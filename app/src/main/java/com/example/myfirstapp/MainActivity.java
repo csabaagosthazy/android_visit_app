@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity{
           Log.d("language",lang);
           String newLang = "en";
           if(lang.equals("en")) newLang = "fr";
-          if(lang.equals("fr")) newLang = "en";
+          else if(lang.equals("fr")) newLang = "en";
 
           Log.d("new language",newLang);
           setAppLocale(newLang);
