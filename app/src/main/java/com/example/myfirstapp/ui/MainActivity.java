@@ -1,17 +1,14 @@
-package com.example.myfirstapp;
+package com.example.myfirstapp.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +16,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
+import com.example.myfirstapp.R;
+import com.example.myfirstapp.adapter.ListAdapter;
+import com.example.myfirstapp.ui.person.Person;
+import com.example.myfirstapp.ui.settings.Settings;
+import com.example.myfirstapp.ui.visitor.Visitor;
+import com.example.myfirstapp.ui.visits.Visits;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -30,8 +31,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity{
 
-    //Initialize
-    BottomNavigationView bottomNavigationView;
 
     private ListView listView;
     private int digit[] = new int[] {1,2,3,4,5,6,7,8,9,10};
@@ -55,15 +54,14 @@ public class MainActivity extends AppCompatActivity{
         listView.setAdapter(listAdapter);
 
         //create bottom navigation view object
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         // define your fragments here
         final Fragment person = new Person();
         final Fragment visit = new Visits();
         final Fragment visitor = new Visitor();
-        final Fragment history = new History();
+        final Fragment settings = new Settings();
 
         //bottom nav selection
         bottomNavigationView.setOnItemSelectedListener(
@@ -78,8 +76,8 @@ public class MainActivity extends AppCompatActivity{
                             case R.id.visitor:
                                 fragment = visitor;
                                 break;
-                            case R.id.history:
-                                fragment = history;
+                            case R.id.settings:
+                                fragment = settings;
                                 break;
                             default:
                                 fragment = visit;
