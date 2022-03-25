@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.example.myfirstapp.ui.person.Person;
+
 
 import java.util.Objects;
 

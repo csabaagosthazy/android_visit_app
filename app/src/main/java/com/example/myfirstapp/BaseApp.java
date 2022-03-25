@@ -4,12 +4,16 @@
 package com.example.myfirstapp;
 
 import android.app.Application;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
 
 import com.example.myfirstapp.database.AppDatabase;
 import com.example.myfirstapp.database.repository.PersonRepository;
 import com.example.myfirstapp.database.repository.VisitRepository;
+import com.google.android.material.navigation.NavigationView;
 
-public class BaseApp extends Application {
+public class BaseApp extends Application implements NavigationView.OnNavigationItemSelectedListener{
 
     @Override
     public void onCreate() {
@@ -26,5 +30,10 @@ public class BaseApp extends Application {
 
     public PersonRepository getPersonRepository() {
         return PersonRepository.getInstance();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }

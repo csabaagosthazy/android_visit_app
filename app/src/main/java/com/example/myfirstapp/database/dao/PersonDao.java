@@ -24,8 +24,8 @@ import com.example.myfirstapp.database.entity.PersonEntity;
 @Dao
 public interface PersonDao {
 
-    @Query("SELECT * FROM persons WHERE email = :id")
-    LiveData<PersonEntity> getById(String id);
+    @Query("SELECT * FROM persons WHERE email = :idPerson")
+    LiveData<PersonEntity> getById(Long idPerson);
 
     @Query("SELECT * FROM persons")
     LiveData<List<PersonEntity>> getAll();

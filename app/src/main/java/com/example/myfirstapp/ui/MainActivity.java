@@ -20,7 +20,8 @@ import android.widget.ListView;
 
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.adapter.ListAdapter;
-import com.example.myfirstapp.ui.person.Person;
+import com.example.myfirstapp.ui.person.Person_old;
+import com.example.myfirstapp.ui.person.PersonsList;
 import com.example.myfirstapp.ui.settings.Settings;
 import com.example.myfirstapp.ui.visitor.Visitor;
 import com.example.myfirstapp.ui.visits.Visits;
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity{
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         // define your fragments here
-        final Fragment person = new Person();
+        final Fragment person = new PersonsList();
         final Fragment visit = new Visits();
         final Fragment visitor = new Visitor();
         final Fragment settings = new Settings();
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity{
                         switch (item.getItemId()) {
                             case R.id.person:
                                 fragment = person;
+                                //person;
                                 break;
                             case R.id.visitor:
                                 fragment = visitor;
