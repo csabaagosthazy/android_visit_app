@@ -95,15 +95,12 @@ public class PersonEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PersonEntity that = (PersonEntity) o;
-        return getEmail().equals(that.getEmail());
+        return that.getEmail().equals(this.getEmail());
     }
 
+    @NonNull
     @Override
     public String toString() {
-        return "PersonEntity{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return firstName + " "+ lastName;
     }
 }

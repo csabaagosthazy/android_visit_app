@@ -70,8 +70,8 @@ public class PersonViewModel extends AndroidViewModel {
         return observablePerson;
     }
 
-    public void createPerson(PersonEntity client, OnAsyncEventListener callback) {
-        repository.insert(client, callback, application);
+    public void createPerson(PersonEntity person, OnAsyncEventListener callback) {
+        repository.insert(person, callback, application);
     }
 
     public void updatePerson(PersonEntity person, OnAsyncEventListener callback) {

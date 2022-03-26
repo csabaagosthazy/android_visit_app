@@ -24,7 +24,7 @@ import com.example.myfirstapp.database.entity.PersonEntity;
 @Dao
 public interface PersonDao {
 
-    @Query("SELECT * FROM persons WHERE email = :idPerson")
+    @Query("SELECT * FROM persons WHERE idPerson = :idPerson")
     LiveData<PersonEntity> getById(Long idPerson);
 
     @Query("SELECT * FROM persons")
@@ -40,16 +40,16 @@ public interface PersonDao {
 
 
     @Insert
-    long insert(PersonEntity client) throws SQLiteConstraintException;
+    long insert(PersonEntity person) throws SQLiteConstraintException;
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<PersonEntity> clients);
+    void insertAll(List<PersonEntity> persons);
 
     @Update
-    void update(PersonEntity client);
+    void update(PersonEntity person);
 
     @Delete
-    void delete(PersonEntity client);
+    void delete(PersonEntity person);
 
     @Query("DELETE FROM persons")
     void deleteAll();

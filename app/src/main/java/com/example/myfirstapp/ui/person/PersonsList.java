@@ -91,7 +91,7 @@ public class PersonsList extends Fragment  {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_persons_list, container, false);
         // Inflate the layout for this fragment
-        RecyclerView recyclerView = view.findViewById(R.id.clientsRecyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.personsRecyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
@@ -111,7 +111,7 @@ public class PersonsList extends Fragment  {
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
-                intent.putExtra("clientEmail", persons.get(position).getEmail());
+                intent.putExtra("personId", persons.get(position).getIdPerson());
                 ((MainActivity) getActivity()).startActivity(intent);
             }
             @Override

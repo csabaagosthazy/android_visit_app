@@ -95,10 +95,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     if (RecyclerAdapter.this.data instanceof PersonEntity) {
                         PersonEntity newPerson = data.get(newItemPosition);
-                        PersonEntity oldClient = RecyclerAdapter.this.data.get(newItemPosition);
-                        return Objects.equals(newPerson.getEmail(), oldClient.getEmail())
-                                && Objects.equals(newPerson.getFirstName(), oldClient.getFirstName())
-                                && Objects.equals(newPerson.getLastName(), oldClient.getLastName());
+                        PersonEntity oldPerson = RecyclerAdapter.this.data.get(newItemPosition);
+                        return Objects.equals(newPerson.getEmail(), oldPerson.getEmail())
+                                && Objects.equals(newPerson.getFirstName(), oldPerson.getFirstName())
+                                && Objects.equals(newPerson.getLastName(), oldPerson.getLastName());
                     }
                     return false;
                 }
