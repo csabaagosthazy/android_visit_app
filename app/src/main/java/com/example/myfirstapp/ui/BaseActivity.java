@@ -2,6 +2,7 @@ package com.example.myfirstapp.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -34,7 +35,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_base);
 
         frameLayout = findViewById(R.id.flFragment);
 
@@ -67,15 +68,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-
         if (id == BaseActivity.position) {
-            return false;
+            return true;
         }
 
         BaseActivity.position = id;
         Intent intent = null;
-
-        bottomNavigationView.setSelectedItemId(id);
 
         switch (id) {
             case R.id.person:

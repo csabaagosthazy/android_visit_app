@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.adapter.ListAdapter;
@@ -46,7 +47,8 @@ public class MainActivity extends BaseActivity{
         getLayoutInflater().inflate(R.layout.activity_main, frameLayout);
 
         setTitle(getString(R.string.app_name));
-        bottomNavigationView.setSelectedItemId(R.id.visits);
+        // Set default selection
+        bottomNavigationView.setSelectedItemId(R.id.nav_none);
 
         //Get phone default language
         String lang = Locale.getDefault().getLanguage();
@@ -60,20 +62,19 @@ public class MainActivity extends BaseActivity{
 
         //Add Header View
         View headerView = inflater.inflate(R.layout.listview_header, null, false);
+        TextView headerText = headerView.findViewById(R.id.listHeader);
+        headerText.setText(R.string.mainListHeader);
         listView.addHeaderView(headerView);//Add view to list view as header view
 
         listAdapter = new ListAdapter(this,digit);
         listView.setAdapter(listAdapter);
 
-        // Set default selection
-        //bottomNavigationView.setSelectedItemId(R.id.nav_none);
-
     }
     @Override
     protected void onResume() {
         super.onResume();
-        setTitle(getString(R.string.app_name));
-        bottomNavigationView.setSelectedItemId(R.id.nav_none);
+        //setTitle(getString(R.string.app_name));
+        //bottomNavigationView.setSelectedItemId(R.id.nav_none);
     }
 
     @Override
