@@ -18,4 +18,8 @@
     <string name="personListHeader">User list</string>
     <string name="visitsListHeader">Visits</string>
     <string name="visitorListHeader">Visitor list</string>
+    <string name="preferenceAboutHeader">About app</string>
+    <string name="preferenceAboutText">This app was created as a school project....</string>
+    <string name="prefSelectLanguage">Select language</string>
+    <string name="prefSummary">Define your preferred language</string>
 </resources>

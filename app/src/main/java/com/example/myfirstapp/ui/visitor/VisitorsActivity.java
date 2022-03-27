@@ -22,7 +22,6 @@ public class VisitorsActivity extends BaseActivity {
     private ListView listView;
     private int digit[] = new int[] {1,2,3,4,5,6,7,8,9,10};
     private ListAdapter listAdapter;
-    private Locale locale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +30,6 @@ public class VisitorsActivity extends BaseActivity {
 
         setTitle(getString(R.string.app_name));
         bottomNavigationView.setSelectedItemId(R.id.visitor);
-
-        //Get phone default language
-        String lang = Locale.getDefault().getLanguage();
-        //not en or fr, set to en
-        if(!lang.equals("en") || !lang.equals("fr") ) lang = "en";
-        setAppLocale(lang);
 
         //list view
         listView = findViewById(R.id.listView);
@@ -78,17 +71,6 @@ public class VisitorsActivity extends BaseActivity {
         alertDialog.show();
     }
 
-    private void setAppLocale(String language){
-        locale = new Locale(language);
-        Resources res = getResources();
-        Configuration config = res.getConfiguration();
-        //DisplayMetrics displayMetrics = res.getDisplayMetrics();
-
-        Locale.setDefault(locale);
-        config.setLocale(locale);
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-    }
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -100,17 +82,6 @@ public class VisitorsActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
-        if (id == R.id.btnLang) {
-            String lang = locale.getLanguage();
-            Log.d("language",lang);
-            String newLang = "en";
-            if(lang.equals("en")) newLang = "fr";
-            else if(lang.equals("fr")) newLang = "en";
-
-            Log.d("new language",newLang);
-            setAppLocale(newLang);
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
 

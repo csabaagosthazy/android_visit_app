@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <Preference
+        android:selectable="false"
+        android:enabled="true"
+        android:title="@string/preferenceAboutHeader"
+        android:summary="@string/preferenceAboutText" />
+
+</PreferenceScreen>

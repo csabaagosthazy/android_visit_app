@@ -1,7 +1,11 @@
 package com.example.myfirstapp.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +23,8 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import com.example.myfirstapp.R;
 
+import java.util.Locale;
+
 /**
  * Base activity with bottom navigation
  */
@@ -29,6 +35,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
 
     //Bottom navigation
     protected BottomNavigationView bottomNavigationView;
+
+    //using locale
+    private Locale locale;
 
     protected static int position;
 
@@ -42,6 +51,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(this);
+
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        setAppLocale(sharedPrefs.getString("pref_lang", "en"));
     }
 
     @Override
@@ -97,5 +110,18 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
             startActivity(intent);
         }
         return true;
+    }
+
+
+    private void setAppLocale(String language){
+        locale = new Locale(language);
+        Resources res = getResources();
+        Configuration config = res.getConfiguration();
+        //DisplayMetrics displayMetrics = res.getDisplayMetrics();
+
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
     }
 }
