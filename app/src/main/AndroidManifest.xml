@@ -18,6 +18,41 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.BaseActivity"
+            android:theme="@style/Theme.MyFirstApp" />
+        <activity
+            android:name=".ui.person.PersonActivity"
+            android:label="@string/activityTitlePerson"
+            android:parentActivityName=".ui.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:label="@string/activityTitleSettings"
+            android:parentActivityName=".ui.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.visitor.VisitorsActivity"
+            android:label="@string/activityTitleVisitors"
+            android:parentActivityName=".ui.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.visits.VisitsActivity"
+            android:label="@string/activityTitleVisits"
+            android:parentActivityName=".ui.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ui.MainActivity" />
+        </activity>
         <activity android:name=".ui.person.PersonDetails" />
     </application>
 
