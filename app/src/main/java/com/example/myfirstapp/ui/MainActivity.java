@@ -1,14 +1,17 @@
 package com.example.myfirstapp.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,19 +32,28 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends BaseActivity{
 
 
     private ListView listView;
     private int digit[] = new int[] {1,2,3,4,5,6,7,8,9,10};
     private ListAdapter listAdapter;
+    private Locale locale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //ActionBar actionBar = getSupportActionBar(); // or getActionBar();
-        //getSupportActionBar().setTitle("My new title"); // set the top title
-        setContentView(R.layout.activity_main);
+        getLayoutInflater().inflate(R.layout.activity_main, frameLayout);
+
+        setTitle(getString(R.string.app_name));
+        bottomNavigationView.setSelectedItemId(R.id.visits);
+
+        //Get phone default language
+        String lang = Locale.getDefault().getLanguage();
+        //not en or fr, set to en
+        if(!lang.equals("en") || !lang.equals("fr") ) lang = "en";
+        setAppLocale(lang);
+
         //list view
         listView = findViewById(R.id.listView);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
@@ -53,87 +65,49 @@ public class MainActivity extends AppCompatActivity{
         listAdapter = new ListAdapter(this,digit);
         listView.setAdapter(listAdapter);
 
-        //create bottom navigation view object
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-
-        // define your fragments here
-        final Fragment person = new Person();
-        final Fragment visit = new Visits();
-        final Fragment visitor = new Visitor();
-        final Fragment settings = new Settings();
-
-        //bottom nav selection
-        bottomNavigationView.setOnItemSelectedListener(
-                new NavigationBarView.OnItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        Fragment fragment;
-                        switch (item.getItemId()) {
-                            case R.id.person:
-                                fragment = person;
-                                break;
-                            case R.id.visitor:
-                                fragment = visitor;
-                                break;
-                            case R.id.settings:
-                                fragment = settings;
-                                break;
-                            default:
-                                fragment = visit;
-                                break;
-                        }
-                        fragmentManager.beginTransaction().replace(R.id.flFragment, fragment).commit();
-                        return true;
-                    }
-                });
         // Set default selection
-        bottomNavigationView.setSelectedItemId(R.id.personFragment);
+        //bottomNavigationView.setSelectedItemId(R.id.nav_none);
 
     }
-
-    private void setAppLocale(String language){
-        Locale locale = new Locale(language);
-        Resources res = getResources();
-        DisplayMetrics displayMetrics = res.getDisplayMetrics();
-        Configuration config = res.getConfiguration();
-        config.setLocale(locale);
-
-        res.updateConfiguration(config, displayMetrics);
-
-        Intent intent = new Intent(this, MainActivity.class);
-
-        startActivity(intent);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setTitle(getString(R.string.app_name));
+        bottomNavigationView.setSelectedItemId(R.id.nav_none);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        final MenuInflater inflater= getMenuInflater();
-        inflater.inflate(R.menu.menu_top, menu);
+    public void onBackPressed() {
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        //alertDialog.setTitle(getString(R.string.action_logout));
+        //just a copy
+        alertDialog.setTitle("test dialog");
+        alertDialog.setCancelable(false);
+        //alertDialog.setMessage(getString(R.string.logout_msg));
+        alertDialog.setMessage("test message");
+        //alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.action_logout), (dialog, which) -> logout());
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "ok", (dialog, which) -> alertDialog.dismiss());
+        //alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.action_cancel), (dialog, which) -> alertDialog.dismiss());
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "cancel", (dialog, which) -> alertDialog.dismiss());
+        alertDialog.show();
+    }
 
-        // referencing button views
-        MenuItem btnLanguage = menu.findItem(R.id.btnLang);
+    private void setAppLocale(String language){
+        locale = new Locale(language);
+        Resources res = getResources();
+        Configuration config = res.getConfiguration();
+        //DisplayMetrics displayMetrics = res.getDisplayMetrics();
 
-        // setting up on click listener event over the button
-        // in order to change the language with the help of
-        // LocaleHelper class
-      /*  btnLanguage.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                String lang = Locale.getDefault().getLanguage();
-                Log.d("language",lang);
-                String newLang = "en";
-                if(lang.equals("en")) newLang = "fr";
-                if(lang.equals("fr")) newLang = "en";
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
-                Log.d("new language",newLang);
-                setAppLocale(newLang);
-                return false;
-            }
-        });*/
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
-        return true;
+        Log.d("Conf", "Changed");
     }
 
   @Override
@@ -141,7 +115,7 @@ public class MainActivity extends AppCompatActivity{
       int id = item.getItemId();
 
       if (id == R.id.btnLang) {
-          String lang = Locale.getDefault().getLanguage();
+          String lang = locale.getLanguage();
           Log.d("language",lang);
           String newLang = "en";
           if(lang.equals("en")) newLang = "fr";

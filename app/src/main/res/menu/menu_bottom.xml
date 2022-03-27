@@ -16,4 +16,8 @@
         android:id="@+id/settings"
         android:title="@string/settings"
         android:icon="@drawable/ic_settings_foreground"/>
+    <item
+        android:id="@+id/nav_none"
+        android:title=""
+        android:visible="false"/>
 </menu>
