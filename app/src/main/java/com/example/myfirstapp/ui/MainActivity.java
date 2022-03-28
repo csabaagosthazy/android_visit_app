@@ -24,7 +24,8 @@ import android.widget.TextView;
 
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.adapter.ListAdapter;
-import com.example.myfirstapp.ui.person.Person;
+import com.example.myfirstapp.ui.person.Person_old;
+import com.example.myfirstapp.ui.person.PersonsList;
 import com.example.myfirstapp.ui.settings.Settings;
 import com.example.myfirstapp.ui.visitor.Visitor;
 import com.example.myfirstapp.ui.visits.Visits;
@@ -56,7 +57,7 @@ public class MainActivity extends BaseActivity{
         if(!lang.equals("en") || !lang.equals("fr") ) lang = "en";
         setAppLocale(lang);
 
-        //list view
+        //listview;
         listView = findViewById(R.id.listView);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
 

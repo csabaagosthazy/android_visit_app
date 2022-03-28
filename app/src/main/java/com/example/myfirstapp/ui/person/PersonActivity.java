@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.adapter.ListAdapter;
@@ -25,36 +27,20 @@ public class PersonActivity extends BaseActivity {
     private int digit[] = new int[] {1,2,3,4,5,6,7,8,9,10};
     private ListAdapter listAdapter;
     private Locale locale;
+    final Fragment person = new PersonsList();
+    final FragmentManager fragmentManager = getSupportFragmentManager();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.activity_person, frameLayout);
+        getLayoutInflater().inflate(R.layout.activity_persons_list, frameLayout);
 
         setTitle(getString(R.string.app_name));
         bottomNavigationView.setSelectedItemId(R.id.person);
+        fragmentManager.beginTransaction().replace(R.id.flFragment, person).commit();
 
-        //Get phone default language
-        String lang = Locale.getDefault().getLanguage();
-        //not en or fr, set to en
-        if(!lang.equals("en") || !lang.equals("fr") ) lang = "en";
-        setAppLocale(lang);
 
-        //list view
-        listView = findViewById(R.id.listView);
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-
-        //Add Header View
-        View headerView = inflater.inflate(R.layout.listview_header, null, false);
-        TextView headerText = headerView.findViewById(R.id.listHeader);
-        headerText.setText(R.string.personListHeader);
-        listView.addHeaderView(headerView);//Add view to list view as header view
-
-        listAdapter = new ListAdapter(this,digit);
-        listView.setAdapter(listAdapter);
-
-        // Set default selection
-        //bottomNavigationView.setSelectedItemId(R.id.nav_none);
 
     }
     @Override

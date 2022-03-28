@@ -9,8 +9,11 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.myfirstapp.ui.person.PersonActivity;
+import com.example.myfirstapp.ui.person.PersonsList;
 import com.example.myfirstapp.ui.settings.SettingsActivity;
 import com.example.myfirstapp.ui.visitor.VisitorsActivity;
 import com.example.myfirstapp.ui.visits.VisitsActivity;
@@ -66,6 +69,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
     //bottom nav selection
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final Fragment person = new PersonsList();
 
         int id = item.getItemId();
         if (id == BaseActivity.position) {
@@ -77,7 +82,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
 
         switch (id) {
             case R.id.person:
-                intent = new Intent(this, PersonActivity.class);
+                fragmentManager.beginTransaction().replace(R.id.flFragment, person).commit();
+
                 break;
             case R.id.visitor:
                 intent = new Intent(this, VisitorsActivity.class);

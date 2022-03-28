@@ -18,6 +18,24 @@
     <string name="personListHeader">User list</string>
     <string name="visitsListHeader">Visits</string>
     <string name="visitorListHeader">Visitor list</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="title_activity_delete_account">Delete Person</string>
+    <string name="account_deleted">Person deleted</string>
+    <string name="title_activity_main">Persons</string>
+    <string name="title_activity_details">Person Details</string>
+    <string name="title_activity_create">Create Visitor</string>
+    <string name="action_create">Create Visitor</string>
+    <string name="person_firstName">First name</string>
+    <string name="person_lastName">Last mail</string>
+    <string name="prompt_email">Email</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="delete_msg">Do you really want to delete this person?</string>
+    <string name="action_error">Something went wrong</string>
+    <string name="person_edited">Client edited</string>
+    <string name="error_used_email">Email already in use</string>
+    <string name="error_invalid_email">Invalid email address</string>
+    <string name="action_settings">Settings</string>
     <string name="title_visit_create">Create new visit</string>
     <string name="title_visit_details">Visit details</string>
 
