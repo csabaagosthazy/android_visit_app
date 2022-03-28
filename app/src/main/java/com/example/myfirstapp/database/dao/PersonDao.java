@@ -30,6 +30,9 @@ public interface PersonDao {
     @Query("SELECT * FROM persons")
     LiveData<List<PersonEntity>> getAll();
 
+    @Query("SELECT * FROM persons where is_employee = 0")
+    LiveData<List<PersonEntity>> getAllVisitors();
+
     /**
      * This method is used to populate the transaction activity.
      * It returns all OTHER users and their accounts.

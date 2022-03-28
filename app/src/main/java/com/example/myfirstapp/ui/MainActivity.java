@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity{
         if(!lang.equals("en") || !lang.equals("fr") ) lang = "en";
         setAppLocale(lang);
 
-        //list view
+        //listview;
         listView = findViewById(R.id.listView);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
 
