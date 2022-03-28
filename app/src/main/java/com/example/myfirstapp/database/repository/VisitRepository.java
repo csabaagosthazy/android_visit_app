@@ -1,10 +1,12 @@
 package com.example.myfirstapp.database.repository;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.myfirstapp.BaseApp;
+import com.example.myfirstapp.database.AppDatabase;
 import com.example.myfirstapp.database.async.Visit.CreateVisit;
 import com.example.myfirstapp.database.async.Visit.DeleteVisit;
 import com.example.myfirstapp.database.async.Visit.UpdateVisit;
@@ -32,26 +34,30 @@ public class VisitRepository {
         }
         return instance;
     }
-    public LiveData<VisitEntity> getVisit(final Long visitId, Application application){
-        return ((BaseApp) application).getDatabase().visitDao().getById(visitId);
+    public LiveData<VisitEntity> getVisit(final Long visitId, Context context){
+        return AppDatabase.getInstance(context).visitDao().getById(visitId);
     }
-    public LiveData<List<VisitEntity>> getVisits(Application application) {
-        return ((BaseApp) application).getDatabase().visitDao().getAll();
+    public LiveData<List<VisitEntity>> getVisits(Context context) {
+        return AppDatabase.getInstance(context).visitDao().getAll();
+    }
+
+    public LiveData<List<VisitEntity>> getByDate(Context context) {
+        return AppDatabase.getInstance(context).visitDao().getAll();
     }
 
     public void insert(final VisitEntity visit, OnAsyncEventListener callback,
-                       Application application) {
-        new CreateVisit(application, callback).execute(visit);
+                       Context context) {
+        new CreateVisit(context, callback).execute(visit);
     }
 
     public void update(final VisitEntity visit, OnAsyncEventListener callback,
-                       Application application) {
-        new UpdateVisit(application, callback).execute(visit);
+                       Context context) {
+        new UpdateVisit(context, callback).execute(visit);
     }
 
     public void delete(final VisitEntity visit, OnAsyncEventListener callback,
-                       Application application) {
-        new DeleteVisit(application, callback).execute(visit);
+                       Context context) {
+        new DeleteVisit(context, callback).execute(visit);
     }
 
 }

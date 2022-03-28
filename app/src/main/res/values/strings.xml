@@ -18,4 +18,8 @@
     <string name="personListHeader">User list</string>
     <string name="visitsListHeader">Visits</string>
     <string name="visitorListHeader">Visitor list</string>
+    <string name="title_visit_create">Create new visit</string>
+    <string name="title_visit_details">Visit details</string>
+
+
 </resources>

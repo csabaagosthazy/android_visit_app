@@ -13,6 +13,7 @@ import androidx.room.Update;
 import com.example.myfirstapp.database.entity.PersonEntity;
 import com.example.myfirstapp.database.entity.VisitEntity;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao
@@ -22,6 +23,9 @@ public interface VisitDao {
 
     @Query("SELECT * FROM visits")
     LiveData<List<VisitEntity>> getAll();
+
+    @Query("SELECT * FROM visits WHERE visit_date = :date")
+    LiveData<List<VisitEntity>> getByDate(Date date);
 
     /**
      * This method is used to populate the transaction activity.
