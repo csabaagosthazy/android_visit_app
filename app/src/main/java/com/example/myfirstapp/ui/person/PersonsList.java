@@ -4,17 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +44,7 @@ public class PersonsList extends Fragment  {
         return fragment;
     }
 
+
     /*@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +55,7 @@ public class PersonsList extends Fragment  {
 
         //setTitle(R.string.title_activity_main);
 
-        /*persons = new ArrayList<>();
+        persons = new ArrayList<>();
 
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);

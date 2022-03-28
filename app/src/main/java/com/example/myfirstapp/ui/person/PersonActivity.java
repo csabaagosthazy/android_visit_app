@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.adapter.ListAdapter;
@@ -25,6 +27,9 @@ public class PersonActivity extends BaseActivity {
     private int digit[] = new int[] {1,2,3,4,5,6,7,8,9,10};
     private ListAdapter listAdapter;
     private Locale locale;
+    final Fragment person = new PersonsList();
+    final FragmentManager fragmentManager = getSupportFragmentManager();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,8 @@ public class PersonActivity extends BaseActivity {
 
         setTitle(getString(R.string.app_name));
         bottomNavigationView.setSelectedItemId(R.id.person);
+        fragmentManager.beginTransaction().replace(R.id.flFragment, person).commit();
+
 
 
     }
