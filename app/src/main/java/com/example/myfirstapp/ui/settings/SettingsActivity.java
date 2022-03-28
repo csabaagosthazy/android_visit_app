@@ -1,22 +1,14 @@
 package com.example.myfirstapp.ui.settings;
 
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.myfirstapp.R;
-import com.example.myfirstapp.adapter.ListAdapter;
 import com.example.myfirstapp.ui.BaseActivity;
-
-import java.util.Locale;
 
 public class SettingsActivity extends BaseActivity {
 

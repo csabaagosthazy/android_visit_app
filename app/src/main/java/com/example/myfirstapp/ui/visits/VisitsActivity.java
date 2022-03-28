@@ -1,7 +1,6 @@
 package com.example.myfirstapp.ui.visits;
 
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,15 +12,13 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.myfirstapp.R;
-import com.example.myfirstapp.adapter.ListAdapter;
+import com.example.myfirstapp.adapter.ArrayAdapter;
 import com.example.myfirstapp.ui.BaseActivity;
-
-import java.util.Locale;
 
 public class VisitsActivity extends BaseActivity {
     private ListView listView;
     private int digit[] = new int[] {1,2,3,4,5,6,7,8,9,10};
-    private ListAdapter listAdapter;
+    private ArrayAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +38,8 @@ public class VisitsActivity extends BaseActivity {
         headerText.setText(R.string.visitsListHeader);
         listView.addHeaderView(headerView);//Add view to list view as header view
 
-        listAdapter = new ListAdapter(this,digit);
-        listView.setAdapter(listAdapter);
+        //arrayAdapter = new ArrayAdapter(this,digit);
+        //listView.setAdapter(arrayAdapter);
 
         // Set default selection
         //bottomNavigationView.setSelectedItemId(R.id.nav_none);

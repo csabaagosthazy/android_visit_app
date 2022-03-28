@@ -13,6 +13,7 @@ import androidx.room.Update;
 import com.example.myfirstapp.database.entity.PersonEntity;
 import com.example.myfirstapp.database.entity.VisitEntity;
 
+import java.util.Date;
 import java.util.List;
 
 @Dao

@@ -22,4 +22,5 @@
     <string name="preferenceAboutText">This app was created as a school project....</string>
     <string name="prefSelectLanguage">Select language</string>
     <string name="prefSummary">Define your preferred language</string>
+    <string name="infoHeader">App information</string>
 </resources>
