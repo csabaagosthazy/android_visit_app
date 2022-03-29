@@ -43,48 +43,9 @@ public class PersonsList extends Fragment  {
     public static PersonsList newInstance() {
         PersonsList fragment = new PersonsList();
         Bundle args = new Bundle();
-
         fragment.setArguments(args);
         return fragment;
     }
-
-
-    /*@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        //setContentView(R.layout.activity_main);
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-        //setTitle(R.string.title_activity_main);
-
-        persons = new ArrayList<>();
-
-
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(view -> {
-                    Intent intent = new Intent(PersonsList.this, PersonDetails.class);
-                    intent.setFlags(
-                            Intent.FLAG_ACTIVITY_NO_ANIMATION |
-                                    Intent.FLAG_ACTIVITY_NO_HISTORY
-                    );
-                    startActivity(intent);
-                }
-        );
-
-        PersonListViewModel.Factory factory = new PersonListViewModel.Factory(getApplication());
-        //viewModel = ViewModelProviders.of(this, factory).get(PersonListViewModel.class);
-        viewModel = new ViewModelProvider(this, factory).get(PersonListViewModel.class);
-        viewModel.getPersons().observe(this, personEntities -> {
-            if (personEntities != null) {
-                persons = personEntities;
-                recyclerAdapter.setData(persons);
-            }
-        });
-
-        recyclerView.setAdapter(recyclerAdapter);
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

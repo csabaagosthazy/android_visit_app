@@ -127,9 +127,7 @@ public class VisitsActivity extends BaseActivity {
 
         //list view
         //listView = findViewById(R.id.listView);
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
-
-
+        //LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
 
         // Set default selection
         //bottomNavigationView.setSelectedItemId(R.id.nav_none);
