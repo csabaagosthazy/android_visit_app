@@ -2,7 +2,6 @@ package com.example.myfirstapp.ui.visits;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -119,12 +118,6 @@ public class VisitsActivity extends BaseActivity {
 
         bottomNavigationView.setSelectedItemId(R.id.visits);
 
-        //Get phone default language
-        String lang = Locale.getDefault().getLanguage();
-        //not en or fr, set to en
-        if(!lang.equals("en") || !lang.equals("fr") ) lang = "en";
-        setAppLocale(lang);
-
         //list view
         //listView = findViewById(R.id.listView);
         //LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
@@ -161,18 +154,6 @@ public class VisitsActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-
-        if (id == R.id.btnLang) {
-            String lang = locale.getLanguage();
-            Log.d("language",lang);
-            String newLang = "en";
-            if(lang.equals("en")) newLang = "fr";
-            else if(lang.equals("fr")) newLang = "en";
-
-            Log.d("new language",newLang);
-            setAppLocale(newLang);
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
 

@@ -5,6 +5,21 @@
     <string name="language">Language</string>
     <string name="about">A propos</string>
     <string name="languageShort">FR</string>
+    <string name="activityTitlePerson">Person</string>
+    <string name="activityTitleSettings">Settings</string>
+    <string name="activityTitleVisitors">Visitors</string>
+    <string name="activityTitleVisits">Visits</string>
+    <string name="mainListHeader">Visits today</string>
+    <string name="personListHeader">User list</string>
+    <string name="visitsListHeader">Visits</string>
+    <string name="visitorListHeader">Visitor list</string>
+    <string name="preferenceAboutHeader">About app</string>
+    <string name="preferenceAboutText">This app was created as a school project....</string>
+    <string name="prefSelectLanguage">Select language</string>
+    <string name="prefSummary">Define your preferred language</string>
+    <string name="infoHeader">App information</string>
+</resources>
+</resources>
     <string name="visits">Visites</string>
     <string name="visitor">Visiteurs</string>
     <string name="history">Historique</string>
