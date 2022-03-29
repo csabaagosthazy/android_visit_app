@@ -1,19 +1,21 @@
 package com.example.myfirstapp.database.async.Visit;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.myfirstapp.BaseApp;
+import com.example.myfirstapp.database.AppDatabase;
 import com.example.myfirstapp.database.entity.VisitEntity;
 import com.example.myfirstapp.util.OnAsyncEventListener;
 
 public class CreateVisit extends AsyncTask<VisitEntity,Void,Void> {
-    private Application application;
+    private AppDatabase database;
     private OnAsyncEventListener callback;
     private Exception exception;
 
-    public CreateVisit(Application application, OnAsyncEventListener callback) {
-        this.application = application;
+    public CreateVisit(Context context, OnAsyncEventListener callback) {
+        database = AppDatabase.getInstance(context);
         this.callback = callback;
     }
 
@@ -21,7 +23,7 @@ public class CreateVisit extends AsyncTask<VisitEntity,Void,Void> {
     protected Void doInBackground(VisitEntity... params) {
         try {
             for (VisitEntity visit : params)
-                ((BaseApp) application).getDatabase().visitDao()
+                database.visitDao()
                         .insert(visit);
         } catch (Exception e) {
             exception = e;
