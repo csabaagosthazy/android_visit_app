@@ -35,13 +35,14 @@ public class DatabaseInitializer {
     }
 
     private static void addVisit(final com.example.myfirstapp.database.AppDatabase db, final String description, final Date visitDate, final Long visitor, final Long employee){
-        VisitEntity visit = new VisitEntity();
+        VisitEntity visit = new VisitEntity(description, visitDate, visitor, employee);
         db.visitDao().insert(visit);
     }
 
 
     private static void populateWithTestData(com.example.myfirstapp.database.AppDatabase db) throws ParseException {
         db.personDao().deleteAll();
+        db.visitDao().deleteAll();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         //Parsing the given String to Date object
 
@@ -59,6 +60,8 @@ public class DatabaseInitializer {
         }
 
         addVisit(db, "Visite of the HR", formatter.parse("15-04-2022"),(long)1,(long)4);
+        addVisit(db, "CEO visit", new Date(),(long)2,(long)4);
+        addVisit(db, "College visit", new Date(),(long)3,(long)4);
 
     }
 

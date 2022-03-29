@@ -23,4 +23,5 @@
     <string name="prefSelectLanguage">Select language</string>
     <string name="prefSummary">Define your preferred language</string>
     <string name="infoHeader">App information</string>
+    <string name="noRecordsFound">No visits today</string>
 </resources>

@@ -24,32 +24,29 @@ import com.example.myfirstapp.database.entity.PersonEntity;
 @Dao
 public interface PersonDao {
 
-    @Query("SELECT * FROM persons WHERE email = :id")
-    LiveData<PersonEntity> getById(String id);
+    @Query("SELECT * FROM persons WHERE idPerson = :idPerson")
+    LiveData<PersonEntity> getById(Long idPerson);
 
     @Query("SELECT * FROM persons")
     LiveData<List<PersonEntity>> getAll();
 
-    /**
-     * This method is used to populate the transaction activity.
-     * It returns all OTHER users and their accounts.
-     * @param id Id of the client who should be excluded from the list.
-     * @return A live data object containing a list of ClientAccounts with
-     * containing all clients but the @id.
-     */
+    @Query("SELECT * FROM persons where is_employee = 0")
+    LiveData<List<PersonEntity>> getAllVisitors();
 
+    @Query("SELECT * FROM persons where is_employee = 1")
+    LiveData<List<PersonEntity>> getAllEmployees();
 
     @Insert
-    long insert(PersonEntity client) throws SQLiteConstraintException;
+    long insert(PersonEntity person) throws SQLiteConstraintException;
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<PersonEntity> clients);
+    void insertAll(List<PersonEntity> persons);
 
     @Update
-    void update(PersonEntity client);
+    void update(PersonEntity person);
 
     @Delete
-    void delete(PersonEntity client);
+    void delete(PersonEntity person);
 
     @Query("DELETE FROM persons")
     void deleteAll();

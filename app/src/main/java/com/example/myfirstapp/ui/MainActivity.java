@@ -3,14 +3,15 @@ package com.example.myfirstapp.ui;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.myfirstapp.R;
 
+
 public class MainActivity extends BaseActivity{
-    String[] currentVisits;
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
