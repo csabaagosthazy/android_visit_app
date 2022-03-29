@@ -1,13 +1,20 @@
 package com.example.myfirstapp.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfirstapp.ui.person.PersonActivity;
@@ -19,6 +26,8 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import com.example.myfirstapp.R;
 
+import java.util.Locale;
+
 /**
  * Base activity with bottom navigation
  */
@@ -29,6 +38,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
 
     //Bottom navigation
     protected BottomNavigationView bottomNavigationView;
+
+    //using locale
+    private Locale locale;
 
     protected static int position;
 
@@ -42,6 +54,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnItemSelectedListener(this);
+
+
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        setAppLocale(sharedPrefs.getString("pref_lang", "en"));
     }
 
     @Override
@@ -97,5 +113,41 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
             startActivity(intent);
         }
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(R.string.infoHeader);
+        alertDialog.setCancelable(false);
+        String s1 = "<b>" + "App Created by"+ "</b>";
+        String s2 = "Loan Rey";
+        String s3 = "Csaba Agosthazy";
+        Spanned strMessage = Html.fromHtml(s1+  "<br>" + s2 +  "<br>" + s3);
+        alertDialog.setMessage(strMessage);
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Great job", (dialog, which) -> alertDialog.dismiss());
+
+
+        int id = item.getItemId();
+        if (id == R.id.btnAbout) {
+            alertDialog.show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+
+    }
+
+
+    private void setAppLocale(String language){
+        locale = new Locale(language);
+        Resources res = getResources();
+        Configuration config = res.getConfiguration();
+        //DisplayMetrics displayMetrics = res.getDisplayMetrics();
+
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
     }
 }

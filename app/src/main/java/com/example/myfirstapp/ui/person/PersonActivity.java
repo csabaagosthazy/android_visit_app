@@ -1,7 +1,6 @@
 package com.example.myfirstapp.ui.person;
 
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,18 +12,15 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.myfirstapp.R;
-import com.example.myfirstapp.adapter.ListAdapter;
+import com.example.myfirstapp.adapter.ArrayAdapter;
 import com.example.myfirstapp.ui.BaseActivity;
-
-import java.util.Locale;
 
 public class PersonActivity extends BaseActivity {
 
 
     private ListView listView;
     private int digit[] = new int[] {1,2,3,4,5,6,7,8,9,10};
-    private ListAdapter listAdapter;
-    private Locale locale;
+    private ArrayAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +29,6 @@ public class PersonActivity extends BaseActivity {
 
         setTitle(getString(R.string.app_name));
         bottomNavigationView.setSelectedItemId(R.id.person);
-
-        //Get phone default language
-        String lang = Locale.getDefault().getLanguage();
-        //not en or fr, set to en
-        if(!lang.equals("en") || !lang.equals("fr") ) lang = "en";
-        setAppLocale(lang);
 
         //list view
         listView = findViewById(R.id.listView);
@@ -50,8 +40,8 @@ public class PersonActivity extends BaseActivity {
         headerText.setText(R.string.personListHeader);
         listView.addHeaderView(headerView);//Add view to list view as header view
 
-        listAdapter = new ListAdapter(this,digit);
-        listView.setAdapter(listAdapter);
+        //istAdapter = new ArrayAdapter(this,digit);
+        //listView.setAdapter(arrayAdapter);
 
         // Set default selection
         //bottomNavigationView.setSelectedItemId(R.id.nav_none);
@@ -80,17 +70,6 @@ public class PersonActivity extends BaseActivity {
         alertDialog.show();
     }
 
-    private void setAppLocale(String language){
-        locale = new Locale(language);
-        Resources res = getResources();
-        Configuration config = res.getConfiguration();
-        //DisplayMetrics displayMetrics = res.getDisplayMetrics();
-
-        Locale.setDefault(locale);
-        config.setLocale(locale);
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-    }
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -101,18 +80,6 @@ public class PersonActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-
-        if (id == R.id.btnLang) {
-            String lang = locale.getLanguage();
-            Log.d("language",lang);
-            String newLang = "en";
-            if(lang.equals("en")) newLang = "fr";
-            else if(lang.equals("fr")) newLang = "en";
-
-            Log.d("new language",newLang);
-            setAppLocale(newLang);
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
 
