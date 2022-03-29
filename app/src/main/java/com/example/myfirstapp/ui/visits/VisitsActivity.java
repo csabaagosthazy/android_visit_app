@@ -12,42 +12,58 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfirstapp.BaseApp;
 import com.example.myfirstapp.R;
-import com.example.myfirstapp.adapter.ListAdapter;
+
+import com.example.myfirstapp.adapter.RecyclerAdapter;
 import com.example.myfirstapp.database.entity.VisitEntity;
 import com.example.myfirstapp.ui.BaseActivity;
-import com.example.myfirstapp.ui.MainActivity;
+
 import com.example.myfirstapp.util.RecyclerViewItemClickListener;
+
 import com.example.myfirstapp.viewmodel.VisitsListViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class VisitsActivity extends BaseActivity {
+
     private static final String TAG = "VisitsActivity";
-    private ListAdapter listAdapter;
-    private Locale locale;
 
     private List<VisitEntity> visits;
     private RecyclerAdapter recyclerAdapter;
     private VisitsListViewModel viewModel;
 
+    private Locale locale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getLayoutInflater().inflate(R.layout.activity_visits, frameLayout);
+
+        bottomNavigationView.setSelectedItemId(R.id.visits);
+        //Factory factory = new PersonListViewModel.Factory(getActivity().getApplication());
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.flFragment, new Visits())
+                .commit();
+
 
         setContentView(R.layout.activity_visits);
 
-        getLayoutInflater().inflate(R.layout.activity_visits, frameLayout);
+        //getLayoutInflater().inflate(R.layout.activity_visits, frameLayout);
 
         setTitle(getString(R.string.activityTitleVisits));
+
         RecyclerView recyclerView = findViewById(R.id.visitsRecyclerView);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -78,6 +94,29 @@ public class VisitsActivity extends BaseActivity {
             }
         });
 
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(view2 -> {
+                    Intent intent = new Intent(VisitsActivity.this, VisitDetails.class);
+                    intent.setFlags(
+                            Intent.FLAG_ACTIVITY_NO_ANIMATION |
+                                    Intent.FLAG_ACTIVITY_NO_HISTORY
+                    );
+                    startActivity(intent);
+                }
+        );
+
+        VisitsListViewModel.Factory factory = new VisitsListViewModel.Factory(getApplication());
+        //viewModel = ViewModelProviders.of(this, factory).get(PersonListViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(VisitsListViewModel.class);
+        viewModel.getVisits().observe(this, visitEntities -> {
+            if (visitEntities != null) {
+                visits = visitEntities;
+                recyclerAdapter.setVisitData(visits);
+            }
+        });
+
+        recyclerView.setAdapter(recyclerAdapter);
+
         bottomNavigationView.setSelectedItemId(R.id.visits);
 
         //Get phone default language
@@ -87,7 +126,7 @@ public class VisitsActivity extends BaseActivity {
         setAppLocale(lang);
 
         //list view
-        listView = findViewById(R.id.listView);
+        //listView = findViewById(R.id.listView);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(this.LAYOUT_INFLATER_SERVICE);
 
 
@@ -99,24 +138,8 @@ public class VisitsActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setTitle(getString(R.string.app_name));
+        //setTitle(getString(R.string.app_name));
         bottomNavigationView.setSelectedItemId(R.id.visits);
-    }
-
-    @Override
-    public void onBackPressed() {
-        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        //alertDialog.setTitle(getString(R.string.action_logout));
-        //just a copy
-        alertDialog.setTitle("test dialog");
-        alertDialog.setCancelable(false);
-        //alertDialog.setMessage(getString(R.string.logout_msg));
-        alertDialog.setMessage("test message");
-        //alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.action_logout), (dialog, which) -> logout());
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "ok", (dialog, which) -> alertDialog.dismiss());
-        //alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.action_cancel), (dialog, which) -> alertDialog.dismiss());
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "cancel", (dialog, which) -> alertDialog.dismiss());
-        alertDialog.show();
     }
 
     private void setAppLocale(String language){

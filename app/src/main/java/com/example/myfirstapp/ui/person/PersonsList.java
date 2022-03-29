@@ -1,6 +1,8 @@
 package com.example.myfirstapp.ui.person;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class PersonsList extends Fragment  {
     private static final String TAG = "MainActivity";
@@ -31,6 +34,7 @@ public class PersonsList extends Fragment  {
     private List<PersonEntity> persons;
     private RecyclerAdapter recyclerAdapter;
     private PersonListViewModel viewModel;
+    private Locale locale;
 
     public PersonsList() {
 
@@ -149,15 +153,31 @@ public class PersonsList extends Fragment  {
        // return true;
     //}
 
+    private void setAppLocale(String language){
+        locale = new Locale(language);
+        Resources res = getResources();
+        Configuration config = res.getConfiguration();
+        //DisplayMetrics displayMetrics = res.getDisplayMetrics();
+
+        Locale.setDefault(locale);
+        config.setLocale(locale);
+        getContext().getResources().updateConfiguration(config, getContext().getResources().getDisplayMetrics());
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.btnLang) {
+            String lang = locale.getLanguage();
+            Log.d("language",lang);
+            String newLang = "en";
+            if(lang.equals("en")) newLang = "fr";
+            else if(lang.equals("fr")) newLang = "en";
+
+            Log.d("new language",newLang);
+            setAppLocale(newLang);
             return true;
         }
 

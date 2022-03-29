@@ -5,9 +5,6 @@
     <string name="language">Language</string>
     <string name="about">A propos</string>
     <string name="languageShort">FR</string>
-    <string name="personListHeader">User list</string>
-    <string name="visitsListHeader">Visits</string>
-    <string name="visitorListHeader">Visitor list</string>
     <string name="visits">Visites</string>
     <string name="visitor">Visiteurs</string>
     <string name="history">Historique</string>
@@ -27,16 +24,11 @@
     <string name="delete_msg">Etes vous sûr de vouloir supprimer cette personne</string>
     <string name="action_error">Une erreur est survenue</string>
     <string name="person_edited">Informations modifiées</string>
+    <string name="visit_edited">Informations modifiées</string>
     <string name="error_used_email">Email déjà utilisé</string>
     <string name="error_invalid_email">Adresse mail invalide</string>
     <string name="action_settings">Réglages</string>
-</resources>
     <string name="person">Personne</string>
-    <string name="visits">Visites</string>
-    <string name="visitor">Visiteur</string>
-    <string name="history">Historique</string>
-    <string name="settings">Réglages</string>
-    <string name="languageShort">FR</string>
     <string name="activityTitlePerson">Persone</string>
     <string name="activityTitleSettings">Réglages</string>
     <string name="activityTitleVisitors">Visiteurs</string>
@@ -47,5 +39,6 @@
     <string name="visitorListHeader">Liste des visites</string>
     <string name="title_visit_create">Créer une nouvelle visite</string>
     <string name="title_visit_details">Détails de la visite</string>
+    <string name="visit_description">Description</string>
 </resources>
-</resources>
+

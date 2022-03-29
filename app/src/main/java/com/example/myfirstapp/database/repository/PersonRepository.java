@@ -37,8 +37,16 @@ public class PersonRepository {
         return AppDatabase.getInstance(context).personDao().getById(personId);
     }
 
-    public LiveData<List<PersonEntity>> getAllClients(Context context) {
+    public LiveData<List<PersonEntity>> getAllPersons(Context context) {
         return AppDatabase.getInstance(context).personDao().getAll();
+    }
+
+    public LiveData<List<PersonEntity>> getAllEmployees(Context context){
+        return AppDatabase.getInstance(context).personDao().getAllEmployees();
+    }
+
+    public LiveData<List<PersonEntity>> getAllVisitory(Context context){
+        return AppDatabase.getInstance(context).personDao().getAllVisitors();
     }
 
     public void insert(final PersonEntity person, OnAsyncEventListener callback,

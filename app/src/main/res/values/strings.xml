@@ -33,11 +33,13 @@
     <string name="delete_msg">Do you really want to delete this person?</string>
     <string name="action_error">Something went wrong</string>
     <string name="person_edited">Client edited</string>
+    <string name="visit_edited">Visit edited</string>
     <string name="error_used_email">Email already in use</string>
     <string name="error_invalid_email">Invalid email address</string>
     <string name="action_settings">Settings</string>
     <string name="title_visit_create">Create new visit</string>
     <string name="title_visit_details">Visit details</string>
+    <string name="visit_description">Description</string>
 
 
 </resources>

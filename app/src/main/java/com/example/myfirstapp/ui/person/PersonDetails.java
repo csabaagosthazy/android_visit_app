@@ -9,13 +9,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.database.entity.PersonEntity;
 import com.example.myfirstapp.util.OnAsyncEventListener;
-import com.example.myfirstapp.viewmodel.PersonListViewModel;
 import com.example.myfirstapp.viewmodel.PersonViewModel;
 
 public class PersonDetails extends AppCompatActivity {
@@ -129,7 +127,7 @@ public class PersonDetails extends AppCompatActivity {
 
     private void initiateView() {
         isEditable = false;
-        etFirstName = findViewById(R.id.firstName);
+        etFirstName = findViewById(R.id.description);
         etLastName = findViewById(R.id.lastName);
         etEmail = findViewById(R.id.email);
 

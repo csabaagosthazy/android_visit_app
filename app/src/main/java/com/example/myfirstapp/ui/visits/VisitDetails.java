@@ -5,36 +5,48 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myfirstapp.R;
+import com.example.myfirstapp.adapter.SpinnerAdapter;
+import com.example.myfirstapp.database.entity.PersonEntity;
 import com.example.myfirstapp.database.entity.VisitEntity;
 import com.example.myfirstapp.viewmodel.VisitViewModel;
 import com.example.myfirstapp.util.OnAsyncEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class VisitDetails extends AppCompatActivity {
     private static final String TAG = "ClientDetails";
 
-    private static final int CREATE_CLIENT = 0;
-    private static final int EDIT_CLIENT = 1;
-    private static final int DELETE_CLIENT = 2;
+    private static final int CREATE_VISIT = 0;
+    private static final int EDIT_VISIT = 1;
+    private static final int DELETE_VISIT = 2;
 
     private Toast statusToast;
 
     private boolean isEditable;
 
-    private EditText etFirstName;
-    private EditText etLastName;
-    private EditText etEmail;
+    private EditText etDescription, etDate;
+    private Spinner spinnerVisitor, spinnerEmployee;
+
+    private SpinnerAdapter<PersonEntity> adapterEmployee;
+    private SpinnerAdapter<PersonEntity> adapterVisitor;
+
 
     private VisitViewModel viewModel;
 
     private VisitEntity visit;
+    private List<PersonEntity> employees;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +59,21 @@ public class VisitDetails extends AppCompatActivity {
         Long idVisit = getIntent().getLongExtra("idVisit",-1);
 
         initiateView();
-
-        VisitViewModel.Factory factory = new VisitViewModel(getApplication(), idVisit);
+        setupEmployeeSpinner();
+        setupVisitorSpinner();
+        VisitViewModel.Factory factory = new VisitViewModel.Factory(getApplication(), idVisit);
         //viewModel = ViewModelProviders.of(this, factory).get(PersonViewModel.class);
         viewModel = new ViewModelProvider(this, factory).get(VisitViewModel.class);
         viewModel.getVisit().observe(this, visitEntity -> {
             if (visitEntity != null) {
                 visit = visitEntity;
                 updateContent();
+            }
+        });
+        viewModel.getEmployees().observe(this, personEntities -> {
+            if(personEntities!=null){
+                employees = personEntities;
+                updateVisitorSpinner(employees);
             }
         });
 
@@ -69,16 +88,16 @@ public class VisitDetails extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        if (client != null)  {
-            menu.add(0, EDIT_CLIENT, Menu.NONE, getString(R.string.action_edit))
-                    .setIcon(R.drawable.ic_mode_edit_white_24dp)
+        if (visit != null)  {
+            menu.add(0, EDIT_VISIT, Menu.NONE, getString(R.string.action_edit))
+                    .setIcon(R.drawable.ic_edit_foreground)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-            menu.add(0, DELETE_CLIENT, Menu.NONE, getString(R.string.action_delete))
+            menu.add(0, DELETE_VISIT, Menu.NONE, getString(R.string.action_delete))
                     .setIcon(R.drawable.ic_delete_white_24dp)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         } else {
-            menu.add(0, CREATE_CLIENT, Menu.NONE, getString(R.string.action_create))
-                    .setIcon(R.drawable.ic_add_white_24dp)
+            menu.add(0, CREATE_VISIT, Menu.NONE, getString(R.string.action_create))
+                    .setIcon(R.drawable.ic_add_foreground)
                     .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return true;
@@ -86,22 +105,22 @@ public class VisitDetails extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == EDIT_CLIENT) {
+        if (item.getItemId() == EDIT_VISIT) {
             if (isEditable) {
-                item.setIcon(R.drawable.ic_mode_edit_white_24dp);
+                item.setIcon(R.drawable.ic_edit_foreground);
                 switchEditableMode();
             } else {
                 item.setIcon(R.drawable.ic_done_white_24dp);
                 switchEditableMode();
             }
         }
-        if (item.getItemId() == DELETE_CLIENT) {
+        if (item.getItemId() == DELETE_VISIT) {
             final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
             alertDialog.setTitle(getString(R.string.action_delete));
             alertDialog.setCancelable(false);
             alertDialog.setMessage(getString(R.string.delete_msg));
             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.action_delete), (dialog, which) -> {
-                viewModel.deleteClient(client, new OnAsyncEventListener() {
+                viewModel.deleteVisit(visit, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
                         Log.d(TAG, "deleteClient: success");
@@ -116,110 +135,133 @@ public class VisitDetails extends AppCompatActivity {
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.action_cancel), (dialog, which) -> alertDialog.dismiss());
             alertDialog.show();
         }
-        if (item.getItemId() == CREATE_CLIENT) {
-            createClient(
-                    etFirstName.getText().toString(),
-                    etLastName.getText().toString(),
-                    etEmail.getText().toString()
-            );
+        if (item.getItemId() == CREATE_VISIT) {
+            try {
+                createVisit(
+                        etDescription.getText().toString(),
+                        new SimpleDateFormat("dd/MM/yyyy").parse(etDate.getText().toString()),
+                        spinnerVisitor.getSelectedItemId(),
+                        spinnerEmployee.getSelectedItemId()
+                );
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void setupVisitorSpinner() {
+        spinnerVisitor = findViewById(R.id.spinner_visitor);
+        adapterVisitor = new SpinnerAdapter<>(this, R.layout.row_person, new ArrayList<>());
+        spinnerVisitor.setAdapter(adapterVisitor);
+    }
+
+    private void setupEmployeeSpinner() {
+        spinnerEmployee = findViewById(R.id.spinner_visitor);
+        adapterEmployee = new SpinnerAdapter<>(this, R.layout.row_person, new ArrayList<>());
+        spinnerEmployee.setAdapter(adapterEmployee);
+    }
+
+    private void updateVisitorSpinner(List<PersonEntity> persons) {
+        adapterVisitor.updateData(new ArrayList<>(persons));
+    }
+
     private void initiateView() {
         isEditable = false;
-        etFirstName = findViewById(R.id.firstName);
-        etLastName = findViewById(R.id.lastName);
-        etEmail = findViewById(R.id.email);
+        etDescription = findViewById(R.id.description);
+        spinnerVisitor = findViewById(R.id.spinner_visitor);
+        spinnerEmployee = findViewById(R.id.spinner_employee);
 
-        etFirstName.setFocusable(false);
-        etFirstName.setEnabled(false);
-        etLastName.setFocusable(false);
-        etLastName.setEnabled(false);
-        etEmail.setFocusable(false);
-        etEmail.setEnabled(false);
+        etDescription.setFocusable(false);
+        etDescription.setEnabled(false);
+        spinnerVisitor.setFocusable(false);
+        spinnerVisitor.setEnabled(false);
+        spinnerEmployee.setFocusable(false);
+        spinnerEmployee.setEnabled(false);
     }
 
     private void switchEditableMode() {
         if (!isEditable) {
-            etFirstName.setFocusable(true);
-            etFirstName.setEnabled(true);
-            etFirstName.setFocusableInTouchMode(true);
+            etDescription.setFocusable(true);
+            etDescription.setEnabled(true);
+            etDescription.setFocusableInTouchMode(true);
 
-            etLastName.setFocusable(true);
-            etLastName.setEnabled(true);
-            etLastName.setFocusableInTouchMode(true);
+            spinnerVisitor.setFocusable(true);
+            spinnerVisitor.setEnabled(true);
+            spinnerVisitor.setFocusableInTouchMode(true);
 
-            etEmail.setFocusable(true);
-            etEmail.setEnabled(true);
-            etEmail.setFocusableInTouchMode(true);
+            spinnerVisitor.setFocusable(true);
+            spinnerVisitor.setEnabled(true);
+            spinnerVisitor.setFocusableInTouchMode(true);
 
-            etFirstName.requestFocus();
+            etDescription.requestFocus();
         } else {
-            saveChanges(
-                    etFirstName.getText().toString(),
-                    etLastName.getText().toString(),
-                    etEmail.getText().toString()
-            );
-            etFirstName.setFocusable(false);
-            etFirstName.setEnabled(false);
+            try {
+                saveChanges(
+                        etDescription.getText().toString(),
+                        new SimpleDateFormat("dd/MM/yyyy").parse(etDate.getText().toString()),
+                        spinnerEmployee.getSelectedItemId(),
+                        spinnerEmployee.getSelectedItemId()
+                );
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            etDescription.setFocusable(false);
+            etDescription.setEnabled(false);
 
-            etLastName.setFocusable(false);
-            etLastName.setEnabled(false);
+            etDate.setFocusable(false);
+            etDate.setEnabled(false);
 
-            etEmail.setFocusable(false);
-            etEmail.setEnabled(false);
+            spinnerEmployee.setFocusable(false);
+            spinnerEmployee.setEnabled(false);
+
+            spinnerVisitor.setFocusable(false);
+            spinnerVisitor.setEnabled(false);
         }
         isEditable = !isEditable;
     }
 
-    private void createClient(String firstName, String lastName, String email) {
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError(getString(R.string.error_invalid_email));
-            etEmail.requestFocus();
-            return;
-        }
+    private void createVisit(String description, Date visitDate, long visitor, long employee) {
 
-        client = new ClientEntity();
-        client.setEmail(email);
-        client.setFirstName(firstName);
-        client.setLastName(lastName);
 
-        viewModel.createClient(client, new OnAsyncEventListener() {
+        visit = new VisitEntity();
+        visit.setDescription(description);
+        visit.setVisitDate(visitDate);
+        visit.setVisitor(visitor);
+        visit.setEmployee(employee);
+
+        viewModel.createVisit(visit, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
-                Log.d(TAG, "createClient: success");
+                Log.d(TAG, "createVisit: success");
                 onBackPressed();
             }
 
             @Override
             public void onFailure(Exception e) {
-                Log.d(TAG, "createClient: failure", e);
+                Log.d(TAG, "createVisit: failure", e);
             }
         });
     }
 
-    private void saveChanges(String firstName, String lastName, String email) {
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError(getString(R.string.error_invalid_email));
-            etEmail.requestFocus();
-            return;
-        }
-        client.setEmail(email);
-        client.setFirstName(firstName);
-        client.setLastName(lastName);
+    private void saveChanges(String description, Date visitDate, long visitor, long employee) {
 
-        viewModel.updateClient(client, new OnAsyncEventListener() {
+        visit.setDescription(description);
+        visit.setVisitDate(visitDate);
+        visit.setVisitor(visitor);
+        visit.setEmployee(employee);
+
+        viewModel.updateVisit(visit, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
-                Log.d(TAG, "updateClient: success");
+                Log.d(TAG, "updateVisit: success");
                 setResponse(true);
                 onBackPressed();
             }
 
             @Override
             public void onFailure(Exception e) {
-                Log.d(TAG, "updateClient: failure", e);
+                Log.d(TAG, "updateVisit: failure", e);
                 setResponse(false);
             }
         });
@@ -227,7 +269,7 @@ public class VisitDetails extends AppCompatActivity {
 
     private void setResponse(Boolean response) {
         if (response) {
-            statusToast = Toast.makeText(this, getString(R.string.client_edited), Toast.LENGTH_LONG);
+            statusToast = Toast.makeText(this, getString(R.string.visit_edited), Toast.LENGTH_LONG);
             statusToast.show();
         } else {
             statusToast = Toast.makeText(this, getString(R.string.action_error), Toast.LENGTH_LONG);
@@ -236,10 +278,10 @@ public class VisitDetails extends AppCompatActivity {
     }
 
     private void updateContent() {
-        if (client != null) {
-            etFirstName.setText(client.getFirstName());
-            etLastName.setText(client.getLastName());
-            etEmail.setText(client.getEmail());
+        if (visit != null) {
+            etDescription.setText(visit.getDescription());
+            spinnerVisitor.setSelection(visit.getVisitor().intValue());
+            spinnerEmployee.setSelection(visit.getEmployee().intValue());
         }
     }
 }

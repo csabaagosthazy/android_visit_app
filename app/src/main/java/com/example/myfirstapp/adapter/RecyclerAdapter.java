@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfirstapp.database.entity.PersonEntity;
+import com.example.myfirstapp.database.entity.VisitEntity;
 import com.example.myfirstapp.util.RecyclerViewItemClickListener;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
 
     private List<PersonEntity> data;
+    private List<VisitEntity> visitData;
     private RecyclerViewItemClickListener listener;
 
     // Provide a reference to the views for each data item
@@ -104,6 +106,50 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 }
             });
             this.data = data;
+            result.dispatchUpdatesTo(this);
+        }
+    }
+
+    public void setVisitData(final List<VisitEntity> data) {
+        if (this.visitData == null) {
+            this.visitData = data;
+            notifyItemRangeInserted(0, data.size());
+        } else {
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return RecyclerAdapter.this.visitData.size();
+                }
+
+                @Override
+                public int getNewListSize() {
+                    return data.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+
+                    if (RecyclerAdapter.this.visitData instanceof VisitEntity) {
+                        return (RecyclerAdapter.this.visitData.get(oldItemPosition)).getIdVisit().equals(
+                                (data.get(newItemPosition)).getIdVisit());
+                    }
+                    return false;
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    if (RecyclerAdapter.this.visitData instanceof VisitEntity) {
+                        VisitEntity newVisit = data.get(newItemPosition);
+                        VisitEntity oldVisit = RecyclerAdapter.this.visitData.get(newItemPosition);
+                        return Objects.equals(newVisit.getDescription(), oldVisit.getDescription())
+                                && Objects.equals(newVisit.getVisitor(), oldVisit.getVisitor())
+                                && Objects.equals(newVisit.getEmployee(), oldVisit.getEmployee())
+                                & Objects.equals(newVisit.getVisitDate(), oldVisit.getVisitDate());
+                    }
+                    return false;
+                }
+            });
+            this.visitData = data;
             result.dispatchUpdatesTo(this);
         }
     }

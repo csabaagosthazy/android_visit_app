@@ -1,7 +1,6 @@
 package com.example.myfirstapp.viewmodel;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -33,8 +32,9 @@ public class PersonListViewModel extends AndroidViewModel {
         // set by default null, until we get data from the database.
         observablePersons.setValue(null);
 
-        LiveData<List<PersonEntity>> persons=repository.getAllClients(application);
+        LiveData<List<PersonEntity>> persons=repository.getAllPersons(application);
         observablePersons.addSource(persons, observablePersons::setValue);
+
     }
     /**
      * A creator is used to inject the account id into the ViewModel

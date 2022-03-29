@@ -10,23 +10,30 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myfirstapp.database.entity.PersonEntity;
 import com.example.myfirstapp.database.entity.VisitEntity;
+import com.example.myfirstapp.database.repository.PersonRepository;
 import com.example.myfirstapp.database.repository.VisitRepository;
 import com.example.myfirstapp.util.OnAsyncEventListener;
 
+import java.util.List;
+
 public class VisitViewModel extends AndroidViewModel {
     private VisitRepository repository;
+    private PersonRepository personRepository;
 
     private Context applicationContext;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<VisitEntity> observableVisit;
+    private final MediatorLiveData<List<PersonEntity>> observablePerson;
 
     public VisitViewModel(@NonNull Application application,
-                           final Long idVisit, VisitRepository visitRepository) {
+                           final Long idVisit, VisitRepository visitRepository, PersonRepository personRepository) {
         super(application);
 
         repository = visitRepository;
+        this.personRepository = personRepository;
 
         applicationContext = application.getApplicationContext();
 
@@ -38,6 +45,13 @@ public class VisitViewModel extends AndroidViewModel {
 
         // observe the changes of the client entity from the database and forward them
         observableVisit.addSource(visit, observableVisit::setValue);
+
+        observablePerson = new MediatorLiveData<>();
+        observablePerson.setValue(null);
+
+        LiveData<List<PersonEntity>> employees = personRepository.getAllEmployees(applicationContext);
+        observablePerson.addSource(employees, observablePerson::setValue);
+
     }
 
     /**
@@ -51,17 +65,20 @@ public class VisitViewModel extends AndroidViewModel {
         private final Long idVisit;
 
         private final VisitRepository repository;
+        private final PersonRepository personRepository;
 
         public Factory(@NonNull Application application, Long idVisit) {
             this.application = application;
             this.idVisit = idVisit;
             repository = VisitRepository.getInstance();
+            this.personRepository = PersonRepository.getInstance();
+
         }
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new VisitViewModel(application, idVisit, repository);
+            return (T) new VisitViewModel(application, idVisit, repository,personRepository);
         }
     }
 
@@ -72,15 +89,17 @@ public class VisitViewModel extends AndroidViewModel {
         return observableVisit;
     }
 
+    public LiveData<List<PersonEntity>> getEmployees(){return observablePerson;}
+
     public void createVisit(VisitEntity visit, OnAsyncEventListener callback) {
         repository.insert(visit, callback, applicationContext);
     }
 
-    public void updateClient(VisitEntity visit, OnAsyncEventListener callback) {
+    public void updateVisit(VisitEntity visit, OnAsyncEventListener callback) {
         repository.update(visit, callback, applicationContext);
     }
 
-    public void deleteClient(VisitEntity visit, OnAsyncEventListener callback) {
+    public void deleteVisit(VisitEntity visit, OnAsyncEventListener callback) {
         repository.delete(visit, callback, applicationContext);
     }
 }
