@@ -13,6 +13,9 @@ import com.example.myfirstapp.database.async.Visit.UpdateVisit;
 import com.example.myfirstapp.database.entity.VisitEntity;
 import com.example.myfirstapp.util.OnAsyncEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class VisitRepository {
@@ -41,8 +44,9 @@ public class VisitRepository {
         return AppDatabase.getInstance(context).visitDao().getAll();
     }
 
-    public LiveData<List<VisitEntity>> getByDate(Context context) {
-        return AppDatabase.getInstance(context).visitDao().getAll();
+    public LiveData<List<VisitEntity>> getByDate(Date date, Context context) {
+
+        return AppDatabase.getInstance(context).visitDao().getByDate(date);
     }
 
     public void insert(final VisitEntity visit, OnAsyncEventListener callback,

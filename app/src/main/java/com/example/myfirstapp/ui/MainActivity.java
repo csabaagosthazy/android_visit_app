@@ -8,8 +8,10 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.myfirstapp.R;
 
+
 public class MainActivity extends BaseActivity{
-    String[] currentVisits;
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

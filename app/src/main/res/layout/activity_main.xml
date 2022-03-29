@@ -15,6 +15,15 @@
             >
 
         </ListView>
+        <TextView
+            android:id="@+id/empty"
+            android:text="@string/noRecordsFound"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            style="@android:style/TextAppearance.Large"
+            android:gravity="center"
+            tools:ignore="MissingConstraints">
+        </TextView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,16 +24,9 @@ public interface VisitDao {
     @Query("SELECT * FROM visits")
     LiveData<List<VisitEntity>> getAll();
 
-    @Query("SELECT * FROM visits WHERE visit_date = :date")
+    @Query("SELECT * FROM visits WHERE date(visit_date / 1000,'unixepoch') = date(:date / 1000,'unixepoch')")
     LiveData<List<VisitEntity>> getByDate(Date date);
 
-    /**
-     * This method is used to populate the transaction activity.
-     * It returns all OTHER users and their accounts.
-     * @param id Id of the client who should be excluded from the list.
-     * @return A live data object containing a list of ClientAccounts with
-     * containing all clients but the @id.
-     */
 
 
     @Insert

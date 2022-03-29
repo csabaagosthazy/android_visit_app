@@ -45,4 +45,5 @@
     <string name="title_visit_create">Create new visit</string>
     <string name="title_visit_details">Visit details</string>
     <string name="visit_description">Description</string>
+    <string name="noRecordsFound">No visits today</string>
 </resources>

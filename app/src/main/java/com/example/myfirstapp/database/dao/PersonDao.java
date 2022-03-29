@@ -30,12 +30,11 @@ public interface PersonDao {
     @Query("SELECT * FROM persons")
     LiveData<List<PersonEntity>> getAll();
 
-    @Query("SELECT * FROM persons where is_employee != 1")
+    @Query("SELECT * FROM persons where is_employee = 0")
     LiveData<List<PersonEntity>> getAllVisitors();
 
     @Query("SELECT * FROM persons where is_employee = 1")
     LiveData<List<PersonEntity>> getAllEmployees();
-
 
     @Insert
     long insert(PersonEntity person) throws SQLiteConstraintException;
