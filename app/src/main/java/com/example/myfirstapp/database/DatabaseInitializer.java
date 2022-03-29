@@ -59,7 +59,7 @@ public class DatabaseInitializer {
             e.printStackTrace();
         }
 
-        addVisit(db, "Visite of the HR", formatter.parse("15-04-2022"),(long)1,(long)4);
+        addVisit(db, "Visite of the HR", new Date(),(long)1,(long)4);
         addVisit(db, "CEO visit", new Date(),(long)2,(long)4);
         addVisit(db, "College visit", new Date(),(long)3,(long)4);
 

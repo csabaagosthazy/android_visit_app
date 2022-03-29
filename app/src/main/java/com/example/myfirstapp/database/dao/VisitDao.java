@@ -24,7 +24,7 @@ public interface VisitDao {
     @Query("SELECT * FROM visits")
     LiveData<List<VisitEntity>> getAll();
 
-    @Query("SELECT * FROM visits WHERE date(visit_date / 1000,'unixepoch') = date(:date / 1000,'unixepoch')")
+    @Query("SELECT * FROM visits WHERE date(visit_date / 10000,'unixepoch') = date(:date / 10000,'unixepoch')")
     LiveData<List<VisitEntity>> getByDate(Date date);
 
 
