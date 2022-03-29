@@ -10,6 +10,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myfirstapp.database.entity.PersonEntity;
 import com.example.myfirstapp.database.entity.VisitEntity;
 import com.example.myfirstapp.database.repository.VisitRepository;
 
@@ -17,8 +18,7 @@ import java.util.List;
 
 public class VisitsListViewModel extends AndroidViewModel {
     private VisitRepository repository;
-
-    private Context applicationContext;
+    private Application application;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<List<VisitEntity>> observableVisits;
@@ -27,17 +27,17 @@ public class VisitsListViewModel extends AndroidViewModel {
         super(application);
 
         repository = visitRepository;
-
-        applicationContext = application.getApplicationContext();
+        this.application=application;
 
         observableVisits = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         observableVisits.setValue(null);
 
-        LiveData<List<VisitEntity>> visits = repository.getVisits(applicationContext);
+        LiveData<List<VisitEntity>> visits = repository.getVisits(application);
 
         // observe the changes of the entities from the database and forward them
         observableVisits.addSource(visits, observableVisits::setValue);
+
     }
 
     /**

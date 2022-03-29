@@ -26,7 +26,7 @@ public class VisitViewModel extends AndroidViewModel {
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<VisitEntity> observableVisit;
-    private final MediatorLiveData<List<PersonEntity>> observablePerson;
+    private final MediatorLiveData<List<PersonEntity>> observablePerson, observableVisitor;
 
     public VisitViewModel(@NonNull Application application,
                            final Long idVisit, VisitRepository visitRepository, PersonRepository personRepository) {
@@ -51,6 +51,12 @@ public class VisitViewModel extends AndroidViewModel {
 
         LiveData<List<PersonEntity>> employees = personRepository.getAllEmployees(applicationContext);
         observablePerson.addSource(employees, observablePerson::setValue);
+
+        observableVisitor = new MediatorLiveData<>();
+        observableVisitor.setValue(null);
+
+        LiveData<List<PersonEntity>> visitors = personRepository.getAllVisitors(applicationContext);
+        observableVisitor.addSource(visitors, observableVisitor::setValue);
 
     }
 
@@ -90,6 +96,8 @@ public class VisitViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<PersonEntity>> getEmployees(){return observablePerson;}
+
+    public LiveData<List<PersonEntity>> getVisitors(){return observableVisitor;}
 
     public void createVisit(VisitEntity visit, OnAsyncEventListener callback) {
         repository.insert(visit, callback, applicationContext);

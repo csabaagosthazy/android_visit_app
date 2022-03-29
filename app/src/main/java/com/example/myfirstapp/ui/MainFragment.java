@@ -42,7 +42,6 @@ public class MainFragment extends Fragment {
         };
 
 
-
         inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_main, null, false);
         //ListView

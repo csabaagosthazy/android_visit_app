@@ -3,18 +3,8 @@ package com.example.myfirstapp.ui;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 
 import androidx.appcompat.app.AlertDialog;
-import com.example.myfirstapp.R;
-import com.example.myfirstapp.adapter.ListAdapter;
-import com.example.myfirstapp.ui.person.Person_old;
-import com.example.myfirstapp.ui.person.PersonsList;
-import com.example.myfirstapp.ui.settings.Settings;
-import com.example.myfirstapp.ui.visitor.Visitor;
-import com.example.myfirstapp.ui.visits.Visits;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 import com.example.myfirstapp.R;
 

@@ -21,7 +21,6 @@ public class PersonListViewModel extends AndroidViewModel {
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<List<PersonEntity>> observablePersons;
 
-
     public PersonListViewModel(@NonNull Application application, PersonRepository personRepository) {
         super(application);
 
@@ -33,6 +32,8 @@ public class PersonListViewModel extends AndroidViewModel {
         observablePersons.setValue(null);
 
         LiveData<List<PersonEntity>> persons=repository.getAllPersons(application);
+
+        // observe the changes of the entities from the database and forward them
         observablePersons.addSource(persons, observablePersons::setValue);
 
     }

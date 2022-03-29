@@ -24,6 +24,7 @@ import com.example.myfirstapp.ui.person.PersonsList;
 import com.example.myfirstapp.ui.settings.SettingsActivity;
 import com.example.myfirstapp.ui.visitor.VisitorsActivity;
 import com.example.myfirstapp.ui.visits.VisitsActivity;
+import com.example.myfirstapp.ui.visits.VisitsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -87,6 +88,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         final FragmentManager fragmentManager = getSupportFragmentManager();
         final Fragment person = new PersonsList();
+        final Fragment visit = new VisitsFragment();
 
         int id = item.getItemId();
         if (id == BaseActivity.position) {
@@ -108,7 +110,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
                 intent = new Intent(this, SettingsActivity.class);
                 break;
             case R.id.visits:
-                intent = new Intent(this, VisitsActivity.class);
+                //intent = new Intent(this, VisitsActivity.class);
+                fragmentManager.beginTransaction().replace(R.id.flFragment, visit).commit();
                 break;
         }
         //later we can log out

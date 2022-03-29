@@ -23,8 +23,6 @@
     <string name="prefSelectLanguage">Select language</string>
     <string name="prefSummary">Define your preferred language</string>
     <string name="infoHeader">App information</string>
-</resources>
-</resources>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
     <string name="title_activity_delete_account">Delete Person</string>

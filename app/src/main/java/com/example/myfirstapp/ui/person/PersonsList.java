@@ -39,7 +39,6 @@ public class PersonsList extends Fragment  {
     public PersonsList() {
 
     }
-
     public static PersonsList newInstance() {
         PersonsList fragment = new PersonsList();
         Bundle args = new Bundle();
@@ -107,13 +106,6 @@ public class PersonsList extends Fragment  {
     }
 
 
-
-    //@Override
-    //public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-       // return true;
-    //}
-
     private void setAppLocale(String language){
         locale = new Locale(language);
         Resources res = getResources();
@@ -126,22 +118,5 @@ public class PersonsList extends Fragment  {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        if (id == R.id.btnLang) {
-            String lang = locale.getLanguage();
-            Log.d("language",lang);
-            String newLang = "en";
-            if(lang.equals("en")) newLang = "fr";
-            else if(lang.equals("fr")) newLang = "en";
-
-            Log.d("new language",newLang);
-            setAppLocale(newLang);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

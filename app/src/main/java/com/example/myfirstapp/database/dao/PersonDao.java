@@ -30,19 +30,11 @@ public interface PersonDao {
     @Query("SELECT * FROM persons")
     LiveData<List<PersonEntity>> getAll();
 
-    @Query("SELECT * FROM persons where is_employee = 0")
+    @Query("SELECT * FROM persons where is_employee != 1")
     LiveData<List<PersonEntity>> getAllVisitors();
 
     @Query("SELECT * FROM persons where is_employee = 1")
     LiveData<List<PersonEntity>> getAllEmployees();
-
-    /**
-     * This method is used to populate the transaction activity.
-     * It returns all OTHER users and their accounts.
-     * @param id Id of the client who should be excluded from the list.
-     * @return A live data object containing a list of ClientAccounts with
-     * containing all clients but the @id.
-     */
 
 
     @Insert

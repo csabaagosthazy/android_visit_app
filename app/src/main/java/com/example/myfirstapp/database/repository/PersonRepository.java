@@ -36,7 +36,6 @@ public class PersonRepository {
     public LiveData<PersonEntity> getPerson(final Long personId, Context context){
         return AppDatabase.getInstance(context).personDao().getById(personId);
     }
-
     public LiveData<List<PersonEntity>> getAllPersons(Context context) {
         return AppDatabase.getInstance(context).personDao().getAll();
     }
@@ -45,7 +44,7 @@ public class PersonRepository {
         return AppDatabase.getInstance(context).personDao().getAllEmployees();
     }
 
-    public LiveData<List<PersonEntity>> getAllVisitory(Context context){
+    public LiveData<List<PersonEntity>> getAllVisitors(Context context){
         return AppDatabase.getInstance(context).personDao().getAllVisitors();
     }
 

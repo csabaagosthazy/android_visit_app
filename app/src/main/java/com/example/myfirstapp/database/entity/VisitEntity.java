@@ -1,4 +1,5 @@
 package com.example.myfirstapp.database.entity;
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -96,5 +97,10 @@ public class VisitEntity {
                 if (o == null || getClass() != o.getClass()) return false;
                 VisitEntity that = (VisitEntity) o;
                 return getIdVisit().equals(that.getIdVisit());
+        }
+        @NonNull
+        @Override
+        public String toString() {
+                return description + " ";
         }
 }

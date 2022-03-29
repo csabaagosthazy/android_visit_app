@@ -47,6 +47,7 @@ public class VisitDetails extends AppCompatActivity {
 
     private VisitEntity visit;
     private List<PersonEntity> employees;
+    private List<PersonEntity> visitors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,14 @@ public class VisitDetails extends AppCompatActivity {
         viewModel.getEmployees().observe(this, personEntities -> {
             if(personEntities!=null){
                 employees = personEntities;
-                updateVisitorSpinner(employees);
+
+                updateEmployeeSpinner(employees);
+            }
+        });
+        viewModel.getVisitors().observe(this, visitorsEntities -> {
+            if(visitorsEntities!=null){
+                visitors = visitorsEntities;
+                updateVisitorSpinner(visitors);
             }
         });
 
@@ -137,11 +145,15 @@ public class VisitDetails extends AppCompatActivity {
         }
         if (item.getItemId() == CREATE_VISIT) {
             try {
+                long selectedEmployee = ((PersonEntity) spinnerEmployee.getSelectedItem()).getIdPerson();
+                long selectedVisitor = ((PersonEntity) spinnerVisitor.getSelectedItem()).getIdPerson();
+
+                Log.d("debugWithCsaba", ""+(PersonEntity)spinnerVisitor.getSelectedItem());
                 createVisit(
                         etDescription.getText().toString(),
                         new SimpleDateFormat("dd/MM/yyyy").parse(etDate.getText().toString()),
-                        spinnerVisitor.getSelectedItemId(),
-                        spinnerEmployee.getSelectedItemId()
+                        selectedVisitor,
+                        selectedEmployee
                 );
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -157,7 +169,7 @@ public class VisitDetails extends AppCompatActivity {
     }
 
     private void setupEmployeeSpinner() {
-        spinnerEmployee = findViewById(R.id.spinner_visitor);
+        spinnerEmployee = findViewById(R.id.spinner_employee);
         adapterEmployee = new SpinnerAdapter<>(this, R.layout.row_person, new ArrayList<>());
         spinnerEmployee.setAdapter(adapterEmployee);
     }
@@ -165,12 +177,17 @@ public class VisitDetails extends AppCompatActivity {
     private void updateVisitorSpinner(List<PersonEntity> persons) {
         adapterVisitor.updateData(new ArrayList<>(persons));
     }
+    private void updateEmployeeSpinner(List<PersonEntity> persons) {
+        adapterEmployee.updateData(new ArrayList<>(persons));
+    }
+
 
     private void initiateView() {
         isEditable = false;
         etDescription = findViewById(R.id.description);
         spinnerVisitor = findViewById(R.id.spinner_visitor);
         spinnerEmployee = findViewById(R.id.spinner_employee);
+        etDate = findViewById(R.id.etDate);
 
         etDescription.setFocusable(false);
         etDescription.setEnabled(false);
@@ -178,6 +195,8 @@ public class VisitDetails extends AppCompatActivity {
         spinnerVisitor.setEnabled(false);
         spinnerEmployee.setFocusable(false);
         spinnerEmployee.setEnabled(false);
+        etDate.setFocusable(false);
+        etDate.setEnabled(false);
     }
 
     private void switchEditableMode() {
@@ -190,9 +209,13 @@ public class VisitDetails extends AppCompatActivity {
             spinnerVisitor.setEnabled(true);
             spinnerVisitor.setFocusableInTouchMode(true);
 
-            spinnerVisitor.setFocusable(true);
-            spinnerVisitor.setEnabled(true);
-            spinnerVisitor.setFocusableInTouchMode(true);
+            spinnerEmployee.setFocusable(true);
+            spinnerEmployee.setEnabled(true);
+            spinnerEmployee.setFocusableInTouchMode(true);
+
+            etDate.setFocusable(true);
+            etDate.setEnabled(true);
+            etDate.setFocusableInTouchMode(true);
 
             etDescription.requestFocus();
         } else {
@@ -201,7 +224,7 @@ public class VisitDetails extends AppCompatActivity {
                         etDescription.getText().toString(),
                         new SimpleDateFormat("dd/MM/yyyy").parse(etDate.getText().toString()),
                         spinnerEmployee.getSelectedItemId(),
-                        spinnerEmployee.getSelectedItemId()
+                        spinnerVisitor.getSelectedItemId()
                 );
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -229,6 +252,7 @@ public class VisitDetails extends AppCompatActivity {
         visit.setVisitDate(visitDate);
         visit.setVisitor(visitor);
         visit.setEmployee(employee);
+
 
         viewModel.createVisit(visit, new OnAsyncEventListener() {
             @Override
@@ -280,6 +304,7 @@ public class VisitDetails extends AppCompatActivity {
     private void updateContent() {
         if (visit != null) {
             etDescription.setText(visit.getDescription());
+            ;etDate.setText(visit.getVisitDate().toString());
             spinnerVisitor.setSelection(visit.getVisitor().intValue());
             spinnerEmployee.setSelection(visit.getEmployee().intValue());
         }

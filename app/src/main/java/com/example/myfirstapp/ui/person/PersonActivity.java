@@ -19,11 +19,6 @@ import com.example.myfirstapp.ui.BaseActivity;
 
 public class PersonActivity extends BaseActivity {
 
-
-    private ListView listView;
-    private int digit[] = new int[] {1,2,3,4,5,6,7,8,9,10};
-    private ListAdapter listAdapter;
-    private Locale locale;
     final Fragment person = new PersonsList();
     final FragmentManager fragmentManager = getSupportFragmentManager();
 

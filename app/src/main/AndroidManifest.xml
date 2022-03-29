@@ -54,6 +54,7 @@
                 android:value="ui.MainActivity" />
         </activity>
         <activity android:name=".ui.person.PersonDetails" />
+        <activity android:name=".ui.visits.VisitDetails" />
     </application>
 
 </manifest>
