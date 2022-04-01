@@ -3,10 +3,13 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-import java.time.LocalDateTime;
+import com.example.myfirstapp.database.Converters;
+
 import java.util.Date;
 
 @Entity(tableName = "visits",
@@ -34,12 +37,14 @@ public class VisitEntity {
         @ColumnInfo(name = "description")
         private String description;
         @ColumnInfo(name = "visit_date")
+        @TypeConverters(Converters.class)
         private Date visitDate;
         @ColumnInfo(name = "visitor")
         private Long visitor;
         @ColumnInfo(name = "employee")
         private Long employee;
 
+        @Ignore
         public VisitEntity(){
 
         }

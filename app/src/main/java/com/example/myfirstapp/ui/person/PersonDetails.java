@@ -13,10 +13,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.database.entity.PersonEntity;
+import com.example.myfirstapp.ui.BaseActivity;
 import com.example.myfirstapp.util.OnAsyncEventListener;
 import com.example.myfirstapp.viewmodel.PersonViewModel;
 
-public class PersonDetails extends AppCompatActivity {
+public class PersonDetails extends BaseActivity {
     private static final String TAG = "ClientDetails";
 
     private static final int CREATE_CLIENT = 0;
@@ -40,10 +41,8 @@ public class PersonDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_person_details);
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
-        Long personId = getIntent().getLongExtra("personId",-1);
+        Long personId = getIntent().getLongExtra("personId",0L);
 
         initiateView();
 

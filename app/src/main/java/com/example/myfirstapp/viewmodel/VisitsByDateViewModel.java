@@ -24,7 +24,7 @@ public class VisitsByDateViewModel extends AndroidViewModel {
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<List<VisitEntity>> observableVisits;
 
-    public VisitsByDateViewModel(@NonNull Application application, final Date date, VisitRepository visitRepository) {
+    public VisitsByDateViewModel(@NonNull Application application, final String from,final String to, VisitRepository visitRepository) {
         super(application);
 
         repository = visitRepository;
@@ -35,7 +35,7 @@ public class VisitsByDateViewModel extends AndroidViewModel {
         // set by default null, until we get data from the database.
         observableVisits.setValue(null);
 
-        LiveData<List<VisitEntity>> visits = repository.getByDate(date, applicationContext);
+        LiveData<List<VisitEntity>> visits = repository.getByDate(from,to, applicationContext);
 
         // observe the changes of the entities from the database and forward them
         observableVisits.addSource(visits, observableVisits::setValue);
@@ -50,20 +50,22 @@ public class VisitsByDateViewModel extends AndroidViewModel {
         private final Application application;
 
         @NonNull
-        private final Date date;
+        private final String from;
+        private final String to;
 
         private final VisitRepository visitRepository;
 
-        public Factory(@NonNull Application application, @NonNull Date date) {
+        public Factory(@NonNull Application application, @NonNull String from, String to) {
             this.application = application;
-            this.date = date;
+            this.from = from;
+            this.to = to;
             visitRepository = VisitRepository.getInstance();
         }
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new VisitsByDateViewModel(application, date, visitRepository);
+            return (T) new VisitsByDateViewModel(application, from,to, visitRepository);
         }
     }
 

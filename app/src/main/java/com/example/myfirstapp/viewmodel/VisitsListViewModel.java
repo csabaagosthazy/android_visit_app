@@ -26,14 +26,14 @@ public class VisitsListViewModel extends AndroidViewModel {
     public VisitsListViewModel(@NonNull Application application, VisitRepository visitRepository) {
         super(application);
 
-        repository = visitRepository;
-        this.application=application;
+        this.repository = visitRepository;
+        this.application = application;
 
         observableVisits = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         observableVisits.setValue(null);
 
-        LiveData<List<VisitEntity>> visits = repository.getVisits(application);
+        LiveData<List<VisitEntity>> visits = repository.getVisits(application.getApplicationContext());
 
         // observe the changes of the entities from the database and forward them
         observableVisits.addSource(visits, observableVisits::setValue);
@@ -52,7 +52,7 @@ public class VisitsListViewModel extends AndroidViewModel {
 
         public Factory(@NonNull Application application) {
             this.application = application;
-            visitRepository = VisitRepository.getInstance();
+            this.visitRepository = VisitRepository.getInstance();
         }
 
         @Override

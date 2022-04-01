@@ -98,7 +98,7 @@ public class VisitsFragment extends Fragment {
         viewModel.getVisits().observe(getViewLifecycleOwner(), visitEntities -> {
             if (visitEntities != null) {
                 visits = visitEntities;
-                recyclerAdapter.setVisitData(visits);
+                recyclerAdapter.setData(visits);
             }
         });
         recyclerView.setAdapter(recyclerAdapter);

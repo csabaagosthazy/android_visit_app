@@ -26,14 +26,13 @@ public class VisitRepository {
     }
     //singleton who return only 1 instance of VisitRepository
     public static VisitRepository getInstance() {
-        if ((instance == null)) {
+        if (instance == null) {
 
             synchronized (VisitRepository.class) {
                 if (instance == null) {
                     instance = new VisitRepository();
                 }
             }
-
         }
         return instance;
     }
@@ -44,9 +43,9 @@ public class VisitRepository {
         return AppDatabase.getInstance(context).visitDao().getAll();
     }
 
-    public LiveData<List<VisitEntity>> getByDate(Date date, Context context) {
+    public LiveData<List<VisitEntity>> getByDate(String from, String to, Context context) {
 
-        return AppDatabase.getInstance(context).visitDao().getByDate(date);
+        return AppDatabase.getInstance(context).visitDao().getByDate(from, to);
     }
 
     public void insert(final VisitEntity visit, OnAsyncEventListener callback,

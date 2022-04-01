@@ -37,6 +37,7 @@ public class PersonListViewModel extends AndroidViewModel {
         observablePersons.addSource(persons, observablePersons::setValue);
 
     }
+
     /**
      * A creator is used to inject the account id into the ViewModel
      */

@@ -19,12 +19,14 @@ import com.example.myfirstapp.ui.person.PersonsList;
 
 public class PersonRepository {
     private static PersonRepository instance;
+
     private PersonRepository(){
 
     }
     //singleton who return only 1 instance of PersonRepository
     public static PersonRepository getInstance(){
         if (instance == null){
+
             synchronized (VisitRepository.class){
                 if (instance == null){
                     instance = new PersonRepository();

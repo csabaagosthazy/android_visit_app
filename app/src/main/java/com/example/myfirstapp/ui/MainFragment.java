@@ -18,14 +18,21 @@ import com.example.myfirstapp.adapter.ArrayAdapter;
 import com.example.myfirstapp.database.entity.VisitEntity;
 import com.example.myfirstapp.database.repository.VisitRepository;
 import com.example.myfirstapp.viewmodel.VisitsByDateViewModel;
+import com.example.myfirstapp.viewmodel.VisitsListViewModel;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class MainFragment extends Fragment {
     private List<VisitEntity> currentVisitList;
-    private VisitsByDateViewModel viewModel;
+    private VisitsListViewModel viewModel;
     private String[] currentVisits;
 
 
@@ -37,10 +44,10 @@ public class MainFragment extends Fragment {
 
         //must be modified later!!!!
         currentVisitList = new ArrayList<>();
-        VisitsByDateViewModel.Factory factory = new VisitsByDateViewModel.Factory(getActivity().getApplication(), new Date());
+        VisitsListViewModel.Factory factory = new VisitsListViewModel.Factory(getActivity().getApplication());
         //viewModel = ViewModelProviders.of(this, factory).get(PersonListViewModel.class);
-        viewModel = new ViewModelProvider(getActivity(), factory).get(VisitsByDateViewModel.class);
-        viewModel.getVisitsByDate().observe(getActivity(), visitEntities -> {
+        viewModel = new ViewModelProvider(getActivity(), factory).get(VisitsListViewModel.class);
+        viewModel.getVisits().observe(getActivity(), visitEntities -> {
             if (visitEntities != null) {
                 currentVisitList = visitEntities;
                 currentVisits = new String[currentVisitList.size()];
@@ -93,6 +100,33 @@ public class MainFragment extends Fragment {
 
 
         return view;
+    }
+
+    private String createDate(boolean end){
+        Calendar cal = Calendar.getInstance();
+        String result;
+        if(end){
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            cal.set(Calendar.MILLISECOND, 999);
+
+            Date date = cal.getTime();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            result = dateFormat.format(date);
+        }
+        else{
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+
+            Date date = cal.getTime();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            result = dateFormat.format(date);
+        }
+
+        return result;
     }
 
 

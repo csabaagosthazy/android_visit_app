@@ -100,8 +100,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
 
         switch (id) {
             case R.id.person:
-                fragmentManager.beginTransaction().replace(R.id.flFragment, person).commit();
-
+                intent = new Intent(this, PersonActivity.class);
                 break;
             case R.id.visitor:
                 intent = new Intent(this, VisitorsActivity.class);
@@ -110,8 +109,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
                 intent = new Intent(this, SettingsActivity.class);
                 break;
             case R.id.visits:
-                //intent = new Intent(this, VisitsActivity.class);
-                fragmentManager.beginTransaction().replace(R.id.flFragment, visit).commit();
+                intent = new Intent(this, VisitsActivity.class);
                 break;
         }
         //later we can log out
