@@ -36,31 +36,31 @@ public class VisitRepository {
         }
         return instance;
     }
-    public LiveData<VisitEntity> getVisit(final Long visitId, Context context){
-        return AppDatabase.getInstance(context).visitDao().getById(visitId);
+    public LiveData<VisitEntity> getVisit(final Long visitId, Application application){
+        return ((BaseApp) application).getDatabase().visitDao().getById(visitId);
     }
-    public LiveData<List<VisitEntity>> getVisits(Context context) {
-        return AppDatabase.getInstance(context).visitDao().getAll();
+    public LiveData<List<VisitEntity>> getVisits(Application application) {
+        return ((BaseApp) application).getDatabase().visitDao().getAll();
     }
 
-    public LiveData<List<VisitEntity>> getByDate(String from, String to, Context context) {
+    public LiveData<List<VisitEntity>> getByDate(String from, String to, Application application) {
 
-        return AppDatabase.getInstance(context).visitDao().getByDate(from, to);
+        return ((BaseApp) application).getDatabase().visitDao().getByDate(from, to);
     }
 
     public void insert(final VisitEntity visit, OnAsyncEventListener callback,
-                       Context context) {
-        new CreateVisit(context, callback).execute(visit);
+                       Application application) {
+        new CreateVisit(application, callback).execute(visit);
     }
 
     public void update(final VisitEntity visit, OnAsyncEventListener callback,
-                       Context context) {
-        new UpdateVisit(context, callback).execute(visit);
+                       Application application) {
+        new UpdateVisit(application, callback).execute(visit);
     }
 
     public void delete(final VisitEntity visit, OnAsyncEventListener callback,
-                       Context context) {
-        new DeleteVisit(context, callback).execute(visit);
+                       Application application) {
+        new DeleteVisit(application, callback).execute(visit);
     }
 
 }

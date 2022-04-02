@@ -9,6 +9,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myfirstapp.BaseApp;
 import com.example.myfirstapp.database.entity.PersonEntity;
 import com.example.myfirstapp.database.repository.PersonRepository;
 
@@ -24,14 +25,14 @@ public class PersonListViewModel extends AndroidViewModel {
     public PersonListViewModel(@NonNull Application application, PersonRepository personRepository) {
         super(application);
 
-        repository=personRepository;
-        this.application=application;
+        this.repository = personRepository;
+        this.application = application;
 
-        observablePersons=new MediatorLiveData<>();
+        observablePersons = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         observablePersons.setValue(null);
 
-        LiveData<List<PersonEntity>> persons=repository.getAllPersons(application);
+        LiveData<List<PersonEntity>> persons = repository.getAllPersons(application);
 
         // observe the changes of the entities from the database and forward them
         observablePersons.addSource(persons, observablePersons::setValue);
@@ -50,7 +51,7 @@ public class PersonListViewModel extends AndroidViewModel {
 
         public Factory(@NonNull Application application) {
             this.application = application;
-            personRepository = PersonRepository.getInstance();
+            this.personRepository = ((BaseApp)application).getPersonRepository();
         }
 
         @Override

@@ -3,6 +3,7 @@
     package="com.example.myfirstapp">
 
     <application
+        android:name=".BaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,16 +31,16 @@
                 android:value="ui.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.settings.SettingsActivity"
-            android:label="@string/activityTitleSettings"
-            android:parentActivityName=".ui.MainActivity">
+            android:name=".ui.person.PersonDetails"
+            android:label="@string/title_activity_details"
+            android:parentActivityName=".ui.person.PersonActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ui.MainActivity" />
+                android:value=".ui.person.PersonActivity" />
         </activity>
         <activity
-            android:name=".ui.visitor.VisitorsActivity"
-            android:label="@string/activityTitleVisitors"
+            android:name=".ui.settings.SettingsActivity"
+            android:label="@string/activityTitleSettings"
             android:parentActivityName=".ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -53,8 +54,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ui.MainActivity" />
         </activity>
-        <activity android:name=".ui.person.PersonDetails" />
-        <activity android:name=".ui.visits.VisitDetails" />
+        <activity android:name=".ui.visits.VisitDetails"
+            android:label="@string/title_visit_details"
+            android:parentActivityName=".ui.visits.VisitsActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.visits.VisitDetails" />
+        </activity>
     </application>
 
 </manifest>

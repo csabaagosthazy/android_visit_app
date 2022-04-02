@@ -38,16 +38,17 @@ public class PersonActivity extends BaseActivity {
     private static final String TAG = "PersonActivity";
 
     private List<PersonEntity> persons;
-    private RecyclerAdapter recyclerAdapter;
+    private RecyclerAdapter<PersonEntity> recyclerAdapter;
     private PersonListViewModel viewModel;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "created");
         getLayoutInflater().inflate(R.layout.activity_person, frameLayout);
 
-        setTitle(getString(R.string.app_name));
+        setTitle(getString(R.string.activityTitlePerson));
         bottomNavigationView.setSelectedItemId(R.id.person);
         //fragmentManager.beginTransaction().replace(R.id.flFragment, person).commit();
 
@@ -62,7 +63,7 @@ public class PersonActivity extends BaseActivity {
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         persons = new ArrayList<>();
-        recyclerAdapter = new RecyclerAdapter(new RecyclerViewItemClickListener() {
+        recyclerAdapter = new RecyclerAdapter<>(new RecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 Log.d(TAG, "clicked position:" + position);
@@ -106,12 +107,13 @@ public class PersonActivity extends BaseActivity {
         recyclerView.setAdapter(recyclerAdapter);
     }
 
-    @Override
+  /*  @Override
     protected void onResume() {
         super.onResume();
-        setTitle(getString(R.string.app_name));
+        Log.d(TAG, "resumed");
+        setTitle(getString(R.string.activityTitlePerson));
         bottomNavigationView.setSelectedItemId(R.id.person);
-    }
+    }*/
 
 
 
@@ -122,4 +124,7 @@ public class PersonActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
+
+
 }

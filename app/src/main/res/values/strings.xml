@@ -31,7 +31,7 @@
     <string name="title_activity_create">Create Visitor</string>
     <string name="action_create">Create Visitor</string>
     <string name="person_firstName">First name</string>
-    <string name="person_lastName">Last mail</string>
+    <string name="person_lastName">Last name</string>
     <string name="prompt_email">Email</string>
     <string name="action_cancel">Cancel</string>
     <string name="delete_msg">Do you really want to delete this person?</string>
@@ -45,6 +45,7 @@
     <string name="title_visit_details">Visit details</string>
     <string name="visit_description">Description</string>
     <string name="noRecordsFound">No visits today</string>
+    <string name="home">Home</string>
 
 
 </resources>

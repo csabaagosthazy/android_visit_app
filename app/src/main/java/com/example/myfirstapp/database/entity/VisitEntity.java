@@ -29,6 +29,9 @@ import java.util.Date;
         indices = {
         @Index(
                 value = {"employee"}
+        ),
+        @Index(
+                value = {"visitor"}
         )}
 )
 public class VisitEntity {

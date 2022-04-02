@@ -18,7 +18,7 @@ import com.example.myfirstapp.util.OnAsyncEventListener;
 import com.example.myfirstapp.viewmodel.PersonViewModel;
 
 public class PersonDetails extends BaseActivity {
-    private static final String TAG = "ClientDetails";
+    private static final String TAG = "PersonDetails";
 
     private static final int CREATE_CLIENT = 0;
     private static final int EDIT_CLIENT = 1;
@@ -126,7 +126,7 @@ public class PersonDetails extends BaseActivity {
 
     private void initiateView() {
         isEditable = false;
-        etFirstName = findViewById(R.id.description);
+        etFirstName = findViewById(R.id.firstName);
         etLastName = findViewById(R.id.lastName);
         etEmail = findViewById(R.id.email);
 

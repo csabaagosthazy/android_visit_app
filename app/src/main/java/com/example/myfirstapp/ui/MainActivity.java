@@ -2,7 +2,11 @@ package com.example.myfirstapp.ui;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,24 +32,21 @@ public class MainActivity extends BaseActivity{
 
     private static final String TAG = "MainActivity";
     private List<VisitEntity> currentVisitList;
-    private VisitsListViewModel viewModel;
     private String[] currentVisits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "created");
         getLayoutInflater().inflate(R.layout.activity_main, frameLayout);
 
         setTitle(getString(R.string.app_name));
         // Set default selection
-        bottomNavigationView.setSelectedItemId(R.id.nav_none);
-
-
-
+        bottomNavigationView.setSelectedItemId(R.id.home);
 
         VisitsListViewModel.Factory factory = new VisitsListViewModel.Factory(getApplication());
-        this.viewModel = new ViewModelProvider(this, factory).get(VisitsListViewModel.class);
-        this.viewModel.getVisits().observe(this, visitEntities -> {
+        VisitsListViewModel viewModel = new ViewModelProvider(this, factory).get(VisitsListViewModel.class);
+        viewModel.getVisits().observe(this, visitEntities -> {
             if (visitEntities != null) {
                 this.currentVisitList = visitEntities;
                 updateContent();
@@ -123,12 +124,12 @@ public class MainActivity extends BaseActivity{
 
         return result;
     }
-    @Override
+/*    @Override
     protected void onResume() {
         super.onResume();
         //setTitle(getString(R.string.app_name));
         //bottomNavigationView.setSelectedItemId(R.id.nav_none);
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -145,12 +146,35 @@ public class MainActivity extends BaseActivity{
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "cancel", (dialog, which) -> alertDialog.dismiss());
         alertDialog.show();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_top, menu);
+        return true;
+    }
+
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
+    public boolean onOptionsItemSelected(MenuItem item){
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(R.string.infoHeader);
+        alertDialog.setCancelable(false);
+        String s1 = "<b>" + "App Created by"+ "</b>";
+        String s2 = "Loan Rey";
+        String s3 = "Csaba Agosthazy";
+        Spanned strMessage = Html.fromHtml(s1+  "<br>" + s2 +  "<br>" + s3);
+        alertDialog.setMessage(strMessage);
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Great job", (dialog, which) -> alertDialog.dismiss());
 
-        Log.d("Conf", "Changed");
+
+        int id = item.getItemId();
+        if (id == R.id.btnAbout) {
+            alertDialog.show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+
     }
 
 }

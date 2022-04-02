@@ -35,19 +35,19 @@ public class PersonRepository {
         }
         return instance;
     }
-    public LiveData<PersonEntity> getPerson(final Long personId, Context context){
-        return AppDatabase.getInstance(context).personDao().getById(personId);
+    public LiveData<PersonEntity> getPerson(final Long personId, Application application){
+        return ((BaseApp) application).getDatabase().personDao().getById(personId);
     }
-    public LiveData<List<PersonEntity>> getAllPersons(Context context) {
-        return AppDatabase.getInstance(context).personDao().getAll();
-    }
-
-    public LiveData<List<PersonEntity>> getAllEmployees(Context context){
-        return AppDatabase.getInstance(context).personDao().getAllEmployees();
+    public LiveData<List<PersonEntity>> getAllPersons(Application application) {
+        return ((BaseApp) application).getDatabase().personDao().getAll();
     }
 
-    public LiveData<List<PersonEntity>> getAllVisitors(Context context){
-        return AppDatabase.getInstance(context).personDao().getAllVisitors();
+    public LiveData<List<PersonEntity>> getAllEmployees(Application application){
+        return ((BaseApp) application).getDatabase().personDao().getAllEmployees();
+    }
+
+    public LiveData<List<PersonEntity>> getAllVisitors(Application application){
+        return ((BaseApp) application).getDatabase().personDao().getAllVisitors();
     }
 
     public void insert(final PersonEntity person, OnAsyncEventListener callback,
