@@ -42,7 +42,7 @@ public class PersonDetails extends BaseActivity {
 
         setContentView(R.layout.activity_person_details);
 
-        Long personId = getIntent().getLongExtra("personId",0L);
+        Long personId = getIntent().getLongExtra("personId",-1);
 
         initiateView();
 

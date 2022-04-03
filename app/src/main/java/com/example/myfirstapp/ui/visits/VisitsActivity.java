@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.example.myfirstapp.R;
 import com.example.myfirstapp.adapter.RecyclerAdapter;
 import com.example.myfirstapp.database.entity.VisitEntity;
 import com.example.myfirstapp.ui.BaseActivity;
+import com.example.myfirstapp.ui.MainActivity;
 import com.example.myfirstapp.util.RecyclerViewItemClickListener;
 import com.example.myfirstapp.viewmodel.VisitsListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -79,10 +81,7 @@ public class VisitsActivity extends BaseActivity {
         );
 
         VisitsListViewModel.Factory factory = new VisitsListViewModel.Factory(getApplication());
-        //viewModel = ViewModelProviders.of(this, factory).get(PersonListViewModel.class);
         viewModel = new ViewModelProvider(this, factory).get(VisitsListViewModel.class);
-
-
         viewModel.getVisits().observe(this, visitEntities -> {
             if (visitEntities != null) {
                 visits = visitEntities;
@@ -99,6 +98,22 @@ public class VisitsActivity extends BaseActivity {
         //setTitle(getString(R.string.app_name));
         bottomNavigationView.setSelectedItemId(R.id.visits);
     }*/
+/*    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == BaseActivity.position) {
+            return false;
+        }
+        finish();
+        return super.onNavigationItemSelected(item);
+    }*/
+
+    public void onBackPressed() {
+
+        finish();
+        super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
 
 
     @Override

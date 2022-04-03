@@ -16,8 +16,8 @@ import com.example.myfirstapp.R;
 import com.example.myfirstapp.adapter.SpinnerAdapter;
 import com.example.myfirstapp.database.entity.PersonEntity;
 import com.example.myfirstapp.database.entity.VisitEntity;
-import com.example.myfirstapp.viewmodel.VisitViewModel;
 import com.example.myfirstapp.util.OnAsyncEventListener;
+import com.example.myfirstapp.viewmodel.VisitViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -270,6 +270,7 @@ public class VisitDetails extends AppCompatActivity {
 
     private void saveChanges(String description, Date visitDate, long visitor, long employee) {
 
+        visit = new VisitEntity();
         visit.setDescription(description);
         visit.setVisitDate(visitDate);
         visit.setVisitor(visitor);
@@ -304,7 +305,7 @@ public class VisitDetails extends AppCompatActivity {
     private void updateContent() {
         if (visit != null) {
             etDescription.setText(visit.getDescription());
-            ;etDate.setText(visit.getVisitDate().toString());
+            etDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(visit.getVisitDate()));
             spinnerVisitor.setSelection(visit.getVisitor().intValue());
             spinnerEmployee.setSelection(visit.getEmployee().intValue());
         }

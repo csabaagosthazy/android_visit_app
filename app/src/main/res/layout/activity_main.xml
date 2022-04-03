@@ -7,23 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-        <ListView
-            android:id="@+id/mainListView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mainRecyclerView"
+            android:scrollbars="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            >
-
-        </ListView>
-        <TextView
-            android:id="@+id/empty"
-            android:text="@string/noRecordsFound"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            style="@android:style/TextAppearance.Large"
-            android:gravity="center"
-            tools:ignore="MissingConstraints">
-        </TextView>
-
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

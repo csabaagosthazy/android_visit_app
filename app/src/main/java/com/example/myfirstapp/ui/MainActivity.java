@@ -1,5 +1,6 @@
 package com.example.myfirstapp.ui;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Html;
@@ -13,16 +14,29 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfirstapp.R;
 import com.example.myfirstapp.adapter.ArrayAdapter;
+import com.example.myfirstapp.adapter.RecyclerAdapter;
 import com.example.myfirstapp.database.entity.VisitEntity;
+import com.example.myfirstapp.ui.person.PersonActivity;
+import com.example.myfirstapp.ui.settings.SettingsActivity;
+import com.example.myfirstapp.ui.visits.VisitDetails;
+import com.example.myfirstapp.ui.visits.VisitsActivity;
+import com.example.myfirstapp.util.RecyclerViewItemClickListener;
+import com.example.myfirstapp.viewmodel.VisitsByDateViewModel;
 import com.example.myfirstapp.viewmodel.VisitsListViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -31,8 +45,9 @@ import java.util.List;
 public class MainActivity extends BaseActivity{
 
     private static final String TAG = "MainActivity";
-    private List<VisitEntity> currentVisitList;
-    private String[] currentVisits;
+    private List<VisitEntity> visits;
+    private RecyclerAdapter<VisitEntity> recyclerAdapter;
+    private VisitsByDateViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,76 +55,56 @@ public class MainActivity extends BaseActivity{
         Log.d(TAG, "created");
         getLayoutInflater().inflate(R.layout.activity_main, frameLayout);
 
-        setTitle(getString(R.string.app_name));
+        setTitle(getString(R.string.mainTitle));
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.home);
 
-        VisitsListViewModel.Factory factory = new VisitsListViewModel.Factory(getApplication());
-        VisitsListViewModel viewModel = new ViewModelProvider(this, factory).get(VisitsListViewModel.class);
-        viewModel.getVisits().observe(this, visitEntities -> {
-            if (visitEntities != null) {
-                this.currentVisitList = visitEntities;
-                updateContent();
+        RecyclerView recyclerView = findViewById(R.id.mainRecyclerView);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        visits = new ArrayList<>();
+        recyclerAdapter = new RecyclerAdapter<>(new RecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Log.d(TAG, "Item clicked: " + position);
+            }
+
+            @Override
+            public void onItemLongClick(View v, int position) {
+                Log.d(TAG, "Item long clicked: " + position);
             }
         });
 
-        ListView list = findViewById(R.id.mainListView);
-
-        //Add Header View
-        View headerView = getLayoutInflater().inflate(R.layout.listview_header, null, false);
-        TextView headerText = headerView.findViewById(R.id.listHeader);
-        headerText.setText(R.string.mainListHeader);
-
-        //Add view to list view as header view
-        list.addHeaderView(headerView);
-
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.listview_body, this.currentVisits);
-
-        if(this.currentVisits == null){
-            list.setEmptyView(findViewById(R.id.empty));
-        }else{
-            list.setAdapter(adapter.getAdapter());
-            //ListeView handler
-            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view,
-                                        int position, long id) {
-                    if(position != 0 ){
-                        Log.d("itemid", String.valueOf(position));
-                        // TODO Auto-generated method stub
-                        Toast.makeText(getApplicationContext(), "You have selected: " + currentVisits[position-1], Toast.LENGTH_LONG).show();
-                    }
-
-                }
-            });
-        }
-
+        VisitsByDateViewModel.Factory factory = new VisitsByDateViewModel.Factory(getApplication(), createDate(false), createDate(true));
+        viewModel = new ViewModelProvider(this, factory).get(VisitsByDateViewModel.class);
+        viewModel.getVisitsByDate().observe(this, visitEntities -> {
+            if (visitEntities != null) {
+                visits = visitEntities;
+                recyclerAdapter.setData(visits);
+            }
+        });
+        recyclerView.setAdapter(recyclerAdapter);
 
 
     }
-    private void updateContent() {
-        if (this.currentVisitList != null) {
-            this.currentVisits = new String[this.currentVisitList.size()];
-            //add items to array
-            for (int i = 0; i < currentVisitList.size(); i++)
-            {
-                this.currentVisits[i] = this.currentVisitList.get(i).getDescription();
-            };
-        }
-    }
-    private String createDate(boolean end){
+
+    private Long createDate(boolean end){
         Calendar cal = Calendar.getInstance();
-        String result;
+        Long result;
         if(end){
             cal.set(Calendar.HOUR_OF_DAY, 23);
             cal.set(Calendar.MINUTE, 59);
             cal.set(Calendar.SECOND, 59);
             cal.set(Calendar.MILLISECOND, 999);
 
-            Date date = cal.getTime();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            result = dateFormat.format(date);
+            result = cal.getTimeInMillis();
+
         }
         else{
             cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -117,9 +112,7 @@ public class MainActivity extends BaseActivity{
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
 
-            Date date = cal.getTime();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            result = dateFormat.format(date);
+            result = cal.getTimeInMillis();
         }
 
         return result;
@@ -176,5 +169,14 @@ public class MainActivity extends BaseActivity{
         return super.onOptionsItemSelected(item);
 
     }
+
+/*    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == BaseActivity.position) {
+            return false;
+        }
+        finish();
+        return super.onNavigationItemSelected(item);
+    }*/
 
 }

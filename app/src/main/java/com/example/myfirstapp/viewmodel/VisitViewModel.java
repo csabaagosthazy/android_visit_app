@@ -27,7 +27,7 @@ public class VisitViewModel extends AndroidViewModel {
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<VisitEntity> observableVisit;
-    private final MediatorLiveData<List<PersonEntity>> observablePerson, observableVisitor;
+    private final MediatorLiveData<List<PersonEntity>> observablePersons, observableVisitors;
 
     public VisitViewModel(@NonNull Application application,
                            final Long idVisit, VisitRepository visitRepository, PersonRepository personRepository) {
@@ -46,17 +46,17 @@ public class VisitViewModel extends AndroidViewModel {
         // observe the changes of the client entity from the database and forward them
         observableVisit.addSource(visit, observableVisit::setValue);
 
-        observablePerson = new MediatorLiveData<>();
-        observablePerson.setValue(null);
+        observablePersons = new MediatorLiveData<>();
+        observablePersons.setValue(null);
 
         LiveData<List<PersonEntity>> employees = personRepository.getAllEmployees(application);
-        observablePerson.addSource(employees, observablePerson::setValue);
+        observablePersons.addSource(employees, observablePersons::setValue);
 
-        observableVisitor = new MediatorLiveData<>();
-        observableVisitor.setValue(null);
+        observableVisitors = new MediatorLiveData<>();
+        observableVisitors.setValue(null);
 
         LiveData<List<PersonEntity>> visitors = personRepository.getAllVisitors(application);
-        observableVisitor.addSource(visitors, observableVisitor::setValue);
+        observableVisitors.addSource(visitors, observableVisitors::setValue);
 
     }
 
@@ -95,9 +95,9 @@ public class VisitViewModel extends AndroidViewModel {
         return observableVisit;
     }
 
-    public LiveData<List<PersonEntity>> getEmployees(){return observablePerson;}
+    public LiveData<List<PersonEntity>> getEmployees(){return observablePersons;}
 
-    public LiveData<List<PersonEntity>> getVisitors(){return observableVisitor;}
+    public LiveData<List<PersonEntity>> getVisitors(){return observableVisitors;}
 
     public void createVisit(VisitEntity visit, OnAsyncEventListener callback) {
         repository.insert(visit, callback, application);

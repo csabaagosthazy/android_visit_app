@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -114,6 +115,22 @@ public class PersonActivity extends BaseActivity {
         setTitle(getString(R.string.activityTitlePerson));
         bottomNavigationView.setSelectedItemId(R.id.person);
     }*/
+/*    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == BaseActivity.position) {
+            return false;
+        }
+        finish();
+        return super.onNavigationItemSelected(item);
+    }*/
+
+    public void onBackPressed() {
+
+        finish();
+        super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
+    }
 
 
 

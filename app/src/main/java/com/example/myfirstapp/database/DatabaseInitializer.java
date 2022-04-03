@@ -43,9 +43,6 @@ public class DatabaseInitializer {
     private static void populateWithTestData(com.example.myfirstapp.database.AppDatabase db) throws ParseException {
         db.personDao().deleteAll();
         db.visitDao().deleteAll();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        //Parsing the given String to Date object
-
 
         addPerson(db, "michel.platini@fifa.com", "Michel", "Platini",false);
         addPerson(db, "sepp.blatter@fifa.com", "Sepp", "Blatter",false);

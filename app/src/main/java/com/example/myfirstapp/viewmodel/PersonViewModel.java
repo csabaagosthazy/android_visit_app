@@ -26,7 +26,7 @@ public class PersonViewModel extends AndroidViewModel {
     public PersonViewModel(@NonNull Application application, final Long personId, PersonRepository personRepository) {
         super(application);
 
-        repository = personRepository;
+        this.repository = personRepository;
         this.application=application;
 
         observablePerson = new MediatorLiveData<>();
@@ -54,7 +54,7 @@ public class PersonViewModel extends AndroidViewModel {
         public Factory(@NonNull Application application, Long personId) {
             this.application = application;
             this.personId = personId;
-            repository = ((BaseApp)application).getPersonRepository();
+            this.repository = ((BaseApp)application).getPersonRepository();
         }
 
         @Override

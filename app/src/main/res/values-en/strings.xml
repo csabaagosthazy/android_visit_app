@@ -35,7 +35,7 @@
     <string name="person_lastName">Last name</string>
     <string name="prompt_email">Email</string>
     <string name="action_cancel">Cancel</string>
-    <string name="delete_msg">Do you really want to delete this person?</string>
+    <string name="delete_msg">Do you really want to delete?</string>
     <string name="action_error">Something went wrong</string>
     <string name="person_edited">Client edited</string>
     <string name="visit_edited">Visit edited</string>
@@ -47,4 +47,7 @@
     <string name="visit_description">Description</string>
     <string name="noRecordsFound">No visits today</string>
     <string name="home">Home</string>
+    <string name="addPerson">Add person</string>
+    <string name="addVisit">Add visit</string>
+    <string name="mainTitle">Visits today</string>
 </resources>

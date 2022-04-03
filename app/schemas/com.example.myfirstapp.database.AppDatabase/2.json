@@ -1,0 +1,150 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "d01e63b54bda7a0bc9f8e8dd0d22b334",
+    "entities": [
+      {
+        "tableName": "persons",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idPerson` INTEGER PRIMARY KEY AUTOINCREMENT, `first_name` TEXT, `last_name` TEXT, `email` TEXT, `is_employee` INTEGER NOT NULL, `password` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "idPerson",
+            "columnName": "idPerson",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "firstName",
+            "columnName": "first_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastName",
+            "columnName": "last_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isEmployee",
+            "columnName": "is_employee",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "password",
+            "columnName": "password",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idPerson"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "visits",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idVisit` INTEGER PRIMARY KEY AUTOINCREMENT, `description` TEXT, `visit_date` INTEGER, `visitor` INTEGER, `employee` INTEGER, FOREIGN KEY(`employee`) REFERENCES `persons`(`idPerson`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`visitor`) REFERENCES `persons`(`idPerson`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "idVisit",
+            "columnName": "idVisit",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "visitDate",
+            "columnName": "visit_date",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "visitor",
+            "columnName": "visitor",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "employee",
+            "columnName": "employee",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idVisit"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_visits_employee",
+            "unique": false,
+            "columnNames": [
+              "employee"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_visits_employee` ON `${TABLE_NAME}` (`employee`)"
+          },
+          {
+            "name": "index_visits_visitor",
+            "unique": false,
+            "columnNames": [
+              "visitor"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_visits_visitor` ON `${TABLE_NAME}` (`visitor`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "persons",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "employee"
+            ],
+            "referencedColumns": [
+              "idPerson"
+            ]
+          },
+          {
+            "table": "persons",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "visitor"
+            ],
+            "referencedColumns": [
+              "idPerson"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd01e63b54bda7a0bc9f8e8dd0d22b334')"
+    ]
+  }
+}

@@ -24,8 +24,9 @@ public interface VisitDao {
     @Query("SELECT * FROM visits")
     LiveData<List<VisitEntity>> getAll();
     //get date between 2 dates 00 and 23:59
-    @Query("SELECT * FROM visits WHERE visit_date BETWEEN date(:from) AND date(:to)")
-    LiveData<List<VisitEntity>> getByDate(String from, String to);
+    //Room using long numbers to store dates (unix)
+    @Query("SELECT * FROM visits WHERE visit_date BETWEEN :from AND :to")
+    LiveData<List<VisitEntity>> getByDate(Long from, Long to);
 
 
 

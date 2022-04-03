@@ -34,7 +34,7 @@ import java.util.Date;
                 value = {"visitor"}
         )}
 )
-public class VisitEntity {
+public class VisitEntity implements Comparable{
         @PrimaryKey(autoGenerate = true)
         private Long idVisit;
         @ColumnInfo(name = "description")
@@ -100,15 +100,21 @@ public class VisitEntity {
         }
 
         @Override
-        public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
-                VisitEntity that = (VisitEntity) o;
+        public boolean equals(Object obj) {
+                if (obj == null ) return false;
+                if (obj == this) return true;
+                if (!(obj instanceof PersonEntity)) return false;
+                VisitEntity that = (VisitEntity) obj;
                 return getIdVisit().equals(that.getIdVisit());
         }
         @NonNull
         @Override
         public String toString() {
                 return description + " ";
+        }
+
+        @Override
+        public int compareTo(@NonNull Object o) {
+                return toString().compareTo(o.toString());
         }
 }

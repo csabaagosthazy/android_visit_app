@@ -65,7 +65,7 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_main, null, false);
         //ListView
 
-        ListView list= view.findViewById(R.id.mainListView);
+        ListView list= view.findViewById(R.id.mainRecyclerView);
 
         //Add Header View
         View headerView = inflater.inflate(R.layout.listview_header, null, false);
@@ -78,7 +78,7 @@ public class MainFragment extends Fragment {
         ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.listview_body, currentVisits);
 
         if(currentVisits == null){
-            list.setEmptyView(view.findViewById(R.id.empty));
+            //do something
         }else{
             list.setAdapter(adapter.getAdapter());
             //ListeView handler

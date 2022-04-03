@@ -43,7 +43,7 @@ public class VisitRepository {
         return ((BaseApp) application).getDatabase().visitDao().getAll();
     }
 
-    public LiveData<List<VisitEntity>> getByDate(String from, String to, Application application) {
+    public LiveData<List<VisitEntity>> getByDate(Long from, Long to, Application application) {
 
         return ((BaseApp) application).getDatabase().visitDao().getByDate(from, to);
     }

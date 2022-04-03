@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey;
 import java.util.Objects;
 
 @Entity(tableName = "persons")
-public class PersonEntity {
+public class PersonEntity implements Comparable{
     @PrimaryKey(autoGenerate = true)
     private Long idPerson;
 
@@ -91,10 +91,11 @@ public class PersonEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PersonEntity that = (PersonEntity) o;
+    public boolean equals(Object obj) {
+        if (obj == null ) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof PersonEntity)) return false;
+        PersonEntity that = (PersonEntity) obj;
         return that.getEmail().equals(this.getEmail());
     }
 
@@ -102,5 +103,10 @@ public class PersonEntity {
     @Override
     public String toString() {
         return firstName + " "+ lastName;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        return toString().compareTo(o.toString());
     }
 }

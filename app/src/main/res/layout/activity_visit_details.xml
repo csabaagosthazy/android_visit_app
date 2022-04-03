@@ -54,6 +54,7 @@
         <EditText
             android:id="@+id/etDate"
             android:layout_width="match_parent"
+            android:hint="dd/mm/yyyy"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="date" />
