@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "872223623623",
+    "firebase_url": "https://visit-app-e024a-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "visit-app-e024a",
+    "storage_bucket": "visit-app-e024a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872223623623:android:2ba71dfb747f99936bf1e2",
+        "android_client_info": {
+          "package_name": "com.example.visitapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872223623623-mjk91u2a8h45l3icfeujssvr18injla0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqg2UVSh9mrm1tM7jn7IAbZa-F0R-Ldyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872223623623-mjk91u2a8h45l3icfeujssvr18injla0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

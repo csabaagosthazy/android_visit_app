@@ -16,10 +16,6 @@ public class BaseApp extends Application{
         super.onCreate();
     }
 
-    public AppDatabase getDatabase() {
-        return AppDatabase.getInstance(this);
-    }
-
     public VisitRepository getVisitRepository() {
         return VisitRepository.getInstance();
     }

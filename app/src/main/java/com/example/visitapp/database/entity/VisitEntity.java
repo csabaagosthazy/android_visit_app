@@ -1,69 +1,36 @@
 package com.example.visitapp.database.entity;
+
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Ignore;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
+import com.google.firebase.database.Exclude;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.example.visitapp.database.Converters;
 
-import java.util.Date;
-
-@Entity(tableName = "visits",
-        foreignKeys ={
-        @ForeignKey(
-                entity = PersonEntity.class,
-                parentColumns = "idPerson",
-                childColumns = "employee",
-                onDelete = ForeignKey.CASCADE
-        ),
-        @ForeignKey(
-                entity = PersonEntity.class,
-                parentColumns = "idPerson",
-                childColumns = "visitor",
-                onDelete = ForeignKey.CASCADE
-        )},
-        indices = {
-        @Index(
-                value = {"employee"}
-        ),
-        @Index(
-                value = {"visitor"}
-        )}
-)
 public class VisitEntity implements Comparable{
-        @PrimaryKey(autoGenerate = true)
-        private Long idVisit;
-        @ColumnInfo(name = "description")
+
+        private String idVisit;
         private String description;
-        @ColumnInfo(name = "visit_date")
-        @TypeConverters(Converters.class)
-        private Date visitDate;
-        @ColumnInfo(name = "visitor")
-        private Long visitor;
-        @ColumnInfo(name = "employee")
-        private Long employee;
+        private Long visitDate;
+        private String visitor;
+        private String employee;
 
-        @Ignore
+
         public VisitEntity(){
-
         }
 
-        public VisitEntity(String description, Date visitDate, Long visitor, Long employee) {
+        public VisitEntity(String description, Long visitDate, String visitor, String employee) {
                 this.description = description;
                 this.visitDate = visitDate;
                 this.visitor = visitor;
                 this.employee = employee;
         }
 
-        public Long getIdVisit() {
+        @Exclude
+        public String getIdVisit() {
                 return idVisit;
         }
 
-        public void setIdVisit(Long idVisit) {
+        public void setIdVisit(String idVisit) {
                 this.idVisit = idVisit;
         }
 
@@ -75,27 +42,27 @@ public class VisitEntity implements Comparable{
                 this.description = description;
         }
 
-        public Date getVisitDate() {
+        public Long getVisitDate() {
                 return visitDate;
         }
 
-        public void setVisitDate(Date visitDate) {
+        public void setVisitDate(Long visitDate) {
                 this.visitDate = visitDate;
         }
 
-        public Long getVisitor() {
+        public String getVisitor() {
                 return visitor;
         }
 
-        public void setVisitor(Long visitor) {
+        public void setVisitor(String visitor) {
                 this.visitor = visitor;
         }
 
-        public Long getEmployee() {
+        public String getEmployee() {
                 return employee;
         }
 
-        public void setEmployee(Long employee) {
+        public void setEmployee(String employee) {
                 this.employee = employee;
         }
 
@@ -107,7 +74,7 @@ public class VisitEntity implements Comparable{
                 VisitEntity that = (VisitEntity) obj;
                 return getIdVisit().equals(that.getIdVisit());
         }
-        @NonNull
+
         @Override
         public String toString() {
                 return description + " ";
@@ -116,5 +83,16 @@ public class VisitEntity implements Comparable{
         @Override
         public int compareTo(@NonNull Object o) {
                 return toString().compareTo(o.toString());
+        }
+
+        @Exclude
+        public Map<String, Object> toMap() {
+                HashMap<String, Object> result = new HashMap<>();
+                result.put("description", description);
+                result.put("visitDate", visitDate);
+                result.put("visitor", visitor);
+                result.put("employee", employee);
+
+                return result;
         }
 }

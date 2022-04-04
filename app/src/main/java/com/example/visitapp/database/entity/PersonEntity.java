@@ -1,48 +1,35 @@
 package com.example.visitapp.database.entity;
+
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
+import com.google.firebase.database.Exclude;
+import java.util.HashMap;
+import java.util.Map;
 
-@Entity(tableName = "persons")
+
 public class PersonEntity implements Comparable{
-    @PrimaryKey(autoGenerate = true)
-    private Long idPerson;
 
-    @ColumnInfo(name = "first_name")
-    private  String firstName;
-
-    @ColumnInfo(name = "last_name")
+    private String idPerson;
+    private String firstName;
     private String lastName;
-
-    @ColumnInfo(name = "email")
     private String email;
-
-    @ColumnInfo(name = "is_employee")
     private boolean isEmployee;
 
-    @ColumnInfo(name = "password")
-    private String password;
-
-    @Ignore
     public PersonEntity(){
     }
 
-    public PersonEntity(String firstName, String lastName, String email, boolean isEmployee, String password) {
+    public PersonEntity(String firstName, String lastName, String email, boolean isEmployee) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.isEmployee = isEmployee;
-        this.password = password;
     }
 
-
-    public Long getIdPerson() {
+    @Exclude
+    public String getIdPerson() {
         return idPerson;
     }
 
-    public void setIdPerson(Long idPerson) {
+    public void setIdPerson(String idPerson) {
         this.idPerson = idPerson;
     }
 
@@ -78,14 +65,6 @@ public class PersonEntity implements Comparable{
         isEmployee = employee;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == null ) return false;
@@ -95,7 +74,6 @@ public class PersonEntity implements Comparable{
         return that.getEmail().equals(this.getEmail());
     }
 
-    @NonNull
     @Override
     public String toString() {
         return firstName + " "+ lastName;
@@ -104,5 +82,16 @@ public class PersonEntity implements Comparable{
     @Override
     public int compareTo(@NonNull Object o) {
         return toString().compareTo(o.toString());
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("firstName", firstName);
+        result.put("lastName", lastName);
+        result.put("email", email);
+        result.put("isEmployee", isEmployee);
+
+        return result;
     }
 }
