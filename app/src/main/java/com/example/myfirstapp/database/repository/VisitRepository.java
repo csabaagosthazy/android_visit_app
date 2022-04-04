@@ -26,42 +26,41 @@ public class VisitRepository {
     }
     //singleton who return only 1 instance of VisitRepository
     public static VisitRepository getInstance() {
-        if ((instance == null)) {
+        if (instance == null) {
 
             synchronized (VisitRepository.class) {
                 if (instance == null) {
                     instance = new VisitRepository();
                 }
             }
-
         }
         return instance;
     }
-    public LiveData<VisitEntity> getVisit(final Long visitId, Context context){
-        return AppDatabase.getInstance(context).visitDao().getById(visitId);
+    public LiveData<VisitEntity> getVisit(final Long visitId, Application application){
+        return ((BaseApp) application).getDatabase().visitDao().getById(visitId);
     }
-    public LiveData<List<VisitEntity>> getVisits(Context context) {
-        return AppDatabase.getInstance(context).visitDao().getAll();
+    public LiveData<List<VisitEntity>> getVisits(Application application) {
+        return ((BaseApp) application).getDatabase().visitDao().getAll();
     }
 
-    public LiveData<List<VisitEntity>> getByDate(Date date, Context context) {
+    public LiveData<List<VisitEntity>> getByDate(Long from, Long to, Application application) {
 
-        return AppDatabase.getInstance(context).visitDao().getByDate(date);
+        return ((BaseApp) application).getDatabase().visitDao().getByDate(from, to);
     }
 
     public void insert(final VisitEntity visit, OnAsyncEventListener callback,
-                       Context context) {
-        new CreateVisit(context, callback).execute(visit);
+                       Application application) {
+        new CreateVisit(application, callback).execute(visit);
     }
 
     public void update(final VisitEntity visit, OnAsyncEventListener callback,
-                       Context context) {
-        new UpdateVisit(context, callback).execute(visit);
+                       Application application) {
+        new UpdateVisit(application, callback).execute(visit);
     }
 
     public void delete(final VisitEntity visit, OnAsyncEventListener callback,
-                       Context context) {
-        new DeleteVisit(context, callback).execute(visit);
+                       Application application) {
+        new DeleteVisit(application, callback).execute(visit);
     }
 
 }

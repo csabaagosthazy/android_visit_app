@@ -22,7 +22,6 @@ import androidx.fragment.app.FragmentManager;
 import com.example.myfirstapp.ui.person.PersonActivity;
 import com.example.myfirstapp.ui.person.PersonsList;
 import com.example.myfirstapp.ui.settings.SettingsActivity;
-import com.example.myfirstapp.ui.visitor.VisitorsActivity;
 import com.example.myfirstapp.ui.visits.VisitsActivity;
 import com.example.myfirstapp.ui.visits.VisitsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,7 +34,7 @@ import java.util.Locale;
 /**
  * Base activity with bottom navigation
  */
-public class BaseActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
+public abstract class BaseActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
 
     //Using frame layout
     protected FrameLayout frameLayout;
@@ -77,18 +76,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
     }
 
 
-    @Override
+   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_top, menu);
-        return true;
+        return false;
     }
     //bottom nav selection
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-        final Fragment person = new PersonsList();
-        final Fragment visit = new VisitsFragment();
 
         int id = item.getItemId();
         if (id == BaseActivity.position) {
@@ -99,19 +94,17 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
         Intent intent = null;
 
         switch (id) {
-            case R.id.person:
-                fragmentManager.beginTransaction().replace(R.id.flFragment, person).commit();
-
+            case R.id.home:
+                intent = new Intent(getApplicationContext(), MainActivity.class);
                 break;
-            case R.id.visitor:
-                intent = new Intent(this, VisitorsActivity.class);
+            case R.id.person:
+                intent = new Intent(getApplicationContext(), PersonActivity.class);
                 break;
             case R.id.settings:
-                intent = new Intent(this, SettingsActivity.class);
+                intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 break;
             case R.id.visits:
-                //intent = new Intent(this, VisitsActivity.class);
-                fragmentManager.beginTransaction().replace(R.id.flFragment, visit).commit();
+                intent = new Intent(getApplicationContext(), VisitsActivity.class);
                 break;
         }
         //later we can log out
@@ -124,7 +117,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
         return true;
     }
 
-    @Override
+/*    @Override
     public boolean onOptionsItemSelected(MenuItem item){
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle(R.string.infoHeader);
@@ -145,7 +138,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationBarView
 
         return super.onOptionsItemSelected(item);
 
-    }
+    }*/
 
 
     private void setAppLocale(String language){

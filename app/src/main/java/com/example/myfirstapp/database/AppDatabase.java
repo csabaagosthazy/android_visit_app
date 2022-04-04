@@ -21,7 +21,7 @@ import com.example.myfirstapp.database.dao.PersonDao;
 import com.example.myfirstapp.database.entity.PersonEntity;
 import com.example.myfirstapp.database.entity.VisitEntity;
 
-@Database(entities = {PersonEntity.class, VisitEntity.class}, version = 1)
+@Database(entities = {PersonEntity.class, VisitEntity.class}, version = 2)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -67,7 +67,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             database.setDatabaseCreated();
                         });
                     }
-                }).build();
+                }).fallbackToDestructiveMigration().build();
     }
 
     /**

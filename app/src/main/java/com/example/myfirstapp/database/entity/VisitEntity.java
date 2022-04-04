@@ -3,10 +3,13 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
-import java.time.LocalDateTime;
+import com.example.myfirstapp.database.Converters;
+
 import java.util.Date;
 
 @Entity(tableName = "visits",
@@ -26,20 +29,25 @@ import java.util.Date;
         indices = {
         @Index(
                 value = {"employee"}
+        ),
+        @Index(
+                value = {"visitor"}
         )}
 )
-public class VisitEntity {
+public class VisitEntity implements Comparable{
         @PrimaryKey(autoGenerate = true)
         private Long idVisit;
         @ColumnInfo(name = "description")
         private String description;
         @ColumnInfo(name = "visit_date")
+        @TypeConverters(Converters.class)
         private Date visitDate;
         @ColumnInfo(name = "visitor")
         private Long visitor;
         @ColumnInfo(name = "employee")
         private Long employee;
 
+        @Ignore
         public VisitEntity(){
 
         }
@@ -92,15 +100,21 @@ public class VisitEntity {
         }
 
         @Override
-        public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
-                VisitEntity that = (VisitEntity) o;
+        public boolean equals(Object obj) {
+                if (obj == null ) return false;
+                if (obj == this) return true;
+                if (!(obj instanceof PersonEntity)) return false;
+                VisitEntity that = (VisitEntity) obj;
                 return getIdVisit().equals(that.getIdVisit());
         }
         @NonNull
         @Override
         public String toString() {
                 return description + " ";
+        }
+
+        @Override
+        public int compareTo(@NonNull Object o) {
+                return toString().compareTo(o.toString());
         }
 }

@@ -10,6 +10,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.myfirstapp.BaseApp;
 import com.example.myfirstapp.database.entity.PersonEntity;
 import com.example.myfirstapp.database.repository.PersonRepository;
 import com.example.myfirstapp.util.OnAsyncEventListener;
@@ -25,7 +26,7 @@ public class PersonViewModel extends AndroidViewModel {
     public PersonViewModel(@NonNull Application application, final Long personId, PersonRepository personRepository) {
         super(application);
 
-        repository = personRepository;
+        this.repository = personRepository;
         this.application=application;
 
         observablePerson = new MediatorLiveData<>();
@@ -53,7 +54,7 @@ public class PersonViewModel extends AndroidViewModel {
         public Factory(@NonNull Application application, Long personId) {
             this.application = application;
             this.personId = personId;
-            repository = PersonRepository.getInstance();
+            this.repository = ((BaseApp)application).getPersonRepository();
         }
 
         @Override

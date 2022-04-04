@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class PersonsList extends Fragment  {
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "PersonListFragment";
 
     private List<PersonEntity> persons;
     private RecyclerAdapter recyclerAdapter;

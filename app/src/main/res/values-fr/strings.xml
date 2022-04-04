@@ -26,7 +26,7 @@
     <string name="person_lastName">Nom de famille</string>
     <string name="prompt_email">Email</string>
     <string name="action_cancel">Annuler</string>
-    <string name="delete_msg">Etes vous sûr de vouloir supprimer cette personne</string>
+    <string name="delete_msg">Etes vous sûr de vouloir supprimer?</string>
     <string name="action_error">Une erreur est survenue</string>
     <string name="person_edited">Informations modifiées</string>
     <string name="visit_edited">Informations modifiées</string>
@@ -46,5 +46,9 @@
     <string name="title_visit_details">Détails de la visite</string>
     <string name="visit_description">Description</string>
     <string name="noRecordsFound">Pas de visite aujourd\'hui</string>
+    <string name="home">Home</string>
+    <string name="addPerson">Add person</string>
+    <string name="addVisit">Add visit</string>
+    <string name="mainTitle">Visits today</string>
 </resources>
 
