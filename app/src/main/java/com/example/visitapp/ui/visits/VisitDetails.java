@@ -14,10 +14,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.visitapp.R;
 import com.example.visitapp.adapter.SpinnerAdapter;
-import com.example.visitapp.database.entity.PersonEntity;
+import com.example.visitapp.database.entity.VisitorEntity;
 import com.example.visitapp.database.entity.VisitEntity;
 import com.example.visitapp.util.OnAsyncEventListener;
-import com.example.visitapp.viewmodel.VisitViewModel;
+import com.example.visitapp.viewmodel.visit.VisitViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,15 +39,15 @@ public class VisitDetails extends AppCompatActivity {
     private EditText etDescription, etDate;
     private Spinner spinnerVisitor, spinnerEmployee;
 
-    private SpinnerAdapter<PersonEntity> adapterEmployee;
-    private SpinnerAdapter<PersonEntity> adapterVisitor;
+    private SpinnerAdapter<VisitorEntity> adapterEmployee;
+    private SpinnerAdapter<VisitorEntity> adapterVisitor;
 
 
     private VisitViewModel viewModel;
 
     private VisitEntity visit;
-    private List<PersonEntity> employees;
-    private List<PersonEntity> visitors;
+    private List<VisitorEntity> employees;
+    private List<VisitorEntity> visitors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class VisitDetails extends AppCompatActivity {
         setupEmployeeSpinner();
         setupVisitorSpinner();
         VisitViewModel.Factory factory = new VisitViewModel.Factory(getApplication(), idVisit);
-        //viewModel = ViewModelProviders.of(this, factory).get(PersonViewModel.class);
+        //viewModel = ViewModelProviders.of(this, factory).get(VisitorViewModel.class);
         viewModel = new ViewModelProvider(this, factory).get(VisitViewModel.class);
         viewModel.getVisit().observe(this, visitEntity -> {
             if (visitEntity != null) {
@@ -145,10 +145,10 @@ public class VisitDetails extends AppCompatActivity {
         }
         if (item.getItemId() == CREATE_VISIT) {
             try {
-                long selectedEmployee = ((PersonEntity) spinnerEmployee.getSelectedItem()).getIdPerson();
-                long selectedVisitor = ((PersonEntity) spinnerVisitor.getSelectedItem()).getIdPerson();
+                long selectedEmployee = ((VisitorEntity) spinnerEmployee.getSelectedItem()).getVisitorId();
+                long selectedVisitor = ((VisitorEntity) spinnerVisitor.getSelectedItem()).getVisitorId();
 
-                Log.d("debugWithCsaba", ""+(PersonEntity)spinnerVisitor.getSelectedItem());
+                Log.d("debugWithCsaba", ""+(VisitorEntity)spinnerVisitor.getSelectedItem());
                 createVisit(
                         etDescription.getText().toString(),
                         new SimpleDateFormat("dd/MM/yyyy").parse(etDate.getText().toString()),
@@ -174,10 +174,10 @@ public class VisitDetails extends AppCompatActivity {
         spinnerEmployee.setAdapter(adapterEmployee);
     }
 
-    private void updateVisitorSpinner(List<PersonEntity> persons) {
+    private void updateVisitorSpinner(List<VisitorEntity> persons) {
         adapterVisitor.updateData(new ArrayList<>(persons));
     }
-    private void updateEmployeeSpinner(List<PersonEntity> persons) {
+    private void updateEmployeeSpinner(List<VisitorEntity> persons) {
         adapterEmployee.updateData(new ArrayList<>(persons));
     }
 

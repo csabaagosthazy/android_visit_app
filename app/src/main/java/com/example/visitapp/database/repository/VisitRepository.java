@@ -1,19 +1,23 @@
 package com.example.visitapp.database.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.visitapp.BaseApp;
-import com.example.visitapp.database.async.Visit.CreateVisit;
-import com.example.visitapp.database.async.Visit.DeleteVisit;
-import com.example.visitapp.database.async.Visit.UpdateVisit;
 import com.example.visitapp.database.entity.VisitEntity;
+import com.example.visitapp.database.firebase.VisitListLiveData;
+import com.example.visitapp.database.firebase.VisitLiveData;
 import com.example.visitapp.util.OnAsyncEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
 public class VisitRepository {
+
+    private static final String TAG = "VisitRepository";
     private static VisitRepository instance;
 
     private VisitRepository(){
@@ -31,31 +35,61 @@ public class VisitRepository {
         }
         return instance;
     }
-    public LiveData<VisitEntity> getVisit(final Long visitId, Application application){
-        return ((BaseApp) application).getDatabase().visitDao().getById(visitId);
+    public LiveData<VisitEntity> getVisit(final String visitId){
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("visits")
+                .child(visitId);
+        return new VisitLiveData(reference);
     }
-    public LiveData<List<VisitEntity>> getVisits(Application application) {
-        return ((BaseApp) application).getDatabase().visitDao().getAll();
-    }
-
-    public LiveData<List<VisitEntity>> getByDate(Long from, Long to, Application application) {
-
-        return ((BaseApp) application).getDatabase().visitDao().getByDate(from, to);
-    }
-
-    public void insert(final VisitEntity visit, OnAsyncEventListener callback,
-                       Application application) {
-        new CreateVisit(application, callback).execute(visit);
+    public LiveData<List<VisitEntity>> getVisitsByHost(final String hostId) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("visits")
+                .child(hostId);
+        return new VisitListLiveData(reference, hostId);
     }
 
-    public void update(final VisitEntity visit, OnAsyncEventListener callback,
-                       Application application) {
-        new UpdateVisit(application, callback).execute(visit);
+    public void insert(final VisitEntity visit, OnAsyncEventListener callback) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance()
+                .getReference("visits")
+                .child(userId)
+                .setValue(visit, (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void delete(final VisitEntity visit, OnAsyncEventListener callback,
-                       Application application) {
-        new DeleteVisit(application, callback).execute(visit);
+    public void update(final VisitEntity visit, OnAsyncEventListener callback) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance()
+                .getReference("visits")
+                .child(userId)
+                .child(visit.getVisitId())
+                .updateChildren(visit.toMap(), (databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
+    }
+
+    public void delete(final VisitEntity visit, OnAsyncEventListener callback) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance()
+                .getReference("visits")
+                .child(userId)
+                .child(visit.getVisitId())
+                .removeValue((databaseError, databaseReference) -> {
+                    if (databaseError != null) {
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
 }

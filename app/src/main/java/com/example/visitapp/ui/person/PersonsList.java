@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.visitapp.R;
 import com.example.visitapp.adapter.RecyclerAdapter;
-import com.example.visitapp.database.entity.PersonEntity;
+import com.example.visitapp.database.entity.VisitorEntity;
 import com.example.visitapp.ui.MainActivity;
 import com.example.visitapp.util.RecyclerViewItemClickListener;
-import com.example.visitapp.viewmodel.PersonListViewModel;
+import com.example.visitapp.viewmodel.visitor.VisitorListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -30,9 +30,9 @@ import java.util.Locale;
 public class PersonsList extends Fragment  {
     private static final String TAG = "PersonListFragment";
 
-    private List<PersonEntity> persons;
+    private List<VisitorEntity> persons;
     private RecyclerAdapter recyclerAdapter;
-    private PersonListViewModel viewModel;
+    private VisitorListViewModel viewModel;
     private Locale locale;
 
     public PersonsList() {
@@ -70,7 +70,7 @@ public class PersonsList extends Fragment  {
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
-                intent.putExtra("personId", persons.get(position).getIdPerson());
+                intent.putExtra("personId", persons.get(position).getVisitorId());
                 ((MainActivity) getActivity()).startActivity(intent);
             }
             @Override
@@ -90,9 +90,9 @@ public class PersonsList extends Fragment  {
                 }
         );
 
-        PersonListViewModel.Factory factory = new PersonListViewModel.Factory(getActivity().getApplication());
-        //viewModel = ViewModelProviders.of(this, factory).get(PersonListViewModel.class);
-        viewModel = new ViewModelProvider(this, factory).get(PersonListViewModel.class);
+        VisitorListViewModel.Factory factory = new VisitorListViewModel.Factory(getActivity().getApplication());
+        //viewModel = ViewModelProviders.of(this, factory).get(VisitorListViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(VisitorListViewModel.class);
         viewModel.getPersons().observe(getViewLifecycleOwner(), personEntities -> {
             if (personEntities != null) {
                 persons = personEntities;

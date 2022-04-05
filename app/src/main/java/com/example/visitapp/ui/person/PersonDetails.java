@@ -11,10 +11,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.visitapp.R;
-import com.example.visitapp.database.entity.PersonEntity;
+import com.example.visitapp.database.entity.VisitorEntity;
 import com.example.visitapp.ui.BaseActivity;
 import com.example.visitapp.util.OnAsyncEventListener;
-import com.example.visitapp.viewmodel.PersonViewModel;
+import com.example.visitapp.viewmodel.visitor.VisitorViewModel;
 
 public class PersonDetails extends BaseActivity {
     private static final String TAG = "PersonDetails";
@@ -31,9 +31,9 @@ public class PersonDetails extends BaseActivity {
     private EditText etLastName;
     private EditText etEmail;
 
-    private PersonViewModel viewModel;
+    private VisitorViewModel viewModel;
 
-    private PersonEntity person;
+    private VisitorEntity person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +45,9 @@ public class PersonDetails extends BaseActivity {
 
         initiateView();
 
-        PersonViewModel.Factory factory = new PersonViewModel.Factory(getApplication(), personId);
-        //viewModel = ViewModelProviders.of(this, factory).get(PersonViewModel.class);
-        viewModel = new ViewModelProvider(this, factory).get(PersonViewModel.class);
+        VisitorViewModel.Factory factory = new VisitorViewModel.Factory(getApplication(), personId);
+        //viewModel = ViewModelProviders.of(this, factory).get(VisitorViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(VisitorViewModel.class);
         viewModel.getPerson().observe(this, personEntity -> {
             if (personEntity != null) {
                 person = personEntity;
@@ -177,7 +177,7 @@ public class PersonDetails extends BaseActivity {
             return;
         }
 
-        person = new PersonEntity();
+        person = new VisitorEntity();
         person.setEmail(email);
         person.setFirstName(firstName);
         person.setLastName(lastName);

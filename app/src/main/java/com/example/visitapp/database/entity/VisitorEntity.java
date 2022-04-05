@@ -6,31 +6,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class PersonEntity implements Comparable{
+public class VisitorEntity implements Comparable{
 
-    private String idPerson;
+    private String visitorId;
     private String firstName;
     private String lastName;
     private String email;
-    private boolean isEmployee;
 
-    public PersonEntity(){
+    public VisitorEntity(){
     }
 
-    public PersonEntity(String firstName, String lastName, String email, boolean isEmployee) {
+    public VisitorEntity(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.isEmployee = isEmployee;
     }
 
     @Exclude
-    public String getIdPerson() {
-        return idPerson;
+    public String getVisitorId() {
+        return visitorId;
     }
 
-    public void setIdPerson(String idPerson) {
-        this.idPerson = idPerson;
+    public void setVisitorId(String id) {
+        this.visitorId = id;
     }
 
     public String getFirstName() {
@@ -57,20 +55,13 @@ public class PersonEntity implements Comparable{
         this.email = email;
     }
 
-    public boolean isEmployee() {
-        return isEmployee;
-    }
-
-    public void setEmployee(boolean employee) {
-        isEmployee = employee;
-    }
 
     @Override
     public boolean equals(Object obj) {
         if (obj == null ) return false;
         if (obj == this) return true;
-        if (!(obj instanceof PersonEntity)) return false;
-        PersonEntity that = (PersonEntity) obj;
+        if (!(obj instanceof VisitorEntity)) return false;
+        VisitorEntity that = (VisitorEntity) obj;
         return that.getEmail().equals(this.getEmail());
     }
 
@@ -90,7 +81,6 @@ public class PersonEntity implements Comparable{
         result.put("firstName", firstName);
         result.put("lastName", lastName);
         result.put("email", email);
-        result.put("isEmployee", isEmployee);
 
         return result;
     }

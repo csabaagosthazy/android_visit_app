@@ -1,4 +1,4 @@
-package com.example.visitapp.viewmodel;
+package com.example.visitapp.viewmodel.visitor;
 
 import android.app.Application;
 
@@ -10,29 +10,29 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.visitapp.BaseApp;
-import com.example.visitapp.database.entity.PersonEntity;
-import com.example.visitapp.database.repository.PersonRepository;
+import com.example.visitapp.database.entity.VisitorEntity;
+import com.example.visitapp.database.repository.VisitorRepository;
 import com.example.visitapp.util.OnAsyncEventListener;
 
-public class PersonViewModel extends AndroidViewModel {
-    private PersonRepository repository;
+public class VisitorViewModel extends AndroidViewModel {
+    private VisitorRepository repository;
     private Application application;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
-    private final MediatorLiveData<PersonEntity> observablePerson;
+    private final MediatorLiveData<VisitorEntity> observablePerson;
 
 
-    public PersonViewModel(@NonNull Application application, final Long personId, PersonRepository personRepository) {
+    public VisitorViewModel(@NonNull Application application, final String visitorId, VisitorRepository visitorRepository) {
         super(application);
 
-        this.repository = personRepository;
+        this.repository = visitorRepository;
         this.application=application;
 
         observablePerson = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         observablePerson.setValue(null);
 
-        LiveData<PersonEntity> person = repository.getPerson(personId, application);
+        LiveData<VisitorEntity> person = repository.getVisitor(visitorId);
 
         // observe the changes of the client entity from the database and forward them
         observablePerson.addSource(person, observablePerson::setValue);
@@ -46,40 +46,40 @@ public class PersonViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
 
-        private final Long personId;
+        private final String visitorId;
 
-        private final PersonRepository repository;
+        private final VisitorRepository repository;
 
-        public Factory(@NonNull Application application, Long personId) {
+        public Factory(@NonNull Application application, String visitorId) {
             this.application = application;
-            this.personId = personId;
-            this.repository = ((BaseApp)application).getPersonRepository();
+            this.visitorId = visitorId;
+            this.repository = ((BaseApp)application).getVisitorRepository();
         }
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new PersonViewModel(application, personId, repository);
+            return (T) new VisitorViewModel(application, visitorId, repository);
         }
     }
 
     /**
      * Expose the LiveData ClientEntity query so the UI can observe it.
      */
-    public LiveData<PersonEntity> getPerson() {
+    public LiveData<VisitorEntity> getPerson() {
         return observablePerson;
     }
 
-    public void createPerson(PersonEntity person, OnAsyncEventListener callback) {
-        repository.insert(person, callback, application);
+    public void createPerson(VisitorEntity person, OnAsyncEventListener callback) {
+        repository.insert(person, callback);
     }
 
-    public void updatePerson(PersonEntity person, OnAsyncEventListener callback) {
-        repository.update(person, callback, application);
+    public void updatePerson(VisitorEntity person, OnAsyncEventListener callback) {
+        repository.update(person, callback);
     }
 
-    public void deletePerson(PersonEntity person, OnAsyncEventListener callback) {
-        repository.delete(person, callback, application);
+    public void deletePerson(VisitorEntity person, OnAsyncEventListener callback) {
+        repository.delete(person, callback);
     }
 
 }

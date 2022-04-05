@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.visitapp.database.entity.PersonEntity;
+import com.example.visitapp.database.entity.VisitorEntity;
 import com.example.visitapp.database.entity.VisitEntity;
 import com.example.visitapp.util.RecyclerViewItemClickListener;
 
@@ -53,8 +53,8 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
     @Override
     public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
         T item = mData.get(position);
-        if (item.getClass().equals(PersonEntity.class))
-            holder.mTextView.setText(((PersonEntity) item).toString());
+        if (item.getClass().equals(VisitorEntity.class))
+            holder.mTextView.setText(((VisitorEntity) item).toString());
         if (item.getClass().equals(VisitEntity.class))
             holder.mTextView.setText(((VisitEntity) item).getDescription());
     }
@@ -86,22 +86,22 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    if (mData instanceof PersonEntity) {
-                        return ((PersonEntity) mData.get(oldItemPosition)).getIdPerson().equals(((PersonEntity) data.get(newItemPosition)).getIdPerson());
+                    if (mData instanceof VisitorEntity) {
+                        return ((VisitorEntity) mData.get(oldItemPosition)).getVisitorId().equals(((VisitorEntity) data.get(newItemPosition)).getVisitorId());
                     }
                     if (mData instanceof VisitEntity) {
-                        return ((VisitEntity) mData.get(oldItemPosition)).getIdVisit().equals(
-                                ((VisitEntity) data.get(newItemPosition)).getIdVisit());
+                        return ((VisitEntity) mData.get(oldItemPosition)).getVisitId().equals(
+                                ((VisitEntity) data.get(newItemPosition)).getVisitId());
                     }
                     return false;
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    if (mData instanceof PersonEntity) {
-                        PersonEntity newPerson = (PersonEntity) data.get(newItemPosition);
-                        PersonEntity oldPerson = (PersonEntity) mData.get(newItemPosition);
-                        return newPerson.getIdPerson().equals(oldPerson.getIdPerson())
+                    if (mData instanceof VisitorEntity) {
+                        VisitorEntity newPerson = (VisitorEntity) data.get(newItemPosition);
+                        VisitorEntity oldPerson = (VisitorEntity) mData.get(newItemPosition);
+                        return newPerson.getVisitorId().equals(oldPerson.getVisitorId())
                                 && Objects.equals(newPerson.getFirstName(), newPerson.getFirstName())
                                 && Objects.equals(newPerson.getLastName(), oldPerson.getLastName())
                                 && newPerson.getEmail().equals(oldPerson.getEmail());
@@ -109,7 +109,7 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
                     if (mData instanceof VisitEntity) {
                         VisitEntity newVisit = (VisitEntity) data.get(newItemPosition);
                         VisitEntity oldVisit = (VisitEntity) mData.get(newItemPosition);
-                        return Objects.equals(newVisit.getIdVisit(), oldVisit.getIdVisit())
+                        return Objects.equals(newVisit.getVisitId(), oldVisit.getVisitId())
                                 && Objects.equals(newVisit.getVisitDate(), oldVisit.getVisitDate())
                                 && Objects.equals(newVisit.getDescription(), oldVisit.getDescription())
                                 && Objects.equals(newVisit.getVisitor(), oldVisit.getVisitor())

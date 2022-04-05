@@ -8,11 +8,11 @@ import java.util.Map;
 
 public class VisitEntity implements Comparable{
 
-        private String idVisit;
+        private String visitId;
         private String description;
         private Long visitDate;
         private String visitor;
-        private String employee;
+        private String hostId;
 
 
         public VisitEntity(){
@@ -22,16 +22,15 @@ public class VisitEntity implements Comparable{
                 this.description = description;
                 this.visitDate = visitDate;
                 this.visitor = visitor;
-                this.employee = employee;
         }
 
         @Exclude
-        public String getIdVisit() {
-                return idVisit;
+        public String getVisitId() {
+                return visitId;
         }
 
-        public void setIdVisit(String idVisit) {
-                this.idVisit = idVisit;
+        public void setVisitId(String visitId) {
+                this.visitId = visitId;
         }
 
         public String getDescription() {
@@ -58,21 +57,22 @@ public class VisitEntity implements Comparable{
                 this.visitor = visitor;
         }
 
-        public String getEmployee() {
-                return employee;
+        @Exclude
+        public String getHostId() {
+                return hostId;
         }
 
-        public void setEmployee(String employee) {
-                this.employee = employee;
+        public void setHostId(String hostId) {
+                this.hostId = hostId;
         }
 
         @Override
         public boolean equals(Object obj) {
                 if (obj == null ) return false;
                 if (obj == this) return true;
-                if (!(obj instanceof PersonEntity)) return false;
+                if (!(obj instanceof VisitorEntity)) return false;
                 VisitEntity that = (VisitEntity) obj;
-                return getIdVisit().equals(that.getIdVisit());
+                return getVisitId().equals(that.getVisitId());
         }
 
         @Override
@@ -91,7 +91,6 @@ public class VisitEntity implements Comparable{
                 result.put("description", description);
                 result.put("visitDate", visitDate);
                 result.put("visitor", visitor);
-                result.put("employee", employee);
 
                 return result;
         }

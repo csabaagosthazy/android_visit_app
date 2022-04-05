@@ -17,7 +17,7 @@ import com.example.visitapp.database.entity.VisitEntity;
 import com.example.visitapp.ui.BaseActivity;
 import com.example.visitapp.ui.MainActivity;
 import com.example.visitapp.util.RecyclerViewItemClickListener;
-import com.example.visitapp.viewmodel.VisitsListViewModel;
+import com.example.visitapp.viewmodel.visit.VisitListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class VisitsActivity extends BaseActivity {
 
     private List<VisitEntity> visits;
     private RecyclerAdapter<VisitEntity> recyclerAdapter;
-    private VisitsListViewModel viewModel;
+    private VisitListViewModel viewModel;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +58,7 @@ public class VisitsActivity extends BaseActivity {
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
-                intent.putExtra("idVisit", visits.get(position).getIdVisit());
+                intent.putExtra("idVisit", visits.get(position).getVisitId());
                 startActivity(intent);
             }
 
@@ -79,8 +79,8 @@ public class VisitsActivity extends BaseActivity {
                 }
         );
 
-        VisitsListViewModel.Factory factory = new VisitsListViewModel.Factory(getApplication());
-        viewModel = new ViewModelProvider(this, factory).get(VisitsListViewModel.class);
+        VisitListViewModel.Factory factory = new VisitListViewModel.Factory(getApplication());
+        viewModel = new ViewModelProvider(this, factory).get(VisitListViewModel.class);
         viewModel.getVisits().observe(this, visitEntities -> {
             if (visitEntities != null) {
                 visits = visitEntities;

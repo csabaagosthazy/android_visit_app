@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.visitapp.R;
 import com.example.visitapp.adapter.ArrayAdapter;
 import com.example.visitapp.database.entity.VisitEntity;
-import com.example.visitapp.viewmodel.VisitsListViewModel;
+import com.example.visitapp.viewmodel.visit.VisitListViewModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,7 +27,7 @@ import java.util.List;
 
 public class MainFragment extends Fragment {
     private List<VisitEntity> currentVisitList;
-    private VisitsListViewModel viewModel;
+    private VisitListViewModel viewModel;
     private String[] currentVisits;
 
 
@@ -39,9 +39,9 @@ public class MainFragment extends Fragment {
 
         //must be modified later!!!!
         currentVisitList = new ArrayList<>();
-        VisitsListViewModel.Factory factory = new VisitsListViewModel.Factory(getActivity().getApplication());
-        //viewModel = ViewModelProviders.of(this, factory).get(PersonListViewModel.class);
-        viewModel = new ViewModelProvider(getActivity(), factory).get(VisitsListViewModel.class);
+        VisitListViewModel.Factory factory = new VisitListViewModel.Factory(getActivity().getApplication());
+        //viewModel = ViewModelProviders.of(this, factory).get(VisitorListViewModel.class);
+        viewModel = new ViewModelProvider(getActivity(), factory).get(VisitListViewModel.class);
         viewModel.getVisits().observe(getActivity(), visitEntities -> {
             if (visitEntities != null) {
                 currentVisitList = visitEntities;

@@ -5,8 +5,7 @@ package com.example.visitapp;
 
 import android.app.Application;
 
-import com.example.visitapp.database.AppDatabase;
-import com.example.visitapp.database.repository.PersonRepository;
+import com.example.visitapp.database.repository.VisitorRepository;
 import com.example.visitapp.database.repository.VisitRepository;
 
 public class BaseApp extends Application{
@@ -20,8 +19,8 @@ public class BaseApp extends Application{
         return VisitRepository.getInstance();
     }
 
-    public PersonRepository getPersonRepository() {
-        return PersonRepository.getInstance();
+    public VisitorRepository getVisitorRepository() {
+        return VisitorRepository.getInstance();
     }
 
 }

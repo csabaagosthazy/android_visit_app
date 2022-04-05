@@ -16,7 +16,7 @@ import com.example.visitapp.R;
 import com.example.visitapp.adapter.RecyclerAdapter;
 import com.example.visitapp.database.entity.VisitEntity;
 import com.example.visitapp.util.RecyclerViewItemClickListener;
-import com.example.visitapp.viewmodel.VisitsListViewModel;
+import com.example.visitapp.viewmodel.visit.VisitListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class VisitsFragment extends Fragment {
 
     private List<VisitEntity> visits;
     private RecyclerAdapter recyclerAdapter;
-    private VisitsListViewModel viewModel;
+    private VisitListViewModel viewModel;
 
     public VisitsFragment(){
 
@@ -68,7 +68,7 @@ public class VisitsFragment extends Fragment {
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
-                intent.putExtra("idVisit", visits.get(position).getIdVisit());
+                intent.putExtra("idVisit", visits.get(position).getVisitId());
                 startActivity(intent);
             }
 
@@ -89,9 +89,9 @@ public class VisitsFragment extends Fragment {
                 }
         );
 
-        VisitsListViewModel.Factory factory = new VisitsListViewModel.Factory(getActivity().getApplication());
-        //viewModel = ViewModelProviders.of(this, factory).get(PersonListViewModel.class);
-        viewModel = new ViewModelProvider(this, factory).get(VisitsListViewModel.class);
+        VisitListViewModel.Factory factory = new VisitListViewModel.Factory(getActivity().getApplication());
+        //viewModel = ViewModelProviders.of(this, factory).get(VisitorListViewModel.class);
+        viewModel = new ViewModelProvider(this, factory).get(VisitListViewModel.class);
 
 
         viewModel.getVisits().observe(getViewLifecycleOwner(), visitEntities -> {

@@ -10,7 +10,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.visitapp.database.entity.PersonEntity;
+import com.example.visitapp.database.entity.VisitorEntity;
 
 import java.util.List;
 //import com.example.myfirstapp.database.pojo.ClientWithAccounts;
@@ -22,28 +22,28 @@ import java.util.List;
 public interface PersonDao {
 
     @Query("SELECT * FROM persons WHERE idPerson = :idPerson")
-    LiveData<PersonEntity> getById(Long idPerson);
+    LiveData<VisitorEntity> getById(Long idPerson);
 
     @Query("SELECT * FROM persons")
-    LiveData<List<PersonEntity>> getAll();
+    LiveData<List<VisitorEntity>> getAll();
 
     @Query("SELECT * FROM persons where is_employee = 0")
-    LiveData<List<PersonEntity>> getAllVisitors();
+    LiveData<List<VisitorEntity>> getAllVisitors();
 
     @Query("SELECT * FROM persons where is_employee = 1")
-    LiveData<List<PersonEntity>> getAllEmployees();
+    LiveData<List<VisitorEntity>> getAllEmployees();
 
     @Insert
-    long insert(PersonEntity person) throws SQLiteConstraintException;
+    long insert(VisitorEntity person) throws SQLiteConstraintException;
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<PersonEntity> persons);
+    void insertAll(List<VisitorEntity> persons);
 
     @Update
-    void update(PersonEntity person);
+    void update(VisitorEntity person);
 
     @Delete
-    void delete(PersonEntity person);
+    void delete(VisitorEntity person);
 
     @Query("DELETE FROM persons")
     void deleteAll();

@@ -1,4 +1,4 @@
-package com.example.visitapp.viewmodel;
+package com.example.visitapp.viewmodel.visitor;
 
 import android.app.Application;
 
@@ -10,32 +10,32 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.visitapp.BaseApp;
-import com.example.visitapp.database.entity.PersonEntity;
-import com.example.visitapp.database.repository.PersonRepository;
+import com.example.visitapp.database.entity.VisitorEntity;
+import com.example.visitapp.database.repository.VisitorRepository;
 
 import java.util.List;
 
-public class PersonListViewModel extends AndroidViewModel {
-    private PersonRepository repository;
+public class VisitorListViewModel extends AndroidViewModel {
+    private VisitorRepository repository;
     private Application application;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
-    private final MediatorLiveData<List<PersonEntity>> observablePersons;
+    private final MediatorLiveData<List<VisitorEntity>> observableVisitors;
 
-    public PersonListViewModel(@NonNull Application application, PersonRepository personRepository) {
+    public VisitorListViewModel(@NonNull Application application, VisitorRepository visitorRepository) {
         super(application);
 
-        this.repository = personRepository;
+        this.repository = visitorRepository;
         this.application = application;
 
-        observablePersons = new MediatorLiveData<>();
+        observableVisitors = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
-        observablePersons.setValue(null);
+        observableVisitors.setValue(null);
 
-        LiveData<List<PersonEntity>> persons = repository.getAllPersons(application);
+        LiveData<List<VisitorEntity>> persons = repository.getAllVisitors();
 
         // observe the changes of the entities from the database and forward them
-        observablePersons.addSource(persons, observablePersons::setValue);
+        observableVisitors.addSource(persons, observableVisitors::setValue);
 
     }
 
@@ -47,25 +47,25 @@ public class PersonListViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
 
-        private final PersonRepository personRepository;
+        private final VisitorRepository visitorRepository;
 
         public Factory(@NonNull Application application) {
             this.application = application;
-            this.personRepository = ((BaseApp)application).getPersonRepository();
+            this.visitorRepository = ((BaseApp)application).getVisitorRepository();
         }
 
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new PersonListViewModel(application, personRepository);
+            return (T) new VisitorListViewModel(application, visitorRepository);
         }
     }
 
     /**
      * Expose the LiveData ClientEntities query so the UI can observe it.
      */
-    public LiveData<List<PersonEntity>> getPersons() {
-        return observablePersons;
+    public LiveData<List<VisitorEntity>> getPersons() {
+        return observableVisitors;
     }
 }
 

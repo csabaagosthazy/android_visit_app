@@ -18,7 +18,7 @@ import com.example.visitapp.R;
 import com.example.visitapp.adapter.RecyclerAdapter;
 import com.example.visitapp.database.entity.VisitEntity;
 import com.example.visitapp.util.RecyclerViewItemClickListener;
-import com.example.visitapp.viewmodel.VisitsByDateViewModel;
+import com.example.visitapp.viewmodel.visit.VisitListByDateViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity{
     private static final String TAG = "MainActivity";
     private List<VisitEntity> visits;
     private RecyclerAdapter<VisitEntity> recyclerAdapter;
-    private VisitsByDateViewModel viewModel;
+    private VisitListByDateViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +64,8 @@ public class MainActivity extends BaseActivity{
             }
         });
 
-        VisitsByDateViewModel.Factory factory = new VisitsByDateViewModel.Factory(getApplication(), createDate(false), createDate(true));
-        viewModel = new ViewModelProvider(this, factory).get(VisitsByDateViewModel.class);
+        VisitListByDateViewModel.Factory factory = new VisitListByDateViewModel.Factory(getApplication(), createDate(false), createDate(true));
+        viewModel = new ViewModelProvider(this, factory).get(VisitListByDateViewModel.class);
         viewModel.getVisitsByDate().observe(this, visitEntities -> {
             if (visitEntities != null) {
                 visits = visitEntities;
