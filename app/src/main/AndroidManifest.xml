@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myfirstapp">
+    package="com.example.visitapp">
 
     <application
-        android:name=".BaseApp"
+        android:name="com.example.visitapp.BaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyFirstApp">
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.example.visitapp.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,46 +20,46 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.BaseActivity"
+            android:name="com.example.visitapp.ui.BaseActivity"
             android:theme="@style/Theme.MyFirstApp" />
         <activity
-            android:name=".ui.person.PersonActivity"
+            android:name="com.example.visitapp.ui.visitor.VisitorActivity"
             android:label="@string/activityTitlePerson"
-            android:parentActivityName=".ui.MainActivity">
+            android:parentActivityName="com.example.visitapp.ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ui.MainActivity" />
+                android:value="com.example.visitapp.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.person.PersonDetails"
+            android:name="com.example.visitapp.ui.visitor.VisitorDetails"
             android:label="@string/title_activity_details"
-            android:parentActivityName=".ui.person.PersonActivity">
+            android:parentActivityName="com.example.visitapp.ui.visitor.VisitorActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.person.PersonActivity" />
+                android:value="com.example.visitapp.ui.visitor.VisitorActivity" />
         </activity>
         <activity
-            android:name=".ui.settings.SettingsActivity"
+            android:name="com.example.visitapp.ui.settings.SettingsActivity"
             android:label="@string/activityTitleSettings"
-            android:parentActivityName=".ui.MainActivity">
+            android:parentActivityName="com.example.visitapp.ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ui.MainActivity" />
+                android:value="com.example.visitapp.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.visits.VisitsActivity"
+            android:name="com.example.visitapp.ui.visits.VisitsActivity"
             android:label="@string/activityTitleVisits"
-            android:parentActivityName=".ui.MainActivity">
+            android:parentActivityName="com.example.visitapp.ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ui.MainActivity" />
+                android:value="com.example.visitapp.ui.MainActivity" />
         </activity>
-        <activity android:name=".ui.visits.VisitDetails"
+        <activity android:name="com.example.visitapp.ui.visits.VisitDetails"
             android:label="@string/title_visit_details"
-            android:parentActivityName=".ui.visits.VisitsActivity">
+            android:parentActivityName="com.example.visitapp.ui.visits.VisitsActivity">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.visits.VisitDetails" />
+            android:value="com.example.visitapp.ui.visits.VisitDetails" />
         </activity>
     </application>
 

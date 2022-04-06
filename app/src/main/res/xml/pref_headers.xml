@@ -3,7 +3,7 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="com.example.myfirstapp.ui.settings.SettingsActivity$AboutPreferenceFragment"
+        android:fragment="com.example.visitapp.ui.settings.SettingsActivity$AboutPreferenceFragment"
         android:icon="@drawable/ic_about_foreground"
         android:title="@string/preferenceAboutHeader" />
 
