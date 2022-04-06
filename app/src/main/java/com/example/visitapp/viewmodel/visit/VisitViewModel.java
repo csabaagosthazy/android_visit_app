@@ -26,7 +26,7 @@ public class VisitViewModel extends AndroidViewModel {
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<VisitEntity> observableVisit;
-    private final MediatorLiveData<List<VisitorEntity>> observablePersons, observableVisitors;
+    private final MediatorLiveData<List<VisitorEntity>> observableVisitors;
 
     public VisitViewModel(@NonNull Application application,
                            final String visitId, VisitRepository visitRepository, VisitorRepository visitorRepository) {
@@ -40,16 +40,13 @@ public class VisitViewModel extends AndroidViewModel {
         // set by default null, until we get data from the database.
         observableVisit.setValue(null);
 
-        LiveData<VisitEntity> visit = repository.getVisit(visitId);
+        if(visitId != null){
+            LiveData<VisitEntity> visit = repository.getVisit(visitId);
 
-        // observe the changes of the client entity from the database and forward them
-        observableVisit.addSource(visit, observableVisit::setValue);
+            // observe the changes of the client entity from the database and forward them
+            observableVisit.addSource(visit, observableVisit::setValue);
 
-        observablePersons = new MediatorLiveData<>();
-        observablePersons.setValue(null);
-
-        LiveData<List<VisitorEntity>> employees = visitorRepository.getAllVisitors();
-        observablePersons.addSource(employees, observablePersons::setValue);
+        }
 
         observableVisitors = new MediatorLiveData<>();
         observableVisitors.setValue(null);
@@ -72,9 +69,9 @@ public class VisitViewModel extends AndroidViewModel {
         private final VisitRepository visitRepository;
         private final VisitorRepository visitorRepository;
 
-        public Factory(@NonNull Application application, String visitID) {
+        public Factory(@NonNull Application application, String visitId) {
             this.application = application;
-            this.idVisit = visitID;
+            this.idVisit = visitId;
             this.visitRepository = ((BaseApp)application).getVisitRepository();
             this.visitorRepository = ((BaseApp)application).getVisitorRepository();
 
@@ -93,8 +90,6 @@ public class VisitViewModel extends AndroidViewModel {
     public LiveData<VisitEntity> getVisit() {
         return observableVisit;
     }
-
-    public LiveData<List<VisitorEntity>> getEmployees(){return observablePersons;}
 
     public LiveData<List<VisitorEntity>> getVisitors(){return observableVisitors;}
 

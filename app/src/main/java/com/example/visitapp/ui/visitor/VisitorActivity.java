@@ -1,4 +1,4 @@
-package com.example.visitapp.ui.person;
+package com.example.visitapp.ui.visitor;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,11 +23,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonActivity extends BaseActivity {
+public class VisitorActivity extends BaseActivity {
 
-    private static final String TAG = "PersonActivity";
+    private static final String TAG = "VisitorActivity";
 
-    private List<VisitorEntity> persons;
+    private List<VisitorEntity> visitors;
     private RecyclerAdapter<VisitorEntity> recyclerAdapter;
     private VisitorListViewModel viewModel;
 
@@ -52,30 +52,30 @@ public class PersonActivity extends BaseActivity {
                 LinearLayoutManager.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        persons = new ArrayList<>();
+        visitors = new ArrayList<>();
         recyclerAdapter = new RecyclerAdapter<>(new RecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 Log.d(TAG, "clicked position:" + position);
-                Log.d(TAG, "clicked on: " + persons.get(position).toString());
+                Log.d(TAG, "clicked on: " + visitors.get(position).toString());
 
-                Intent intent = new Intent(PersonActivity.this, PersonDetails.class);
+                Intent intent = new Intent(VisitorActivity.this, VisitorDetails.class);
                 intent.setFlags(
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
-                intent.putExtra("personId", persons.get(position).getVisitorId());
+                intent.putExtra("personId", visitors.get(position).getVisitorId());
                 startActivity(intent);
             }
             @Override
             public void onItemLongClick(View v, int position) {
                 Log.d(TAG, "longClicked position:" + position);
-                Log.d(TAG, "longClicked on: " + persons.get(position).toString());
+                Log.d(TAG, "longClicked on: " + visitors.get(position).toString());
             }
         });
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view2 -> {
-                    Intent intent = new Intent(PersonActivity.this, PersonDetails.class);
+                    Intent intent = new Intent(VisitorActivity.this, VisitorDetails.class);
                     intent.setFlags(
                             Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                     Intent.FLAG_ACTIVITY_NO_HISTORY
@@ -89,8 +89,8 @@ public class PersonActivity extends BaseActivity {
         viewModel = new ViewModelProvider(this, factory).get(VisitorListViewModel.class);
         viewModel.getPersons().observe(this, personEntities -> {
             if (personEntities != null) {
-                persons = personEntities;
-                recyclerAdapter.setData(persons);
+                visitors = personEntities;
+                recyclerAdapter.setData(visitors);
             }
         });
 

@@ -23,7 +23,7 @@
             android:name="com.example.visitapp.ui.BaseActivity"
             android:theme="@style/Theme.MyFirstApp" />
         <activity
-            android:name="com.example.visitapp.ui.person.PersonActivity"
+            android:name="com.example.visitapp.ui.visitor.VisitorActivity"
             android:label="@string/activityTitlePerson"
             android:parentActivityName="com.example.visitapp.ui.MainActivity">
             <meta-data
@@ -31,12 +31,12 @@
                 android:value="com.example.visitapp.ui.MainActivity" />
         </activity>
         <activity
-            android:name="com.example.visitapp.ui.person.PersonDetails"
+            android:name="com.example.visitapp.ui.visitor.VisitorDetails"
             android:label="@string/title_activity_details"
-            android:parentActivityName="com.example.visitapp.ui.person.PersonActivity">
+            android:parentActivityName="com.example.visitapp.ui.visitor.VisitorActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.visitapp.ui.person.PersonActivity" />
+                android:value="com.example.visitapp.ui.visitor.VisitorActivity" />
         </activity>
         <activity
             android:name="com.example.visitapp.ui.settings.SettingsActivity"

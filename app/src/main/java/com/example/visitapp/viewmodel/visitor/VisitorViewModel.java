@@ -31,11 +31,12 @@ public class VisitorViewModel extends AndroidViewModel {
         observablePerson = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         observablePerson.setValue(null);
+        if(visitorId != null){
+            LiveData<VisitorEntity> person = repository.getVisitor(visitorId);
 
-        LiveData<VisitorEntity> person = repository.getVisitor(visitorId);
-
-        // observe the changes of the client entity from the database and forward them
-        observablePerson.addSource(person, observablePerson::setValue);
+            // observe the changes of the client entity from the database and forward them
+            observablePerson.addSource(person, observablePerson::setValue);
+        }
     }
 
     /**
@@ -66,20 +67,20 @@ public class VisitorViewModel extends AndroidViewModel {
     /**
      * Expose the LiveData ClientEntity query so the UI can observe it.
      */
-    public LiveData<VisitorEntity> getPerson() {
+    public LiveData<VisitorEntity> getVisitor() {
         return observablePerson;
     }
 
-    public void createPerson(VisitorEntity person, OnAsyncEventListener callback) {
-        repository.insert(person, callback);
+    public void createVisitor(VisitorEntity visitor, OnAsyncEventListener callback) {
+        repository.insert(visitor, callback);
     }
 
-    public void updatePerson(VisitorEntity person, OnAsyncEventListener callback) {
-        repository.update(person, callback);
+    public void updateVisitor(VisitorEntity visitor, OnAsyncEventListener callback) {
+        repository.update(visitor, callback);
     }
 
-    public void deletePerson(VisitorEntity person, OnAsyncEventListener callback) {
-        repository.delete(person, callback);
+    public void deleteVisitor(VisitorEntity visitor, OnAsyncEventListener callback) {
+        repository.delete(visitor, callback);
     }
 
 }

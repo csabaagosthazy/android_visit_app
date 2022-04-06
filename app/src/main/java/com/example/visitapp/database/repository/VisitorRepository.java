@@ -44,8 +44,11 @@ public class VisitorRepository {
     }
 
     public void insert(final VisitorEntity visitor, OnAsyncEventListener callback){
-        FirebaseDatabase.getInstance()
-                .getReference("visitors")
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReference("visitors");
+                String key = ref.push().getKey();
+                FirebaseDatabase.getInstance()
+                .getReference("visitors").child(key)
                 .setValue(visitor, (databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         callback.onFailure(databaseError.toException());

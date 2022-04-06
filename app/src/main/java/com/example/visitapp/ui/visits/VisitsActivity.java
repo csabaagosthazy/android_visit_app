@@ -19,6 +19,7 @@ import com.example.visitapp.ui.MainActivity;
 import com.example.visitapp.util.RecyclerViewItemClickListener;
 import com.example.visitapp.viewmodel.visit.VisitListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,8 @@ public class VisitsActivity extends BaseActivity {
                 }
         );
 
-        VisitListViewModel.Factory factory = new VisitListViewModel.Factory(getApplication());
+        VisitListViewModel.Factory factory = new VisitListViewModel.Factory(getApplication(),
+                FirebaseAuth.getInstance().getCurrentUser().getUid());
         viewModel = new ViewModelProvider(this, factory).get(VisitListViewModel.class);
         viewModel.getVisits().observe(this, visitEntities -> {
             if (visitEntities != null) {
@@ -91,20 +93,6 @@ public class VisitsActivity extends BaseActivity {
 
 
     }
-/*    @Override
-    protected void onResume() {
-        super.onResume();
-        //setTitle(getString(R.string.app_name));
-        bottomNavigationView.setSelectedItemId(R.id.visits);
-    }*/
-/*    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == BaseActivity.position) {
-            return false;
-        }
-        finish();
-        return super.onNavigationItemSelected(item);
-    }*/
 
     public void onBackPressed() {
 

@@ -36,8 +36,10 @@ public class VisitRepository {
         return instance;
     }
     public LiveData<VisitEntity> getVisit(final String visitId){
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("visits")
+                .child(userId)
                 .child(visitId);
         return new VisitLiveData(reference);
     }
@@ -48,11 +50,21 @@ public class VisitRepository {
         return new VisitListLiveData(reference, hostId);
     }
 
+    public LiveData<List<VisitEntity>> getVisitsByHostAndDate(final String hostId, final Long from, final Long to) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("visits")
+                .child(hostId);
+        return new VisitListLiveData(reference, hostId, from, to);
+    }
+
     public void insert(final VisitEntity visit, OnAsyncEventListener callback) {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        FirebaseDatabase.getInstance()
+        DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("visits")
-                .child(userId)
+                .child(userId);
+        String key = ref.push().getKey();
+        FirebaseDatabase.getInstance()
+                .getReference("visits").child(userId).child(key)
                 .setValue(visit, (databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         callback.onFailure(databaseError.toException());

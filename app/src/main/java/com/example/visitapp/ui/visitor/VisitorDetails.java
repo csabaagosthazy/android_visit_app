@@ -1,4 +1,4 @@
-package com.example.visitapp.ui.person;
+package com.example.visitapp.ui.visitor;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +16,8 @@ import com.example.visitapp.ui.BaseActivity;
 import com.example.visitapp.util.OnAsyncEventListener;
 import com.example.visitapp.viewmodel.visitor.VisitorViewModel;
 
-public class PersonDetails extends BaseActivity {
-    private static final String TAG = "PersonDetails";
+public class VisitorDetails extends BaseActivity {
+    private static final String TAG = "VisitorDetails";
 
     private static final int CREATE_CLIENT = 0;
     private static final int EDIT_CLIENT = 1;
@@ -41,22 +41,24 @@ public class PersonDetails extends BaseActivity {
 
         setContentView(R.layout.activity_person_details);
 
-        Long personId = getIntent().getLongExtra("personId",-1);
+        String personId = getIntent().getStringExtra("personId");
+
 
         initiateView();
 
         VisitorViewModel.Factory factory = new VisitorViewModel.Factory(getApplication(), personId);
         //viewModel = ViewModelProviders.of(this, factory).get(VisitorViewModel.class);
         viewModel = new ViewModelProvider(this, factory).get(VisitorViewModel.class);
-        viewModel.getPerson().observe(this, personEntity -> {
+        viewModel.getVisitor().observe(this, personEntity -> {
             if (personEntity != null) {
                 person = personEntity;
                 updateContent();
             }
         });
 
-        if (personId != -1) {
+        if (personId != null) {
             setTitle(R.string.title_activity_details);
+            Log.d(TAG, personId);
         } else {
             setTitle(R.string.title_activity_create);
             switchEditableMode();
@@ -98,7 +100,7 @@ public class PersonDetails extends BaseActivity {
             alertDialog.setCancelable(false);
             alertDialog.setMessage(getString(R.string.delete_msg));
             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.action_delete), (dialog, which) -> {
-                viewModel.deletePerson(person, new OnAsyncEventListener() {
+                viewModel.deleteVisitor(person, new OnAsyncEventListener() {
                     @Override
                     public void onSuccess() {
                         Log.d(TAG, "deleteClient: success");
@@ -182,7 +184,7 @@ public class PersonDetails extends BaseActivity {
         person.setFirstName(firstName);
         person.setLastName(lastName);
 
-        viewModel.createPerson(person, new OnAsyncEventListener() {
+        viewModel.createVisitor(person, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
                 Log.d(TAG, "createClient: success");
@@ -206,7 +208,7 @@ public class PersonDetails extends BaseActivity {
         person.setFirstName(firstName);
         person.setLastName(lastName);
 
-        viewModel.updatePerson(person, new OnAsyncEventListener() {
+        viewModel.updateVisitor(person, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
                 Log.d(TAG, "updateClient: success");

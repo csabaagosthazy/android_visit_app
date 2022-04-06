@@ -99,12 +99,12 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     if (mData instanceof VisitorEntity) {
-                        VisitorEntity newPerson = (VisitorEntity) data.get(newItemPosition);
-                        VisitorEntity oldPerson = (VisitorEntity) mData.get(newItemPosition);
-                        return newPerson.getVisitorId().equals(oldPerson.getVisitorId())
-                                && Objects.equals(newPerson.getFirstName(), newPerson.getFirstName())
-                                && Objects.equals(newPerson.getLastName(), oldPerson.getLastName())
-                                && newPerson.getEmail().equals(oldPerson.getEmail());
+                        VisitorEntity newVisitor = (VisitorEntity) data.get(newItemPosition);
+                        VisitorEntity oldVisitor = (VisitorEntity) mData.get(newItemPosition);
+                        return newVisitor.getVisitorId().equals(oldVisitor.getVisitorId())
+                                && Objects.equals(newVisitor.getFirstName(), oldVisitor.getFirstName())
+                                && Objects.equals(newVisitor.getLastName(), oldVisitor.getLastName())
+                                && newVisitor.getEmail().equals(oldVisitor.getEmail());
                     }
                     if (mData instanceof VisitEntity) {
                         VisitEntity newVisit = (VisitEntity) data.get(newItemPosition);
@@ -113,7 +113,7 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
                                 && Objects.equals(newVisit.getVisitDate(), oldVisit.getVisitDate())
                                 && Objects.equals(newVisit.getDescription(), oldVisit.getDescription())
                                 && Objects.equals(newVisit.getVisitor(), oldVisit.getVisitor())
-                                && Objects.equals(newVisit.getEmployee(), oldVisit.getEmployee());
+                                && Objects.equals(newVisit.getHostId(), oldVisit.getHostId());
                     }
                     return false;
                 }

@@ -21,7 +21,7 @@ public class VisitListByDateViewModel extends AndroidViewModel {
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<List<VisitEntity>> observableVisits;
 
-    public VisitListByDateViewModel(@NonNull Application application, final Long from, final Long to,final String hostId, VisitRepository visitRepository) {
+    public VisitListByDateViewModel(@NonNull Application application, final String hostId, final Long from, final Long to, VisitRepository visitRepository) {
         super(application);
 
         this.repository = visitRepository;
@@ -32,7 +32,7 @@ public class VisitListByDateViewModel extends AndroidViewModel {
         // set by default null, until we get data from the database.
         observableVisits.setValue(null);
 
-        LiveData<List<VisitEntity>> visits = repository.getByHostAndDate(from,to, hostId);
+        LiveData<List<VisitEntity>> visits = repository.getVisitsByHostAndDate(hostId, from,to );
 
         // observe the changes of the entities from the database and forward them
         observableVisits.addSource(visits, observableVisits::setValue);
@@ -50,7 +50,7 @@ public class VisitListByDateViewModel extends AndroidViewModel {
         private final String hostId;
         private final VisitRepository visitRepository;
 
-        public Factory(@NonNull Application application, Long from, Long to, String hostId) {
+        public Factory(@NonNull Application application,String hostId, Long from, Long to) {
             this.application = application;
             this.from = from;
             this.to = to;
@@ -61,7 +61,7 @@ public class VisitListByDateViewModel extends AndroidViewModel {
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new VisitListByDateViewModel(application, from,to, hostId, visitRepository);
+            return (T) new VisitListByDateViewModel(application,hostId, from,to, visitRepository);
         }
     }
 

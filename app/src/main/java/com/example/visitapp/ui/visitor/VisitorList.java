@@ -1,4 +1,4 @@
-package com.example.visitapp.ui.person;
+package com.example.visitapp.ui.visitor;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class PersonsList extends Fragment  {
+public class VisitorList extends Fragment  {
     private static final String TAG = "PersonListFragment";
 
     private List<VisitorEntity> persons;
@@ -35,11 +35,11 @@ public class PersonsList extends Fragment  {
     private VisitorListViewModel viewModel;
     private Locale locale;
 
-    public PersonsList() {
+    public VisitorList() {
 
     }
-    public static PersonsList newInstance() {
-        PersonsList fragment = new PersonsList();
+    public static VisitorList newInstance() {
+        VisitorList fragment = new VisitorList();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -65,7 +65,7 @@ public class PersonsList extends Fragment  {
                 Log.d(TAG, "clicked position:" + position);
                 Log.d(TAG, "clicked on: " + persons.get(position).toString());
 
-                Intent intent = new Intent(getActivity(), PersonDetails.class);
+                Intent intent = new Intent(getActivity(), VisitorDetails.class);
                 intent.setFlags(
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_NO_HISTORY
@@ -81,7 +81,7 @@ public class PersonsList extends Fragment  {
             });
         FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view2 -> {
-                    Intent intent = new Intent(getActivity(), PersonDetails.class);
+                    Intent intent = new Intent(getActivity(), VisitorDetails.class);
                     intent.setFlags(
                             Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                     Intent.FLAG_ACTIVITY_NO_HISTORY

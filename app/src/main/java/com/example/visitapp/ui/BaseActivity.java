@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.visitapp.ui.person.PersonActivity;
+import com.example.visitapp.ui.visitor.VisitorActivity;
 import com.example.visitapp.ui.settings.SettingsActivity;
 import com.example.visitapp.ui.visits.VisitsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -90,7 +90,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 intent = new Intent(getApplicationContext(), MainActivity.class);
                 break;
             case R.id.person:
-                intent = new Intent(getApplicationContext(), PersonActivity.class);
+                intent = new Intent(getApplicationContext(), VisitorActivity.class);
                 break;
             case R.id.settings:
                 intent = new Intent(getApplicationContext(), SettingsActivity.class);

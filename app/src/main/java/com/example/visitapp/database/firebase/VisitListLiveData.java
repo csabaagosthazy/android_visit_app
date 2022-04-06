@@ -19,6 +19,8 @@ public class VisitListLiveData extends LiveData<List<VisitEntity>> {
 
     private final DatabaseReference reference;
     private final String hostId;
+    private Long from = null;
+    private Long to = null;
     private final MyValueEventListener listener = new MyValueEventListener();
 
     public VisitListLiveData(DatabaseReference ref, String hostId) {
@@ -26,10 +28,22 @@ public class VisitListLiveData extends LiveData<List<VisitEntity>> {
         this.hostId = hostId;
     }
 
+    public VisitListLiveData(DatabaseReference ref, String hostId, Long from, Long to) {
+        reference = ref;
+        this.hostId = hostId;
+        this.from = from;
+        this.to = to;
+    }
+
     @Override
     protected void onActive() {
         Log.d(TAG, "onActive");
-        reference.addValueEventListener(listener);
+        if(from == null || to == null ){
+
+            reference.addValueEventListener(listener);
+        } else {
+            reference.orderByChild("visitDate").startAt(from).endAt(to).addValueEventListener(listener);
+        }
     }
 
     @Override

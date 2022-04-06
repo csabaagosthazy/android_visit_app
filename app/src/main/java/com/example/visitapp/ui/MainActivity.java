@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -19,6 +20,11 @@ import com.example.visitapp.adapter.RecyclerAdapter;
 import com.example.visitapp.database.entity.VisitEntity;
 import com.example.visitapp.util.RecyclerViewItemClickListener;
 import com.example.visitapp.viewmodel.visit.VisitListByDateViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +48,7 @@ public class MainActivity extends BaseActivity{
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.home);
 
+
         RecyclerView recyclerView = findViewById(R.id.mainRecyclerView);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -63,16 +70,25 @@ public class MainActivity extends BaseActivity{
                 Log.d(TAG, "Item long clicked: " + position);
             }
         });
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null){
+            SignIn();
+        }else{
 
-        VisitListByDateViewModel.Factory factory = new VisitListByDateViewModel.Factory(getApplication(), createDate(false), createDate(true));
-        viewModel = new ViewModelProvider(this, factory).get(VisitListByDateViewModel.class);
-        viewModel.getVisitsByDate().observe(this, visitEntities -> {
-            if (visitEntities != null) {
-                visits = visitEntities;
-                recyclerAdapter.setData(visits);
-            }
-        });
-        recyclerView.setAdapter(recyclerAdapter);
+            VisitListByDateViewModel.Factory factory = new VisitListByDateViewModel.Factory(
+                    getApplication(),
+                    FirebaseAuth.getInstance().getCurrentUser().getUid(),
+                    createDate(false), createDate(true)
+            );
+            viewModel = new ViewModelProvider(this, factory).get(VisitListByDateViewModel.class);
+            viewModel.getVisitsByDate().observe(this, visitEntities -> {
+                if (visitEntities != null) {
+                    visits = visitEntities;
+                    recyclerAdapter.setData(visits);
+                }
+            });
+            recyclerView.setAdapter(recyclerAdapter);
+        }
 
 
     }
@@ -99,6 +115,23 @@ public class MainActivity extends BaseActivity{
         }
 
         return result;
+    }
+
+    private void SignIn(){
+        //permanent signin for testing
+        FirebaseAuth.getInstance().signInWithEmailAndPassword("michel.platini@fifa.com", "Michel1")
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        }
+                    }
+                });
     }
 /*    @Override
     protected void onResume() {
