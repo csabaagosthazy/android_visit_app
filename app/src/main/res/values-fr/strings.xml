@@ -50,5 +50,14 @@
     <string name="addPerson">Add person</string>
     <string name="addVisit">Add visit</string>
     <string name="mainTitle">Visits today</string>
+    <string name="prompt_password">Mot de passe</string>
+    <string name="action_sign_in">Connexion</string>
+    <string name="action_sign_in_short">conexion</string>
+    <string name="error_invalid_password">Ce mot de passe est trop court (&lt;5 caractères)</string>
+    <string name="error_edit_invalid_password">Vous devez spécififiez un mot de passe</string>
+    <string name="error_incorrect_password">Le mot de passe est inccorect</string>
+    <string name="error_field_required">Ce champs est requis</string>
+    <string name="permission_rationale">"La permission d'accès au contact est requise pour la complétion automatique"</string>
+    <string name="title_activity_login">Connexion</string>
 </resources>
 

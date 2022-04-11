@@ -6,6 +6,9 @@ import com.example.visitapp.database.entity.VisitorEntity;
 import com.example.visitapp.database.firebase.VisitorListLiveData;
 import com.example.visitapp.database.firebase.VisitorLiveData;
 import com.example.visitapp.util.OnAsyncEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,6 +34,13 @@ public class VisitorRepository {
         }
         return instance;
     }
+
+    public void signIn(final String email, final String password,
+                       final OnCompleteListener<AuthResult> listener) {
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(listener);
+    }
+
     public LiveData<VisitorEntity> getVisitor(final String id){
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("visitors")
