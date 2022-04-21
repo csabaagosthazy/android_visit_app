@@ -58,6 +58,8 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="title_activity_login">Login</string>
+    <string name="sign_out_header">Sign out</string>
+    <string name="sign_out_message">Do you want to sign out?</string>
 
 
 </resources>

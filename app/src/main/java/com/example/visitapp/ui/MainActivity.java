@@ -145,15 +145,10 @@ public class MainActivity extends BaseActivity{
     @Override
     public void onBackPressed() {
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        //alertDialog.setTitle(getString(R.string.action_logout));
-        //just a copy
-        alertDialog.setTitle("test dialog");
+        alertDialog.setTitle(R.string.sign_out_header);
         alertDialog.setCancelable(false);
-        //alertDialog.setMessage(getString(R.string.logout_msg));
-        alertDialog.setMessage("test message");
-        //alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.action_logout), (dialog, which) -> logout());
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "ok", (dialog, which) -> alertDialog.dismiss());
-        //alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.action_cancel), (dialog, which) -> alertDialog.dismiss());
+        alertDialog.setMessage(getString(R.string.sign_out_message));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "ok", (dialog, which) -> logout());
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "cancel", (dialog, which) -> alertDialog.dismiss());
         alertDialog.show();
     }

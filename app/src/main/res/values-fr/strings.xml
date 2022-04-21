@@ -59,5 +59,7 @@
     <string name="error_field_required">Ce champs est requis</string>
     <string name="permission_rationale">"La permission d'accès au contact est requise pour la complétion automatique"</string>
     <string name="title_activity_login">Connexion</string>
+    <string name="sign_out_header">Sign out</string>
+    <string name="sign_out_message">Do you want to sign out?</string>
 </resources>
 
