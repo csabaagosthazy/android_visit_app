@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity{
         });
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null){
-            SignIn();
+            logout();
         }else{
 
             VisitListByDateViewModel.Factory factory = new VisitListByDateViewModel.Factory(
@@ -118,30 +118,6 @@ public class MainActivity extends BaseActivity{
 
         return result;
     }
-
-    private void SignIn(){
-        //permanent signin for testing
-        FirebaseAuth.getInstance().signInWithEmailAndPassword("michel.platini@fifa.com", "Michel1")
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        }
-                    }
-                });
-    }
-/*    @Override
-    protected void onResume() {
-        super.onResume();
-        //setTitle(getString(R.string.app_name));
-        //bottomNavigationView.setSelectedItemId(R.id.nav_none);
-    }*/
-
     @Override
     public void onBackPressed() {
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
@@ -182,14 +158,5 @@ public class MainActivity extends BaseActivity{
         return super.onOptionsItemSelected(item);
 
     }
-
-/*    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == BaseActivity.position) {
-            return false;
-        }
-        finish();
-        return super.onNavigationItemSelected(item);
-    }*/
 
 }

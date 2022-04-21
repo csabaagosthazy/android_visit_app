@@ -35,12 +35,6 @@ public class VisitorRepository {
         return instance;
     }
 
-    public void signIn(final String email, final String password,
-                       final OnCompleteListener<AuthResult> listener) {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(listener);
-    }
-
     public LiveData<VisitorEntity> getVisitor(final String id){
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("visitors")

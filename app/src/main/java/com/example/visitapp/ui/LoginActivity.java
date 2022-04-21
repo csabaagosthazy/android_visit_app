@@ -3,22 +3,30 @@ package com.example.visitapp.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.visitapp.R;
 import com.example.visitapp.BaseApp;
 import com.example.visitapp.database.repository.VisitorRepository;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity {
+
+    private static final String TAG = "LoginActivity";
 
     private EditText emailView;
     private EditText passwordView;
@@ -33,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        repository = ((BaseApp) getApplication()).getVisitorRepository();
+        //repository = ((BaseApp) getApplication()).getVisitorRepository();
         progressBar = findViewById(R.id.progress);
 
         // Set up the login form.
@@ -90,19 +98,27 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             progressBar.setVisibility(View.VISIBLE);
-            repository.signIn(email, password, task -> {
-                if (task.isSuccessful()) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    emailView.setText("");
-                    passwordView.setText("");
-                } else {
-                    emailView.setError(getString(R.string.error_invalid_email));
-                    emailView.requestFocus();
-                    passwordView.setText("");
-                }
-                progressBar.setVisibility(View.GONE);
-            });
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                emailView.setText("");
+                                passwordView.setText("");
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                emailView.setError(getString(R.string.error_invalid_email));
+                                emailView.requestFocus();
+                                passwordView.setText("");
+                            }
+                        }
+                    });
+            progressBar.setVisibility(View.GONE);
         }
     }
 
@@ -112,6 +128,23 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isPasswordValid(String password) {
         return password.length() > 4;
+    }
+
+    private void SignIn(String email, String password){
+        //permanent signin for testing
+        FirebaseAuth.getInstance().signInWithEmailAndPassword("michel.platini@fifa.com", "Michel1")
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                        }
+                    }
+                });
     }
 }
 
