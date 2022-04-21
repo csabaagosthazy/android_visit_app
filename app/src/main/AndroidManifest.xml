@@ -21,8 +21,7 @@
         </activity>
         <activity
             android:name="com.example.visitapp.ui.MainActivity"
-            android:parentActivityName=".ui.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".ui.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.visitapp.ui.LoginActivity" />

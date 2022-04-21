@@ -47,6 +47,8 @@ public class MainActivity extends BaseActivity{
         setTitle(getString(R.string.mainTitle));
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.home);
+        //remove action bar back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
 
         RecyclerView recyclerView = findViewById(R.id.mainRecyclerView);
