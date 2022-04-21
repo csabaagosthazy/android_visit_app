@@ -47,7 +47,6 @@ public class VisitorDetails extends BaseActivity {
         initiateView();
 
         VisitorViewModel.Factory factory = new VisitorViewModel.Factory(getApplication(), personId);
-        //viewModel = ViewModelProviders.of(this, factory).get(VisitorViewModel.class);
         viewModel = new ViewModelProvider(this, factory).get(VisitorViewModel.class);
         viewModel.getVisitor().observe(this, personEntity -> {
             if (personEntity != null) {

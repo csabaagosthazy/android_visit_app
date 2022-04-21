@@ -40,9 +40,6 @@ public class VisitorActivity extends BaseActivity {
 
         setTitle(getString(R.string.activityTitlePerson));
         bottomNavigationView.setSelectedItemId(R.id.person);
-        //fragmentManager.beginTransaction().replace(R.id.flFragment, person).commit();
-
-        //View view = getLayoutInflater().inflate(R.layout.activity_person, frameLayout);
         // Inflate the layout for this fragment
         RecyclerView recyclerView = findViewById(R.id.personsRecyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -97,22 +94,6 @@ public class VisitorActivity extends BaseActivity {
         recyclerView.setAdapter(recyclerAdapter);
     }
 
-  /*  @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "resumed");
-        setTitle(getString(R.string.activityTitlePerson));
-        bottomNavigationView.setSelectedItemId(R.id.person);
-    }*/
-/*    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        if (item.getItemId() == BaseActivity.position) {
-            return false;
-        }
-        finish();
-        return super.onNavigationItemSelected(item);
-    }*/
 
     public void onBackPressed() {
 

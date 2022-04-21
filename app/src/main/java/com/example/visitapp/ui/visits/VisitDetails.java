@@ -16,6 +16,7 @@ import com.example.visitapp.R;
 import com.example.visitapp.adapter.SpinnerAdapter;
 import com.example.visitapp.database.entity.VisitorEntity;
 import com.example.visitapp.database.entity.VisitEntity;
+import com.example.visitapp.ui.BaseActivity;
 import com.example.visitapp.util.OnAsyncEventListener;
 import com.example.visitapp.viewmodel.visit.VisitViewModel;
 
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class VisitDetails extends AppCompatActivity {
+public class VisitDetails extends BaseActivity {
     private static final String TAG = "VisitDetails";
 
     private static final int CREATE_VISIT = 0;
@@ -51,8 +52,6 @@ public class VisitDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_visit_details);
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         String idVisit = getIntent().getStringExtra("idVisit");
 
@@ -60,7 +59,6 @@ public class VisitDetails extends AppCompatActivity {
         setupVisitorSpinner();
 
         VisitViewModel.Factory factory = new VisitViewModel.Factory(getApplication(), idVisit);
-        //viewModel = ViewModelProviders.of(this, factory).get(VisitorViewModel.class);
         viewModel = new ViewModelProvider(this, factory).get(VisitViewModel.class);
         viewModel.getVisit().observe(this, visitEntity -> {
             if (visitEntity != null) {

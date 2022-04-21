@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -20,9 +19,6 @@ import com.example.visitapp.adapter.RecyclerAdapter;
 import com.example.visitapp.database.entity.VisitEntity;
 import com.example.visitapp.util.RecyclerViewItemClickListener;
 import com.example.visitapp.viewmodel.visit.VisitListByDateViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

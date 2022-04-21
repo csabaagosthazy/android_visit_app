@@ -6,9 +6,6 @@ import com.example.visitapp.database.entity.VisitorEntity;
 import com.example.visitapp.database.firebase.VisitorListLiveData;
 import com.example.visitapp.database.firebase.VisitorLiveData;
 import com.example.visitapp.util.OnAsyncEventListener;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

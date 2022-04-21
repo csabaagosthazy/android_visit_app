@@ -25,13 +25,6 @@ public class SettingsActivity extends BaseActivity {
 
 
     }
-/*    @Override
-    protected void onResume() {
-        super.onResume();
-        setTitle(getString(R.string.app_name));
-        bottomNavigationView.setSelectedItemId(R.id.settings);
-    }*/
-
     @Override
     public void onBackPressed() {
         finish();

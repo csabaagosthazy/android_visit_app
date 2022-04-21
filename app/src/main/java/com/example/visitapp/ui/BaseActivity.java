@@ -110,35 +110,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         return true;
     }
 
-/*    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(R.string.infoHeader);
-        alertDialog.setCancelable(false);
-        String s1 = "<b>" + "App Created by"+ "</b>";
-        String s2 = "Loan Rey";
-        String s3 = "Csaba Agosthazy";
-        Spanned strMessage = Html.fromHtml(s1+  "<br>" + s2 +  "<br>" + s3);
-        alertDialog.setMessage(strMessage);
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Great job", (dialog, which) -> alertDialog.dismiss());
-
-
-        int id = item.getItemId();
-        if (id == R.id.btnAbout) {
-            alertDialog.show();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-
-    }*/
-
 
     private void setAppLocale(String language){
         locale = new Locale(language);
         Resources res = getResources();
         Configuration config = res.getConfiguration();
-        //DisplayMetrics displayMetrics = res.getDisplayMetrics();
 
         Locale.setDefault(locale);
         config.setLocale(locale);
