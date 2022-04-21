@@ -20,7 +20,7 @@ import com.example.visitapp.database.repository.VisitorRepository;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private AutoCompleteTextView emailView;
+    private EditText emailView;
     private EditText passwordView;
     private ProgressBar progressBar;
 
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Attempts to sign in or register the client specified by the login form.
+     * Attempts to sign in user
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
